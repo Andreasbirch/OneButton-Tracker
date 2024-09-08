@@ -1,1 +1,1 @@
-readme
+# This project aims to detect when the M4 is connected via the USB port to allow easier read/write configurations
