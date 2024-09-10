@@ -35,27 +35,27 @@ tilt_switch_state = tilt_switch.value
 if board_control:
     with open("/data.csv", "a") as fp:
         start_time = time.monotonic_ns()
-        fp.write("timestamp, accel_x, accel_y, accel_z, gyro_x, gyro_y, gyro_z, mag_x, mag_y, mag_z, quat_i, quat_j, quat_k, quat_real, switch_state, state_change\n")
+        fp.write("timestamp,accel_x,accel_y,accel_z,gyro_x,gyro_y,gyro_z,mag_x,mag_y,mag_z,quat_i,quat_j,quat_k,quat_real,switch_state,state_change\n")
         while True:
             time.sleep(0.5)
             timestamp = time.monotonic_ns() - start_time
             accel_x, accel_y, accel_z = bno.acceleration  # pylint:disable=no-member
-            fp.write("%d, %0.6f, %0.6f, %0.6f, " % (timestamp, accel_x, accel_y, accel_z))
+            fp.write("%d,%0.6f,%0.6f,%0.6f," % (timestamp, accel_x, accel_y, accel_z))
             
             gyro_x, gyro_y, gyro_z = bno.gyro  # pylint:disable=no-member
-            fp.write("%0.6f, %0.6f, %0.6f, " % (gyro_x, gyro_y, gyro_z))
+            fp.write("%0.6f,%0.6f,%0.6f," % (gyro_x, gyro_y, gyro_z))
 
             mag_x, mag_y, mag_z = bno.magnetic  # pylint:disable=no-member
-            fp.write("%0.6f, %0.6f, %0.6f, " % (mag_x, mag_y, mag_z))
+            fp.write("%0.6f,%0.6f,%0.6f," % (mag_x, mag_y, mag_z))
 
             quat_i, quat_j, quat_k, quat_real = bno.quaternion  # pylint:disable=no-member
-            fp.write("%0.6f, %0.6f, %0.6f, %0.6f, " % (quat_i, quat_j, quat_k, quat_real))
+            fp.write("%0.6f,%0.6f,%0.6f,%0.6f," % (quat_i, quat_j, quat_k, quat_real))
             
             new_tilt_switch_state = tilt_switch.value
             state_change = new_tilt_switch_state != tilt_switch_state
             if(state_change):
                 tilt_switch_state = new_tilt_switch_state
-            fp.write("{0}, {1}\n".format(tilt_switch_state, state_change))
+            fp.write("{0},{1}\n".format(tilt_switch_state, state_change))
 
             fp.flush()
 else:
