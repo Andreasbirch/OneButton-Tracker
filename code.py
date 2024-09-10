@@ -33,7 +33,7 @@ tilt_switch.pull = Pull.UP
 tilt_switch_state = tilt_switch.value
 
 if board_control:
-    with open("/ims.txt", "a") as fp:
+    with open("/data.csv", "a") as fp:
         start_time = time.monotonic_ns()
         fp.write("timestamp, accel_x, accel_y, accel_z, gyro_x, gyro_y, gyro_z, mag_x, mag_y, mag_z, quat_i, quat_j, quat_k, quat_real, switch_state, state_change\n")
         while True:
