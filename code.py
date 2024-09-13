@@ -47,7 +47,7 @@ def get_datetime():
 bno.enable_feature(BNO_REPORT_STEP_COUNTER)
 if board_control:
     with open("/data.csv", "a+") as fp:
-        fp.write("timestamp,bno_steps,forward_state_change,upward_state_change")
+        fp.write("timestamp,bno_steps,forward_state_change,upward_state_change\n")
         while True:
             time.sleep(sleep_time)
             timestamp = get_datetime()
@@ -61,7 +61,7 @@ if board_control:
             if forward_state_change:
                 tilt_switch_forward_state = tilt_switch_forward.value
 
-            fp.write("%s,%d,%s,%s" % (timestamp, bno.steps, upward_state_change, forward_state_change))
+            fp.write("%s,%d,%s,%s\n" % (timestamp, bno.steps, upward_state_change, forward_state_change))
             fp.flush()
 else:
     while True:
