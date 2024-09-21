@@ -2,10 +2,10 @@
 #
 # SPDX-License-Identifier: Unlicense
 import time
-import alarm.time
+# import alarm.time
 import board
 import busio
-import alarm
+# import alarm
 from adafruit_datetime import datetime
 import adafruit_ds3231
 from analogio import AnalogIn
@@ -42,10 +42,10 @@ tilt_switch_forward = DigitalInOut(board.D6)
 tilt_switch_forward.direction = Direction.INPUT
 tilt_switch_forward.pull = Pull.UP
 
-sleep_time = 10 ## Sleep time in seconds
+sleep_time = 1 ## Sleep time in seconds
 
-## Alarms
-time_alarm = alarm.time.TimeAlarm(monotonic_time=time.monotonic() + sleep_time)
+# ## Alarms
+# time_alarm = alarm.time.TimeAlarm(monotonic_time=time.monotonic() + sleep_time)
 
 def get_datetime():
     timestamp = rtc.datetime
@@ -69,7 +69,7 @@ if board_control:
                                               get_voltage(vbat_voltage), 
                                               get_voltage(usb_voltage)))
             fp.flush()
-            time.sleep(1)
+            time.sleep(sleep_time)
 else:
     while True:
         q_x, q_y, q_z, q_w = bno.geomagnetic_quaternion
@@ -84,4 +84,4 @@ else:
                                               tilt_switch_upward.value, 
                                               get_voltage(vbat_voltage), 
                                               get_voltage(usb_voltage)))
-        time.sleep(1)
+        time.sleep(sleep_time)
