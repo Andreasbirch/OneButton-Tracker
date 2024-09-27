@@ -7,25 +7,40 @@ import matplotlib.pyplot as plt
 import numpy as np
 from datetime import datetime, timedelta
 from collections import Counter
+from enum import Enum
+
+class sample_types(Enum):
+    most_occuring = 1
+    hierarchical = 2 #Running > Walking > In-Vehicle > Still > Unknown
 
 df = pd.read_csv('data 21-23 sep/data 123.csv')
-first_timestamp = datetime.strptime(df['timestamp'][0], '%Y-%m-%d %H:%M:%S')
-# last_record = df[len(df)-1]
+df['timestamp'] = pd.to_datetime(df['timestamp'])
 
-## Split into ~15 minute groups meaning 60*15 measurements
-minute_groups = np.array_split(df, int(len(df)/900))
-
+# Group into approximately 15 minute sections, aligning with hourly quarters
+df = df.set_index('timestamp')
+df['group'] = df.index.to_series().groupby(pd.Grouper(freq='15min')).ngroup() + 1
+df = df.reset_index() 
 
 out_list = []
 
+first_timestamp = df['timestamp'][0]
 new_timestamp = datetime(first_timestamp.year, first_timestamp.month, first_timestamp.day, first_timestamp.hour, first_timestamp.minute, 0)
-
+occ= None
+sample_type = sample_types.hierarchical
 ## Select most prevalent activity for each minute
-for group in minute_groups:
-    most_frequent_activity = Counter(group['activity_classification']).most_common(1)[0][0]
-    a = group['timestamp']
-    new_timestamp = group['timestamp'][0]
-    out_list.append((new_timestamp, most_frequent_activity))
+for _,group in df.groupby(df['group']):
+    # most_frequent_activity = Counter(group['activity_classification']).most_common(1)[0][0]
+    occurrences = group['activity_classification'].value_counts()
+    activity = None
+    if sample_type == sample_types.most_occuring:
+        activity = occurrences.index[0]
+    elif sample_type == sample_types.hierarchical:#Running > Walking > In-Vehicle > Still > Unknown
+        for i in ['Running', 'Walking', 'In-Vehicle', 'Still', 'Unknown']:
+            if i in occurrences.index:
+                activity = i
+                break
+    new_timestamp = group['timestamp'].iloc[0]
+    out_list.append((new_timestamp, activity))
     # new_timestamp = new_timestamp + timedelta(minutes=15)
 
 
