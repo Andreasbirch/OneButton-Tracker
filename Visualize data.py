@@ -8,12 +8,12 @@ import numpy as np
 from datetime import datetime, timedelta
 from collections import Counter
 
-df = pd.read_csv('data 21-23 sep/data 4.csv')
+df = pd.read_csv('data 21-23 sep/data 3.csv')
 first_timestamp = datetime.strptime(df['timestamp'][0], '%Y-%m-%d %H:%M:%S')
 # last_record = df[len(df)-1]
 
-## Split into ~1 minute groups of 60 measurements
-minute_groups = np.array_split(df, int(len(df)/60))
+## Split into ~15 minute groups meaning 60*15 measurements
+minute_groups = np.array_split(df, int(len(df)/900))
 
 
 out_list = []
@@ -24,7 +24,7 @@ new_timestamp = datetime(first_timestamp.year, first_timestamp.month, first_time
 for group in minute_groups:
     most_frequent_activity = Counter(group['activity_classification']).most_common(1)[0][0]
     out_list.append((new_timestamp, most_frequent_activity))
-    new_timestamp = new_timestamp + timedelta(minutes=1)
+    new_timestamp = new_timestamp + timedelta(minutes=15)
 
 
 
@@ -47,7 +47,8 @@ for i in range(len(timestamps) - 1):
 
 # Set labels and limits
 ax.set_yticks([])
-ax.set_xlim(min(timestamps), max(timestamps))
+ax.set_xticklabels(timestamps)
+ax.set_xlim(timestamps[0], timestamps[len(timestamps)-1])
 
 # Display the plot
 plt.show()
