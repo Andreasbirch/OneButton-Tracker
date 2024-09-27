@@ -8,7 +8,7 @@ import numpy as np
 from datetime import datetime, timedelta
 from collections import Counter
 
-df = pd.read_csv('data 21-23 sep/data 3.csv')
+df = pd.read_csv('data 21-23 sep/data 123.csv')
 first_timestamp = datetime.strptime(df['timestamp'][0], '%Y-%m-%d %H:%M:%S')
 # last_record = df[len(df)-1]
 
@@ -23,8 +23,10 @@ new_timestamp = datetime(first_timestamp.year, first_timestamp.month, first_time
 ## Select most prevalent activity for each minute
 for group in minute_groups:
     most_frequent_activity = Counter(group['activity_classification']).most_common(1)[0][0]
+    a = group['timestamp']
+    new_timestamp = group['timestamp'][0]
     out_list.append((new_timestamp, most_frequent_activity))
-    new_timestamp = new_timestamp + timedelta(minutes=15)
+    # new_timestamp = new_timestamp + timedelta(minutes=15)
 
 
 
