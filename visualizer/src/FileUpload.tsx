@@ -1,6 +1,8 @@
 import React, { ChangeEventHandler } from "react"
 import { useState } from "react";
 import Papa from "papaparse";
+import Charts from "./Charts";
+import { IMeasurement } from "./models/measurement";
 
 const FileUpload = () => {
     const [fileJson, setFileJson] = useState(null);
@@ -59,7 +61,8 @@ const FileUpload = () => {
         <label>
             Upload din fil her
             <input type="file" accept=".csv" onChange={handleFileUpload} />
-            <pre>{JSON.stringify(fileJson, null, 2)}</pre>
+            {fileJson && <Charts measurements={fileJson} />}
+            
         </label>
     </div>
 };
