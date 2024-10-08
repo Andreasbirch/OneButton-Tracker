@@ -6,10 +6,15 @@ import { IMeasurement } from "./models/measurement";
 
 const FileUpload = () => {
     const [fileJson, setFileJson] = useState(null);
+    let lastFile: File | null = null;
 
     const handleFileUpload = (e: any) => {
-        console.log(typeof(e));
         const file = e.target.files[0];
+        if (lastFile && lastFile === file)
+            return;
+        
+        lastFile = file;
+
         if (file && file.type === "text/csv") 
             parseCSV(file);
         else {
@@ -61,9 +66,8 @@ const FileUpload = () => {
         <label>
             Upload din fil her
             <input type="file" accept=".csv" onChange={handleFileUpload} />
-            {fileJson && <Charts measurements={fileJson} />}
-            
         </label>
+        {fileJson && <Charts data={fileJson} />}
     </div>
 };
 

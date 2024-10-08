@@ -12,8 +12,8 @@ function parseMeasurement(data: any): IMeasurement {
         case 'in motion':
             stability = 'inMotion';
             break;
-        case 'still':
-            stability = 'still';
+        case 'stable':
+            stability = 'stable';
             break;
         default:
             throw new Error(`Unknown stability classification: ${data.stability_classification}`);
@@ -51,3 +51,4 @@ function parseMeasurement(data: any): IMeasurement {
 
     return measurement;
 }
+export default parseMeasurement;

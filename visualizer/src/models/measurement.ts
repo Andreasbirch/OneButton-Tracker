@@ -17,7 +17,7 @@ export interface IMeasurement {
     vusb: number
 }
 
-export type stabilityClassification = 'onTable' | 'inMotion' | 'still';
+export type stabilityClassification = 'onTable' | 'inMotion' | 'stable';
 
 export interface IActivityClassification {
     running: number,
