@@ -15,14 +15,28 @@ const FileUpload = () => {
         }
     };
 
+    var header = [
+        "Timestamp", 
+        "activity_running", 
+        "activity_unknown", 
+        "activity_tilting", 
+        "activity_on_foot", 
+        "activity_in_vehicle", 
+        "activity_still", 
+        "activity_walking", 
+        "activity_most_likely", 
+        "stability_classification", 
+    ];
+
     const parseCSV = (file: File) => {
         const reader = new FileReader();
         reader.onload = () => {
             const csvData = reader.result;
 
             Papa.parse(csvData, {
-                header: {},
+                header: ["Timestamp", "activity_running", "activity_unknown", "activity_tilting", "activity_on_foot", "activity_in_vehicle", "activity_still", "activity_walking", "activity_most_likely", "stability_classification", ],
                 skipEmptyLines: true,
+                
                 complete: (result) => {
                     setFileJson(result.data);
                 },
