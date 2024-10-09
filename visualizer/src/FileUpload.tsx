@@ -44,9 +44,9 @@ const FileUpload = () => {
     const parseCSV = (file: File) => {
         const reader = new FileReader();
         reader.onload = () => {
-            let csvData:any = headers.join(";") + "\n" + reader.result;
+            // let csvData:any = headers.join(";") + "\n" + reader.result;
 
-            Papa.parse(csvData, {
+            Papa.parse(file, {
                 header: true,
                 skipEmptyLines: true,
                 delimiter: ";",

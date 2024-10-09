@@ -2,7 +2,7 @@ import { IMeasurement, stabilityClassification } from "../measurement";
 // Parsing function to convert JSON objects into IMeasurement
 function parseMeasurement(data: any): IMeasurement {
     const activityClassification = JSON.parse(data.activity_classification.replace(/'/g, '"'));
-
+    
     // Stability classification conversion
     let stability: stabilityClassification;
     switch (data.stability_classification.toLowerCase()) {
@@ -14,6 +14,9 @@ function parseMeasurement(data: any): IMeasurement {
             break;
         case 'stable':
             stability = 'stable';
+            break;
+        case 'unknown':
+            stability = 'unknown';
             break;
         default:
             throw new Error(`Unknown stability classification: ${data.stability_classification}`);
