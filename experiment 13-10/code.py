@@ -4,13 +4,22 @@ from analogio import AnalogIn
 from logger import FileLogger, ConsoleLogger
 
 vbat_voltage = AnalogIn(board.VOLTAGE_MONITOR)
-
+usb_voltage = AnalogIn(board.A1)
 
 def get_voltage(pin):
     return (pin.value * 3.3) / 65536 * 2
 
 # logger = FileLogger("data.csv", ["Voltage"])
-logger = ConsoleLogger()
+logger = None
+
+usb_voltage_rea = get_voltage(usb_voltage)
+if get_voltage(usb_voltage) > 2:
+    logger = ConsoleLogger()
+else:
+    logger = FileLogger("test.csv", headers=[
+        "pre measurement"," post measurement"
+    ])
+
 
 ## Calculate an average battery voltage to ensure no spikes
 def get_avg_voltage(pin, sample_size = 50):
@@ -40,7 +49,6 @@ while True:
 
     logger.log([
         "{:.2f}".format(average_pre_measurement_voltage),
-        "{:.2f}".format(average_post_measurement_voltage),
-        "{:.2f}".format(average_pre_measurement_voltage - average_post_measurement_voltage),
+        "{:.2f}".format(average_post_measurement_voltage)
     ])
     sleep(1)
