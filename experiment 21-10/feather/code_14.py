@@ -1,6 +1,5 @@
 import board
 import busio
-import time
 from adafruit_bno08x.i2c import BNO08X_I2C
 from adafruit_bno08x import BNO_REPORT_STEP_COUNTER
 
