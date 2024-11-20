@@ -10,7 +10,7 @@ button.direction = Direction.INPUT
 button.pull = Pull.UP
  
 alarm.sleep_memory[0] = (alarm.sleep_memory[0] + 1) % 254
-print(alarm.sleep_memory[0], button.value, alarm.wake_alarm.value)
+print(alarm.sleep_memory[0], button.value)
 
 # Create an alarm that will trigger if button on pin IO9 is pressed.
 pin_alarm = alarm.pin.PinAlarm(pin=WAKEPIN, value=not button.value, pull=False)
