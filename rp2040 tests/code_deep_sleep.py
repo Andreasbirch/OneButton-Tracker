@@ -1,5 +1,5 @@
 import board
-import alarm
+import alarm.pin
 from digitalio import DigitalInOut, Direction, Pull
 
 
