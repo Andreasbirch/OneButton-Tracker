@@ -23,7 +23,6 @@ const getCircuitpyDrives = async () => {
         drive.mountpoints.some(o => o.label === 'CIRCUITPY')
       );
       if (circuitpyDrives.length > 0) {
-        console.log(circuitpyDrives);
         const circuitpyMountPoints = circuitpyDrives.map(drive => {
           const circuitpyMountPoint = drive.mountpoints.find(o => o.label === 'CIRCUITPY');
           return `${circuitpyMountPoint.label} ${circuitpyMountPoint.path}`;
@@ -34,6 +33,32 @@ const getCircuitpyDrives = async () => {
   }
   return null;
 }
+
+
+const getDeviceMapping = async () => {
+  let usbDevices = await webusb.getDevices();
+  let drives = await driveList.list();
+
+  let deviceInfo = usbDevices;
+  // let deviceInfo = usbDevices.map(device => ({
+  //   serialNumber: device.serialNumber,
+  //   vendorId: device.vendorId,
+  //   productId: device.productId,
+  // }));
+
+  let driveInfo = drives.map(drive => ({
+    device: drive.device,
+    description: drive.description,
+    isUSB: drive.isUSB,
+  }));
+
+  console.log('USB Devices:', deviceInfo);
+  console.log('Drives:', driveInfo);
+
+  return { deviceInfo, driveInfo };
+}
+
+
 
 const handleDeviceConnect = async () => {
   let data = "No devices found";
@@ -87,6 +112,7 @@ const createWindow = () => {
 
     windows.push(win);
     handleDeviceConnect();
+    getDeviceMapping();
 };
 
 // This method will be called when Electron has finished
