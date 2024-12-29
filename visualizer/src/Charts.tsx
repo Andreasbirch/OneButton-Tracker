@@ -1,7 +1,6 @@
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend, TimeScale } from 'chart.js';
 import { IMeasurement } from "./models/measurement";
 import parseMeasurement from "./models/parsers/measurementParser";
-import { Line } from "react-chartjs-2";
 import zoomPlugin from 'chartjs-plugin-zoom';
 import 'chartjs-adapter-date-fns';
 
@@ -119,7 +118,6 @@ const Charts = (data: any) => {
 
     return <div>
         <p>Charts</p>
-        <Line data={chartData} options={options}></Line>
     </div>
 };
 
