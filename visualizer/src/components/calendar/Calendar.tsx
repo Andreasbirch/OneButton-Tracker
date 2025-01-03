@@ -46,18 +46,11 @@ function GetCalendarWeek(year: number, week:number) {
 }
 
 function Calendar({year, month, week, day}: Props) {
-    year = 2024;
+    year = 2025;
     month = 1;
     week = 5;
     day = 8;
     return <>
-        <Container>
-            <Row>
-                <Col>
-                    <p>Month</p>
-                </Col>
-            </Row>
-        </Container>
         {/* <CalendarDay year={year!} month={month!} date={day!}></CalendarDay> */}
         {/* <CalendarWeek year={year!} week={week!}></CalendarWeek> */}
         {/* <CalendarMonth year={year!} month={month!}></CalendarMonth> */}

@@ -11,15 +11,17 @@ function GetCalendar(year: number) {
 
     
     // Group every date into weeks
+    //TODO: Der bliver fyldt forkert på her, det skal være index baseret på getDay()!!!
     let calendar: {week: number, dates: Date[]}[] = [];
-    let currentWeek = {week: getWeek(firstDateInYear), dates: [firstDateInYear]};
+    let currentWeek = {week: getWeek(firstDateInYear), dates: new Array(7).fill(undefined)};
+    currentWeek.dates[(firstDateInYear.getDay() + 6) % 7] = firstDateInYear;
     daysInYear.forEach(date => {
         let week = getWeek(date);
         if(week !== currentWeek.week) {
             calendar.push(currentWeek);
-            currentWeek = {week, dates: []};
+            currentWeek = {week, dates: new Array(7).fill(undefined)};
         }
-        currentWeek.dates.push(date);
+        currentWeek.dates[(date.getDay() + 6) % 7] = date;
     });
     calendar.push(currentWeek);
 
@@ -54,8 +56,12 @@ function CalendarYear({year}: {year:number}) {
     let datesForWeekdays = ['M', 'T', 'W', 'T', 'F', 'S', 'S'].map((_,i) => 
         calendar.map(o => o.dates[i])
     );
-    console.log(weekSpansAccumulated);
     return <Container id='calendar-year'>
+        <Row>
+            <Col>
+                <h3>{year}</h3>
+            </Col>
+        </Row>
         <Row>
             <Col>
                 <div>
@@ -70,6 +76,7 @@ function CalendarYear({year}: {year:number}) {
                             <div 
                                 key={m} 
                                 style={{ gridColumn: `span ${weekSpans[i]}` }} 
+                                role='button'
                                 className='month-name'>
                                 {m}
                             </div>
@@ -82,8 +89,10 @@ function CalendarYear({year}: {year:number}) {
                         gridTemplateColumns: `1em repeat(${calendar.length}, 1fr)`,
                     }}>
                         <div></div>
-                        {Object.keys(calendar).map((o, i) => (
-                            <div key={`week-${o}`} style={{
+                        {Object.keys(calendar).map(o => (
+                            <div key={`week-${o}`} 
+                                 role='button'
+                            style={{
                                 borderLeft: (weekSpansAccumulated.includes(parseInt(o))) ? "2px solid var(--bs-gray-500)" : ""
                             }}>
                                 {(parseInt(o) % 52) + 1}
@@ -104,8 +113,9 @@ function CalendarYear({year}: {year:number}) {
                                 <div className='week-day'>{m}</div>
                                 {datesForWeekdays[i].map((o, index) => (
                                     <div 
-                                        key={index}
+                                        key={`${o?.getFullYear()}-${o?.getMonth()}-${o?.getDate()}`}
                                         className='week-date' 
+                                        role='button'
                                         style={{
                                             backgroundColor: getColor(groups, o)?? "#eee", 
                                             borderTop: (o?.getMonth() > 0 && o?.getDate() == 1 && o?.getDay() != 1)? "2px solid var(--bs-gray-500)" : "",

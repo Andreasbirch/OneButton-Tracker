@@ -76,10 +76,19 @@
 
 /*Styling for yearly calendar*/
 #calendar-year .week-date:hover:not(:empty) {
+  font-weight: bold;
+  /*
   outline: 2px solid black;
-  transform: scale(1.1); /*Slight zoom effect*/
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+  transform: scale(1.1); /*Slight zoom effect
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow for depth
+  */
 }
+
+#calendar-year .weeks > div:hover:not(:empty) {
+  font-weight: bold;
+}
+
+
 
 #calendar-year .months, .weeks, .week-row {
   text-align: center;
@@ -94,6 +103,10 @@
   text-align: left;
   font-weight: bold;
   border-bottom: 2px solid black;
+}
+
+#calendar-year .month-name:hover {
+    text-decoration: underline;
 }
 
 .week-date, .week-day {
@@ -111,4 +124,8 @@
 #calendar-year .week-date {
   font-size: .9em;
   text-align: center;
+}
+
+#calendar-year .week-date:empty {
+  background-color: transparent !important;
 }
