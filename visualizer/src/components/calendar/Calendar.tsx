@@ -3,7 +3,10 @@ import mockdatapresses from '../../mock_data_presses.json';
 import {Scope} from '../../models/enums';
 import { Container, Row, Col } from 'react-bootstrap';
 import { groupBy, getWeek } from '../../components/calendar/helpers'
-import CalendarMonth from './CalendarMonth';
+import CalendarMonth from './month/CalendarMonth';
+import CalendarWeek from './week/CalendarWeek';
+import CalendarDay from './day/CalendarDay';
+import CalendarYear from './year/CalendarYear';
 
 type Props = {
     year?: number, 
@@ -43,8 +46,10 @@ function GetCalendarWeek(year: number, week:number) {
 }
 
 function Calendar({year, month, week, day}: Props) {
-    var calendar: any;
-
+    year = 2024;
+    month = 1;
+    week = 5;
+    day = 8;
     return <>
         <Container>
             <Row>
@@ -53,13 +58,10 @@ function Calendar({year, month, week, day}: Props) {
                 </Col>
             </Row>
         </Container>
-        <Container>
-            <Row>
-                <Col>
-                    <CalendarMonth year={year!} month={month!}></CalendarMonth>
-                </Col>
-            </Row>
-        </Container>
+        {/* <CalendarDay year={year!} month={month!} date={day!}></CalendarDay> */}
+        {/* <CalendarWeek year={year!} week={week!}></CalendarWeek> */}
+        {/* <CalendarMonth year={year!} month={month!}></CalendarMonth> */}
+        <CalendarYear year={year}></CalendarYear>
     </>
 }
 
