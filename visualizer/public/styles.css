@@ -68,17 +68,47 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
 }
 
+
+
+
+
+
+
 /*Styling for yearly calendar*/
-#calendar-year .week-numbers td{
-  font-size: 0.9em;
+#calendar-year .week-date:hover:not(:empty) {
+  outline: 2px solid black;
+  transform: scale(1.1); /*Slight zoom effect*/
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
 }
 
-#calendar-year .week-date{
+#calendar-year .months, .weeks, .week-row {
+  text-align: center;
+  gap: 2px 2px;
+}
+
+#calendar-year .weeks > div{
+  font-size: .75em;
+}
+
+#calendar-year .month-name {
+  text-align: left;
+  font-weight: bold;
+  border-bottom: 2px solid black;
+}
+
+.week-date, .week-day {
+  display: flex;
+  align-items: center; /* Align content vertically */
+  justify-content: center; /* Align content horizontally */
+  height: 100%; /* Ensure full height of grid cell */
+}
+
+#calendar-year .week-day {
+  font-weight: bold;
   text-align: center;
 }
 
-#calendar-year .week-date:hover:not(:empty) {
-  border: 2px solid black;
-  transform: scale(1.05); /* Slight zoom effect */
-  /*box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+#calendar-year .week-date {
+  font-size: .9em;
+  text-align: center;
 }

@@ -49,46 +49,75 @@ function CalendarYear({year}: {year:number}) {
     let groups = groupBy(data, o => o.timestamp.toISOString().split('T')[0]);
     let [calendar, weekSpans] = GetCalendar(year);
     
+    let weekSpansAccumulated = weekSpans.map((sum => value => sum += value)(0));
+
     let datesForWeekdays = ['M', 'T', 'W', 'T', 'F', 'S', 'S'].map((_,i) => 
         calendar.map(o => o.dates[i])
     );
-    console.log(groups);
+    console.log(weekSpansAccumulated);
     return <Container id='calendar-year'>
         <Row>
             <Col>
-                <Table responsive={true} bordered={true}>
-                    <thead>
-                        <tr>
-                            <th></th>
-                            {['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'].map((m,i) => {
-                                return <th scope='col' className='month-name' colSpan={weekSpans[i]}>{m}</th>
-                            })}
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr className='week-numbers'>
-                            <th scope='row'></th>
-                            {
-                                Object.keys(calendar).map(o => <td className='text-muted text-sm small-font-size' >{(parseInt(o) % 52) + 1}</td>)
-                            }
-                        </tr>
-                        {['M', 'T', 'W', 'T', 'F', 'S', 'S'].map((m, i) => {
-                            return <tr>
-                                <th scope='row' className='week-day'>
-                                    {m}
-                                </th>
-                                {datesForWeekdays[i].map(o => 
-                                    <td className='week-date' 
-                                        style={{backgroundColor: getColor(groups, o)?? "", 
-                                            borderTop: (o?.getMonth() > 0 && o?.getDate() == 1 && o?.getDay() != 1)? "2px solid black" : "2px solid lightgray",
-                                            borderLeft: (o?.getMonth() > 0 && o?.getDate() <= 7) ? "2px solid black" : ""
+                <div>
+                    {/* Months Row */}
+                    <div className='months' style={{
+                        display: "grid",
+                        gridTemplateColumns: `1em repeat(${calendar.length}, 1fr)`,
+                        gridAutoRows: "2em",
+                    }}>
+                        <div></div>
+                        {['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'].map((m, i) => (
+                            <div 
+                                key={m} 
+                                style={{ gridColumn: `span ${weekSpans[i]}` }} 
+                                className='month-name'>
+                                {m}
+                            </div>
+                        ))}
+                    </div>
+
+                    {/* Weeks Row */}
+                    <div className='weeks' style={{
+                        display: "grid",
+                        gridTemplateColumns: `1em repeat(${calendar.length}, 1fr)`,
+                    }}>
+                        <div></div>
+                        {Object.keys(calendar).map((o, i) => (
+                            <div key={`week-${o}`} style={{
+                                borderLeft: (weekSpansAccumulated.includes(parseInt(o))) ? "2px solid var(--bs-gray-500)" : ""
+                            }}>
+                                {(parseInt(o) % 52) + 1}
+                            </div>
+                        ))}
+                    </div>
+                    <div style={{
+                                display: 'grid',
+                                gridTemplateRows: "repeat(7, 1fr)",
+                                rowGap: 1
+                            }}>
+                        {/* Days and Dates Rows */}
+                        {['M', 'T', 'W', 'T', 'F', 'S', 'S'].map((m, i) => (
+                            <div key={`day-${i}`} className='week-row' style={{
+                                display: 'grid',
+                                gridTemplateColumns: `1em repeat(${calendar.length}, 1fr)`,
+                            }}>
+                                <div className='week-day'>{m}</div>
+                                {datesForWeekdays[i].map((o, index) => (
+                                    <div 
+                                        key={index}
+                                        className='week-date' 
+                                        style={{
+                                            backgroundColor: getColor(groups, o)?? "#eee", 
+                                            borderTop: (o?.getMonth() > 0 && o?.getDate() == 1 && o?.getDay() != 1)? "2px solid var(--bs-gray-500)" : "",
+                                            borderLeft: (o?.getMonth() > 0 && o?.getDate() <= 7) ? "2px solid var(--bs-gray-500)" : ""
                                         }}>
                                         {o?.getDate()}
-                                    </td>)}
-                            </tr>
-                        })}
-                    </tbody>
-                </Table>
+                                    </div>
+                                ))}
+                            </div>
+                        ))}
+                    </div>
+                </div>
             </Col>
         </Row>
     </Container>
