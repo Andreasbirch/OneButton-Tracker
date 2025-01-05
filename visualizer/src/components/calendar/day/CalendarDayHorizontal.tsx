@@ -1,11 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { groupBy, getWeek, timeFloat } from '../helpers';
 import mockdatapresses from '../../../mock_data_presses.json';
 import * as Plot from "@observablehq/plot";
-import { Col, Container, Row } from 'react-bootstrap';
+import { Button, ButtonGroup, Col, Container, Row } from 'react-bootstrap';
+import { ChevronLeft, ChevronRight } from 'react-bootstrap-icons';
 
 // https://observablehq.com/plot/getting-started
-function CalendarDay({year, month, date, width}:{year: number, month: number, date: number, width: number}){
+function CalendarDay({year, month, _date, width}:{year: number, month: number, _date: number, width: number}){
+    const [date, setDate] = useState(_date);
     const containerRef = useRef<any>(null);
     const [data, setData] = useState<{timestamp: Date, duration: number}[]>([]);
     useEffect(() => {
@@ -61,6 +62,15 @@ function CalendarDay({year, month, date, width}:{year: number, month: number, da
         //return data.filter(o => o.date.getDay() == 4)
 
     return <Container>
+      <Row>
+        <Col style={{display: 'flex', justifyContent: 'center'}}>
+            <ButtonGroup style={{alignItems: 'center'}}>
+                <Button className='btn btn-light' onClick={() => setDate(date - 1)}><ChevronLeft></ChevronLeft></Button>
+                <div className='h3 bg-light' style={{marginBottom: 0}}>{new Date(year, month, date).toLocaleDateString('en-GB')}</div>
+                <Button className='btn btn-light' onClick={() => setDate(date + 1)}><ChevronRight></ChevronRight></Button>
+            </ButtonGroup>
+        </Col>
+      </Row>
       <Row>
         <Col>
           <div ref={containerRef}/>

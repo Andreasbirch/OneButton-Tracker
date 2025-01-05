@@ -1,20 +1,23 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { groupBy, getWeek, timeFloat } from '../helpers';
+import { getWeek, timeFloat } from '../helpers';
 import mockdatapresses from '../../../mock_data_presses.json';
 import * as Plot from "@observablehq/plot";
-import { Col, Container, Row } from 'react-bootstrap';
+import { Button, ButtonGroup, Col, Container, Row } from 'react-bootstrap';
+import { ChevronLeft, ChevronRight } from 'react-bootstrap-icons';
 
 type CalendarWeekProps = {
   year: number,
-  week: number,
+  _week: number,
   width: number
 }
 
-function CalendarWeek({year, week, width}: CalendarWeekProps) {
-    let _data = mockdatapresses.map(o => ({timestamp: new Date(o.timestamp), duration: o.duration}))
-    .filter(o => o.timestamp.getFullYear() == year)
-    .filter(o => getWeek(o.timestamp) == week);
-    
+function CalendarWeek({year, _week, width}: CalendarWeekProps) {
+  const [week, setWeek] = useState(_week);
+  
+  let _data = mockdatapresses.map(o => ({timestamp: new Date(o.timestamp), duration: o.duration}))
+  .filter(o => o.timestamp.getFullYear() == year)
+  .filter(o => getWeek(o.timestamp) == week);
+
     const containerRef = useRef<any>(null);
     const [data, setData] = useState(_data);
     useEffect(() => {
@@ -69,11 +72,20 @@ function CalendarWeek({year, week, width}: CalendarWeekProps) {
       containerRef.current.append(plot);
         
       return () => plot.remove();
-    }, [data]); // Run on data change
+    }, [data, week]); // Run on data change
 
         //return data.filter(o => o.date.getDay() == 4)
 
     return <Container>
+      <Row>
+        <Col style={{display: 'flex', justifyContent: 'center'}}>
+            <ButtonGroup style={{alignItems: 'center'}}>
+                <Button className='btn btn-light' onClick={() => setWeek(week - 1)}><ChevronLeft></ChevronLeft></Button>
+                <div className='h3 bg-light' style={{marginBottom: 0}}>Week {week}</div>
+                <Button className='btn btn-light' onClick={() => setWeek(week + 1)}><ChevronRight></ChevronRight></Button>
+            </ButtonGroup>
+        </Col>
+      </Row>
       <Row>
         <Col>
           <div ref={containerRef}/>

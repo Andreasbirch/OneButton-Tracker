@@ -5,9 +5,8 @@ import { Button, ButtonGroup, Col, Container, Row, Table } from 'react-bootstrap
 import { ChevronLeft, ChevronRight } from 'react-bootstrap-icons';
 
 type CalendarYearProps = {
-    year: number,
     onMonthClick: (month: number) => void;
-    onWeekClick: (year:number, week: number) => void;
+    onWeekClick: (year: number, week: number) => void;
     onDateClick: (year: number, month: number, date: number) => void;
 }
 
@@ -52,7 +51,9 @@ function GetCalendar(year: number) {
     return [calendar, weekSpans];
 }
 
-function CalendarYear({year, onMonthClick, onWeekClick, onDateClick}: CalendarYearProps) {
+function CalendarYear({onMonthClick, onWeekClick, onDateClick}: CalendarYearProps) {
+    const [year, setYear] = useState(new Date().getFullYear())
+
     let data = mockdatapresses.map(o => ({timestamp: new Date(o.timestamp), duration: o.duration}))
         .filter(o => o.timestamp.getFullYear() == year);
     let groups = groupBy(data, o => o.timestamp.toISOString().split('T')[0]);
@@ -66,10 +67,10 @@ function CalendarYear({year, onMonthClick, onWeekClick, onDateClick}: CalendarYe
     return <Container id='calendar-year'>
         <Row>
             <Col style={{display: 'flex', justifyContent: 'center'}}>
-                <ButtonGroup style={{alignItems: 'center'}} onClick={() => {year--;}}>
-                    <Button className='btn btn-light'><ChevronLeft></ChevronLeft></Button>
+                <ButtonGroup style={{alignItems: 'center'}}>
+                    <Button className='btn btn-light' onClick={() => setYear(year - 1)}><ChevronLeft></ChevronLeft></Button>
                     <div className='h3 bg-light' style={{marginBottom: 0}}>{year}</div>
-                    <Button className='btn btn-light'><ChevronRight></ChevronRight></Button>
+                    <Button className='btn btn-light' onClick={() => setYear(year + 1)}><ChevronRight></ChevronRight></Button>
                 </ButtonGroup>
             </Col>
         </Row>

@@ -70,15 +70,14 @@ function Calendar() {
             </Row>
         </Container>
         <CalendarYear
-            year={year} 
             onMonthClick={handleMonthClick}
             onWeekClick={handleWeekClick}
             onDateClick={handleDateClick}></CalendarYear>
             <>
-                { scope == 'month' && selectedMonth && (<CalendarMonth year={year} month={selectedMonth} onWeekClick={handleWeekClick} onDateClick={handleDateClick}></CalendarMonth>)}
-                { scope == 'week' && selectedWeek && (<CalendarWeek year={year} week={selectedWeek} width={colWidth}></CalendarWeek>)}
+                { scope == 'month' && selectedMonth && (<CalendarMonth year={year} _month={selectedMonth} onWeekClick={handleWeekClick} onDateClick={handleDateClick}></CalendarMonth>)}
+                { scope == 'week' && selectedWeek && (<CalendarWeek year={year} _week={selectedWeek} width={colWidth}></CalendarWeek>)}
                 {/* {selectedYear && selectedMonth && selectedDay && (<CalendarDay year={year} month={selectedMonth} date={selectedDay}></CalendarDay>)} */}
-                { scope == 'day' && selectedYear && selectedMonth && selectedDay && (<CalendarDayHorizontal year={year} month={selectedMonth} date={selectedDay} width={colWidth}></CalendarDayHorizontal>)}
+                { scope == 'day' && selectedYear && selectedMonth && selectedDay && (<CalendarDayHorizontal year={year} month={selectedMonth} _date={selectedDay} width={colWidth}></CalendarDayHorizontal>)}
             </>
     </>
 }

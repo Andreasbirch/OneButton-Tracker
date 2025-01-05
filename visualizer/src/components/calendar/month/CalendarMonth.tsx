@@ -1,14 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { groupBy, getWeek, getColor } from '../helpers';
 import mockdatapresses from '../../../mock_data_presses.json';
-import { Col, Container, Row } from 'react-bootstrap';
+import { Button, ButtonGroup, Col, Container, Row } from 'react-bootstrap';
+import { ChevronLeft, ChevronRight } from 'react-bootstrap-icons';
 
 type CalendarMonthProps = {
-    year: number,
-    month: number
+    year: number;
+    _month: number;
     onWeekClick: (year:number, week: number) => void;
     onDateClick: (year: number, month: number, date: number) => void;
 }
+const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
 function GetCalendar(year: number, month: number) {
     let firstDayInMonth = new Date(year, month, 1);
@@ -29,7 +31,8 @@ function GetCalendar(year: number, month: number) {
     return weeks;
 }
 
-function CalendarMonth({year, month, onWeekClick, onDateClick}:CalendarMonthProps) {
+function CalendarMonth({year, _month, onWeekClick, onDateClick}:CalendarMonthProps) {
+    const [month, setMonth] = useState(_month)
     var data = mockdatapresses.map(o => ({timestamp: new Date(o.timestamp), duration: o.duration}))
         .filter(o => o.timestamp.getFullYear() == year)
         .filter(o => o.timestamp.getMonth() == month);
@@ -40,6 +43,15 @@ function CalendarMonth({year, month, onWeekClick, onDateClick}:CalendarMonthProp
     var calendar = GetCalendar(year, month);
     console.log(calendar);
     return <Container id='calendar-month'>
+    <Row>
+        <Col style={{display: 'flex', justifyContent: 'center'}}>
+            <ButtonGroup style={{alignItems: 'center'}}>
+                <Button className='btn btn-light' onClick={() => setMonth(month - 1)}><ChevronLeft></ChevronLeft></Button>
+                <div className='h3 bg-light' style={{marginBottom: 0}}>{months[month % 12]}</div>
+                <Button className='btn btn-light' onClick={() => setMonth(month + 1)}><ChevronRight></ChevronRight></Button>
+            </ButtonGroup>
+        </Col>
+    </Row>
     <Row>
       <Col>
         <div>
