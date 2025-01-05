@@ -8,6 +8,7 @@ import { ChevronLeft, ChevronRight } from 'react-bootstrap-icons';
 
 // https://observablehq.com/plot/getting-started
 function CalendarDay({year, month, _date}:{year: number, month: number, _date: number}){
+    console.log("CalendarDay");
     const [date, setDate] = useState(_date);
     let _data = mockdatapresses.map(o => ({timestamp: new Date(o.timestamp), duration: o.duration}))
         .filter(o => o.timestamp.getFullYear() == year)

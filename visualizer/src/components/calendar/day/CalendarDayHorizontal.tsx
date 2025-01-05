@@ -4,25 +4,37 @@ import * as Plot from "@observablehq/plot";
 import { Button, ButtonGroup, Col, Container, Row } from 'react-bootstrap';
 import { ChevronLeft, ChevronRight } from 'react-bootstrap-icons';
 
+type CalendarDayProps = {
+  year: number, 
+  month: number, 
+  _date: number, 
+  width: number
+}
+
 // https://observablehq.com/plot/getting-started
-function CalendarDay({year, month, _date, width}:{year: number, month: number, _date: number, width: number}){
+function CalendarDay({year, month, _date, width}:CalendarDayProps){
     const [date, setDate] = useState(_date);
     const containerRef = useRef<any>(null);
     const [data, setData] = useState<{timestamp: Date, duration: number}[]>([]);
+
+    useEffect(() => {
+        setDate(_date);
+    }, [_date]);
+
     useEffect(() => {
         let _data = mockdatapresses
             .map(o => ({ timestamp: new Date(o.timestamp), duration: o.duration }))
             .filter(o => o.timestamp.getFullYear() === year)
             .filter(o => o.timestamp.getMonth() === month)
             .filter(o => o.timestamp.getDate() === date);
-
+        console.log(_data);
         if (_data.length === 0) return; // Avoid processing empty data
 
-        let _date: Date = _data[0].timestamp;
-        let firstDate = new Date(Date.UTC(_date.getFullYear(), _date.getMonth(), _date.getDate(), 0, 0, 0));
+        let tempFirstDate: Date = _data[0].timestamp;
+        let firstDate = new Date(Date.UTC(tempFirstDate.getFullYear(), tempFirstDate.getMonth(), tempFirstDate.getDate(), 0, 0, 0));
         let emptyFirst = { timestamp: firstDate, duration: 0 };
 
-        let lastDate = new Date(Date.UTC(_date.getFullYear(), _date.getMonth(), _date.getDate(), 23, 59, 59));
+        let lastDate = new Date(Date.UTC(tempFirstDate.getFullYear(), tempFirstDate.getMonth(), tempFirstDate.getDate(), 23, 59, 59));
         let emptyLast = { timestamp: lastDate, duration: 0 };
 
         setData([emptyFirst, ..._data, emptyLast]); // Update state with new data
@@ -30,6 +42,8 @@ function CalendarDay({year, month, _date, width}:{year: number, month: number, _
 
     useEffect(() => {
       if (data === undefined) return;
+      containerRef.current.innerHTML = ''; // Clear previous plot
+
       const plot = Plot.plot({
         width,
         y: {

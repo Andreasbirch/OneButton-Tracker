@@ -60,6 +60,12 @@ function CalendarWeek({year, _week, width}: CalendarWeekProps) {
           //   fx: (d) => d.start.getWeek(),
           //   fill: (d) => "lightgray",
           // }),
+          Plot.axisFx({
+            dy: -14,
+            text: "",
+            label: `Week ${getWeek(data[0].timestamp)}`
+            //tickFormat: Plot.formatMonth("dk", "long")
+          }),
           Plot.frame(),
         ]
       });

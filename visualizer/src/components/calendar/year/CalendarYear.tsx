@@ -108,7 +108,7 @@ function CalendarYear({onMonthClick, onWeekClick, onDateClick}: CalendarYearProp
                                 style={{
                                     borderLeft: (weekSpansAccumulated.includes(parseInt(o))) ? "2px solid var(--bs-gray-500)" : ""
                                 }}
-                                onClick={() => onWeekClick(year, parseInt(o))}>
+                                onClick={() => onWeekClick(year, parseInt(o) + 1)}>
                                 {(parseInt(o) % 52) + 1}
                             </div>
                         ))}

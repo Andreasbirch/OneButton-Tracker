@@ -21,7 +21,7 @@ function Calendar() {
     let year = today.getFullYear() - 1;
     
     const [scope, setScope] = useState<Scope>('year');
-    const [selectedYear, setSelectedYear] = useState<number | null>(today.getFullYear() - 1);
+    const [selectedYear, setSelectedYear] = useState<number | null>(year);
     const [selectedMonth, setSelectedMonth] = useState<number | null>(null);
     const [selectedWeek, setSelectedWeek] = useState<number | null>(null);
     const [selectedDay, setSelectedDay] = useState<number | null>(null);
@@ -38,6 +38,7 @@ function Calendar() {
     };
 
     const handleDateClick = (year:number, month: number, date: number) => {
+        console.log("DateClick", year, month, date);
         setSelectedYear(year);
         setSelectedMonth(month);
         setSelectedDay(date);

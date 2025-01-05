@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { groupBy, getWeek, getColor } from '../helpers';
 import mockdatapresses from '../../../mock_data_presses.json';
 import { Button, ButtonGroup, Col, Container, Row } from 'react-bootstrap';
@@ -32,16 +32,21 @@ function GetCalendar(year: number, month: number) {
 }
 
 function CalendarMonth({year, _month, onWeekClick, onDateClick}:CalendarMonthProps) {
-    const [month, setMonth] = useState(_month)
-    var data = mockdatapresses.map(o => ({timestamp: new Date(o.timestamp), duration: o.duration}))
-        .filter(o => o.timestamp.getFullYear() == year)
-        .filter(o => o.timestamp.getMonth() == month);
+    const [month, setMonth] = useState(_month);
+    const [calendar, setCalendar] = useState<Record<string, (Date)[]>>({});
+    const [groups, setGroups] = useState<Record<string, any>>({});
+    useEffect(() => {
+            setMonth(_month);
+        }, [_month]);
+    useEffect(() => {
+        var data = mockdatapresses.map(o => ({timestamp: new Date(o.timestamp), duration: o.duration}))
+                .filter(o => o.timestamp.getFullYear() == year)
+                .filter(o => o.timestamp.getMonth() == month);
+        setGroups(groupBy(data, o => o.timestamp.toISOString().split('T')[0]));
+        setCalendar(GetCalendar(year, month));
+    }, [year, month]);
 
-    var groups = groupBy(data, o => o.timestamp.toISOString().split('T')[0]);
-
-    console.log(data);
-    var calendar = GetCalendar(year, month);
-    console.log(calendar);
+    console.log(groups, calendar);
     return <Container id='calendar-month'>
     <Row>
         <Col style={{display: 'flex', justifyContent: 'center'}}>
