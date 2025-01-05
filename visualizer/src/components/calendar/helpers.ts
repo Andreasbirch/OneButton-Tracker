@@ -49,3 +49,35 @@ export function getColor(groups: Record<string, {timestamp:Date; duration:number
   // Return the color from the oranges array
   return oranges[normalizedIndex];
 }
+
+// Trims gaps which the target date starts in, ends in, or if the gap is wholly within said date
+export function GetGapIntersectForDate(gaps: {start: Date, end: Date}[], date: Date): {start: Date, end:Date}[] {
+  const targetDate = new Date(date);
+  const nextDate = new Date(targetDate);
+  nextDate.setDate(nextDate.getDate() + 1);
+
+  const startOfDay = new Date(targetDate);
+  startOfDay.setHours(0, 0, 0, 0);
+
+  const endOfDay = new Date(nextDate);
+  endOfDay.setMilliseconds(-1); // Just before midnight of the next day
+
+  return gaps
+      .filter(gap => {
+          const gapStart = new Date(gap.start);
+          const gapEnd = new Date(gap.end);
+          return gapStart < endOfDay && gapEnd > startOfDay;
+      })
+      .map(gap => {
+          const gapStart = new Date(gap.start);
+          const gapEnd = new Date(gap.end);
+
+          const adjustedStart = gapStart < startOfDay ? startOfDay : gapStart;
+          const adjustedEnd = gapEnd > endOfDay ? endOfDay : gapEnd;
+
+          return {
+              start: adjustedStart,
+              end: adjustedEnd
+          };
+      });
+}

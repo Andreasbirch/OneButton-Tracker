@@ -1,8 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react';
 import mockdatapresses from '../../../mock_data_presses.json';
+import mock_data_gaps from '../../../mock_data_gaps.json';
 import * as Plot from "@observablehq/plot";
 import { Button, ButtonGroup, Col, Container, Row } from 'react-bootstrap';
 import { ChevronLeft, ChevronRight } from 'react-bootstrap-icons';
+import { GetGapIntersectForDate } from '../helpers';
 
 type CalendarDayProps = {
   year: number, 
@@ -16,18 +18,21 @@ function CalendarDay({year, month, _date, width}:CalendarDayProps){
     const [date, setDate] = useState(_date);
     const containerRef = useRef<any>(null);
     const [data, setData] = useState<{timestamp: Date, duration: number}[]>([]);
+    const [nonWearData, setNonWearData] = useState<{start: Date, end: Date}[]>([]);
 
     useEffect(() => {
         setDate(_date);
     }, [_date]);
 
     useEffect(() => {
+        let targetDate = new Date(year, month, date);
+        let _nonWearData = GetGapIntersectForDate(mock_data_gaps.map(o => ({start: new Date(o.start), end: new Date(o.end)})), targetDate);
+        console.log(_nonWearData);
         let _data = mockdatapresses
             .map(o => ({ timestamp: new Date(o.timestamp), duration: o.duration }))
             .filter(o => o.timestamp.getFullYear() === year)
             .filter(o => o.timestamp.getMonth() === month)
             .filter(o => o.timestamp.getDate() === date);
-        console.log(_data);
         if (_data.length === 0) return; // Avoid processing empty data
 
         let tempFirstDate: Date = _data[0].timestamp;
@@ -38,6 +43,7 @@ function CalendarDay({year, month, _date, width}:CalendarDayProps){
         let emptyLast = { timestamp: lastDate, duration: 0 };
 
         setData([emptyFirst, ..._data, emptyLast]); // Update state with new data
+        setNonWearData(_nonWearData);
     }, [year, month, date]);
 
     useEffect(() => {
@@ -66,6 +72,11 @@ function CalendarDay({year, month, _date, width}:CalendarDayProps){
             title: (d) => d.timestamp,
             y: (d) => d.duration / 1000
           }),
+          Plot.barX(nonWearData, {
+            x1: 'start',
+            x2: 'end',
+            fill: 'lightgray'
+          })
         ]
       });
       containerRef.current.append(plot);

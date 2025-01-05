@@ -18,7 +18,7 @@ type Scope = 'year' | 'month' | 'week' | 'day';
 
 function Calendar() {
     let today = new Date();
-    let year = today.getFullYear() - 1;
+    let year = today.getFullYear();
     
     const [scope, setScope] = useState<Scope>('year');
     const [selectedYear, setSelectedYear] = useState<number | null>(year);
