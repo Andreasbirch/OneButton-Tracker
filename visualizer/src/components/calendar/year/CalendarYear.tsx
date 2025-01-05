@@ -3,8 +3,13 @@ import { getColor, getDaysArray, getWeek, groupBy } from '../helpers';
 import mockdatapresses from '../../../mock_data_presses.json';
 import { Button, ButtonGroup, Col, Container, Row, Table } from 'react-bootstrap';
 import { ChevronLeft, ChevronRight } from 'react-bootstrap-icons';
+import { Scope } from '../../../models/enums';
 
 type CalendarYearProps = {
+    scope: Scope;
+    selectedMonth: number | null;
+    selectedWeek: number | null;
+    selectedDate: number | null;
     onMonthClick: (month: number) => void;
     onWeekClick: (year: number, week: number) => void;
     onDateClick: (year: number, month: number, date: number) => void;
@@ -51,7 +56,8 @@ function GetCalendar(year: number) {
     return [calendar, weekSpans];
 }
 
-function CalendarYear({onMonthClick, onWeekClick, onDateClick}: CalendarYearProps) {
+function CalendarYear({scope, selectedMonth, selectedWeek, selectedDate, onMonthClick, onWeekClick, onDateClick}: CalendarYearProps) {
+    console.log(scope, selectedMonth, selectedWeek, selectedDate);
     const [year, setYear] = useState(new Date().getFullYear())
 
     let data = mockdatapresses.map(o => ({timestamp: new Date(o.timestamp), duration: o.duration}))
@@ -87,7 +93,7 @@ function CalendarYear({onMonthClick, onWeekClick, onDateClick}: CalendarYearProp
                         {['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'].map((m, i) => (
                             <div 
                                 key={m} 
-                                style={{ gridColumn: `span ${weekSpans[i]}` }} 
+                                style={{ gridColumn: `span ${weekSpans[i]}`, textDecoration: (scope == Scope.Month && i == selectedMonth) ? "underline" : "" }} 
                                 role='button'
                                 className='month-name'
                                 onClick={() => onMonthClick(i)}>
@@ -106,6 +112,7 @@ function CalendarYear({onMonthClick, onWeekClick, onDateClick}: CalendarYearProp
                             <div key={`week-${o}`} 
                                  role='button'
                                 style={{
+                                    fontWeight: (scope == Scope.Week && parseInt(o) == selectedWeek!-1) ? "bold" : "",
                                     borderLeft: (weekSpansAccumulated.includes(parseInt(o))) ? "2px solid var(--bs-gray-500)" : ""
                                 }}
                                 onClick={() => onWeekClick(year, parseInt(o) + 1)}>
@@ -132,6 +139,7 @@ function CalendarYear({onMonthClick, onWeekClick, onDateClick}: CalendarYearProp
                                         role='button'
                                         onClick={() => onDateClick(o?.getFullYear(), o?.getMonth(), o?.getDate())}
                                         style={{
+                                            fontWeight: (scope == Scope.Day && o?.getMonth() == selectedMonth && o?.getDate() == selectedDate) ? "bold" : "",
                                             backgroundColor: getColor(groups, o)?? "#eee", 
                                             borderTop: (o?.getMonth() > 0 && o?.getDate() == 1 && o?.getDay() != 1)? "2px solid var(--bs-gray-500)" : "",
                                             borderLeft: (o?.getMonth() > 0 && o?.getDate() <= 7) ? "2px solid var(--bs-gray-500)" : ""

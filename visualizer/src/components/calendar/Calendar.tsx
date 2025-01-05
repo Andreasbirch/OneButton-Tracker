@@ -5,6 +5,7 @@ import CalendarDay from './day/CalendarDay';
 import CalendarYear from './year/CalendarYear';
 import CalendarDayHorizontal from './day/CalendarDayHorizontal';
 import { Col, Container, Row } from 'react-bootstrap';
+import { Scope } from '../../models/enums';
 
 type Props = {
     year?: number, 
@@ -13,14 +14,12 @@ type Props = {
     day?: number
 }
 
-type Scope = 'year' | 'month' | 'week' | 'day';
-
 
 function Calendar() {
     let today = new Date();
     let year = today.getFullYear();
     
-    const [scope, setScope] = useState<Scope>('year');
+    const [scope, setScope] = useState<Scope>(Scope.Year);
     const [selectedYear, setSelectedYear] = useState<number | null>(year);
     const [selectedMonth, setSelectedMonth] = useState<number | null>(null);
     const [selectedWeek, setSelectedWeek] = useState<number | null>(null);
@@ -28,13 +27,13 @@ function Calendar() {
 
     const handleMonthClick = (month: number) => {
         setSelectedMonth(month);
-        setScope('month');
+        setScope(Scope.Month);
     };
 
     const handleWeekClick = (year: number, week: number) => {
         setSelectedYear(year);
         setSelectedWeek(week);
-        setScope('week');
+        setScope(Scope.Week);
     };
 
     const handleDateClick = (year:number, month: number, date: number) => {
@@ -42,7 +41,7 @@ function Calendar() {
         setSelectedYear(year);
         setSelectedMonth(month);
         setSelectedDay(date);
-        setScope('day');
+        setScope(Scope.Day);
     };
 
     const colRef = useRef<HTMLDivElement>(null); // Ref to access Col's DOM node
@@ -73,12 +72,16 @@ function Calendar() {
         <CalendarYear
             onMonthClick={handleMonthClick}
             onWeekClick={handleWeekClick}
-            onDateClick={handleDateClick}></CalendarYear>
+            onDateClick={handleDateClick}
+            scope={scope}
+            selectedMonth={selectedMonth}
+            selectedWeek={selectedWeek}
+            selectedDate={selectedDay}></CalendarYear>
             <>
-                { scope == 'month' && selectedMonth && (<CalendarMonth year={year} _month={selectedMonth} onWeekClick={handleWeekClick} onDateClick={handleDateClick}></CalendarMonth>)}
-                { scope == 'week' && selectedWeek && (<CalendarWeek year={year} _week={selectedWeek} width={colWidth}></CalendarWeek>)}
+                { scope == Scope.Month && selectedMonth && (<CalendarMonth year={year} _month={selectedMonth} onWeekClick={handleWeekClick} onDateClick={handleDateClick}></CalendarMonth>)}
+                { scope == Scope.Week && selectedWeek && (<CalendarWeek year={year} _week={selectedWeek} width={colWidth}></CalendarWeek>)}
                 {/* {selectedYear && selectedMonth && selectedDay && (<CalendarDay year={year} month={selectedMonth} date={selectedDay}></CalendarDay>)} */}
-                { scope == 'day' && selectedYear && selectedMonth && selectedDay && (<CalendarDayHorizontal year={year} month={selectedMonth} _date={selectedDay} width={colWidth}></CalendarDayHorizontal>)}
+                { scope == Scope.Day && selectedYear && selectedMonth && selectedDay && (<CalendarDayHorizontal year={year} month={selectedMonth} _date={selectedDay} width={colWidth}></CalendarDayHorizontal>)}
             </>
     </>
 }
