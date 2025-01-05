@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { getColor, getDaysArray, getWeek, groupBy } from '../helpers';
 import mockdatapresses from '../../../mock_data_presses.json';
-import { Col, Container, Row, Table } from 'react-bootstrap';
+import { Button, ButtonGroup, Col, Container, Row, Table } from 'react-bootstrap';
+import { ChevronLeft, ChevronRight } from 'react-bootstrap-icons';
 
 type CalendarYearProps = {
     year: number,
@@ -15,7 +16,6 @@ function GetCalendar(year: number) {
     let lastDate = new Date(year, 11, 31);
     let daysInYear = getDaysArray(firstDate, lastDate);
     let firstDateInYear = daysInYear.shift()!;
-
     
     // Group every date into weeks
     //TODO: Der bliver fyldt forkert på her, det skal være index baseret på getDay()!!!
@@ -65,8 +65,12 @@ function CalendarYear({year, onMonthClick, onWeekClick, onDateClick}: CalendarYe
     );
     return <Container id='calendar-year'>
         <Row>
-            <Col>
-                <h3>{year}</h3>
+            <Col style={{display: 'flex', justifyContent: 'center'}}>
+                <ButtonGroup style={{alignItems: 'center'}} onClick={() => {year--;}}>
+                    <Button className='btn btn-light'><ChevronLeft></ChevronLeft></Button>
+                    <div className='h3 bg-light' style={{marginBottom: 0}}>{year}</div>
+                    <Button className='btn btn-light'><ChevronRight></ChevronRight></Button>
+                </ButtonGroup>
             </Col>
         </Row>
         <Row>

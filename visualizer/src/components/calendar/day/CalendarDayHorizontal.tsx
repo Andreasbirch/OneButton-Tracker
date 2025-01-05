@@ -6,28 +6,27 @@ import { Col, Container, Row } from 'react-bootstrap';
 
 // https://observablehq.com/plot/getting-started
 function CalendarDay({year, month, date, width}:{year: number, month: number, date: number, width: number}){
-    let _data = mockdatapresses.map(o => ({timestamp: new Date(o.timestamp), duration: o.duration}))
-        .filter(o => o.timestamp.getFullYear() == year)
-        .filter(o => o.timestamp.getMonth() == month)
-        .filter(o => o.timestamp.getDate() == date);
-    let _date: Date = _data[0].timestamp;
-    let firstDate = new Date(Date.UTC(_date.getFullYear(), _date.getMonth(), _date.getDate(), 0, 0, 0));
-    let emptyFirst = {
-        timestamp: firstDate,
-        duration: 0,
-    }
-    
-    let lastDate = new Date(Date.UTC(_date.getFullYear(), _date.getMonth(), _date.getDate(), 23, 59, 59));
-    let emptyLast = {
-        timestamp: lastDate,
-        duration: 0,
-    }
-    
-    _data = [emptyFirst, ..._data, emptyLast];
-
-
     const containerRef = useRef<any>(null);
-    const [data, setData] = useState(_data);
+    const [data, setData] = useState<{timestamp: Date, duration: number}[]>([]);
+    useEffect(() => {
+        let _data = mockdatapresses
+            .map(o => ({ timestamp: new Date(o.timestamp), duration: o.duration }))
+            .filter(o => o.timestamp.getFullYear() === year)
+            .filter(o => o.timestamp.getMonth() === month)
+            .filter(o => o.timestamp.getDate() === date);
+
+        if (_data.length === 0) return; // Avoid processing empty data
+
+        let _date: Date = _data[0].timestamp;
+        let firstDate = new Date(Date.UTC(_date.getFullYear(), _date.getMonth(), _date.getDate(), 0, 0, 0));
+        let emptyFirst = { timestamp: firstDate, duration: 0 };
+
+        let lastDate = new Date(Date.UTC(_date.getFullYear(), _date.getMonth(), _date.getDate(), 23, 59, 59));
+        let emptyLast = { timestamp: lastDate, duration: 0 };
+
+        setData([emptyFirst, ..._data, emptyLast]); // Update state with new data
+    }, [year, month, date]);
+
     useEffect(() => {
       if (data === undefined) return;
       const plot = Plot.plot({
