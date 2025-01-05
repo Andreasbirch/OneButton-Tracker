@@ -11,7 +11,7 @@
 /* Week Row Styling */
 #calendar-month .calendar-week {
   display: grid;
-  grid-template-columns: .1fr repeat(7, 1fr); /* One for week number, seven for week days */
+  grid-template-columns: .15fr repeat(7, 1fr); /* One for week number, seven for week days */
   align-items: stretch;
 }
 
@@ -23,6 +23,10 @@
   display: flex;
   justify-content: flex-end;
   font-size: 0.8em;
+}
+
+#calendar-month .week-number:hover {
+  text-decoration: underline;
 }
 
 /* Week Days Styling */
@@ -62,8 +66,9 @@
 }
 
 #calendar-month .week-day:hover:not(:empty) {
-  background-color: #fff; /* Highlight color, adjust as needed */
-  color: white; /* Change text color for better contrast */
+  /*background-color: #fff;*/ /* Highlight color, adjust as needed */
+  font-weight: bold;
+  /*color: white;*/ /* Change text color for better contrast */
   transform: scale(1.05); /* Slight zoom effect */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
 }
@@ -96,6 +101,7 @@
 }
 
 #calendar-year .weeks > div{
+  font-weight: lighter;
   font-size: .75em;
 }
 
@@ -109,7 +115,7 @@
     text-decoration: underline;
 }
 
-.week-date, .week-day {
+#calendar-year .week-date, .week-day {
   display: flex;
   align-items: center; /* Align content vertically */
   justify-content: center; /* Align content horizontally */

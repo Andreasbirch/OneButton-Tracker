@@ -3,6 +3,13 @@ import { getColor, getDaysArray, getWeek, groupBy } from '../helpers';
 import mockdatapresses from '../../../mock_data_presses.json';
 import { Col, Container, Row, Table } from 'react-bootstrap';
 
+type CalendarYearProps = {
+    year: number,
+    onMonthClick: (month: number) => void;
+    onWeekClick: (year:number, week: number) => void;
+    onDateClick: (year: number, month: number, date: number) => void;
+}
+
 function GetCalendar(year: number) {
     let firstDate = new Date(year, 0, 1);
     let lastDate = new Date(year, 11, 31);
@@ -45,7 +52,7 @@ function GetCalendar(year: number) {
     return [calendar, weekSpans];
 }
 
-function CalendarYear({year}: {year:number}) {
+function CalendarYear({year, onMonthClick, onWeekClick, onDateClick}: CalendarYearProps) {
     let data = mockdatapresses.map(o => ({timestamp: new Date(o.timestamp), duration: o.duration}))
         .filter(o => o.timestamp.getFullYear() == year);
     let groups = groupBy(data, o => o.timestamp.toISOString().split('T')[0]);
@@ -77,7 +84,8 @@ function CalendarYear({year}: {year:number}) {
                                 key={m} 
                                 style={{ gridColumn: `span ${weekSpans[i]}` }} 
                                 role='button'
-                                className='month-name'>
+                                className='month-name'
+                                onClick={() => onMonthClick(i)}>
                                 {m}
                             </div>
                         ))}
@@ -92,9 +100,10 @@ function CalendarYear({year}: {year:number}) {
                         {Object.keys(calendar).map(o => (
                             <div key={`week-${o}`} 
                                  role='button'
-                            style={{
-                                borderLeft: (weekSpansAccumulated.includes(parseInt(o))) ? "2px solid var(--bs-gray-500)" : ""
-                            }}>
+                                style={{
+                                    borderLeft: (weekSpansAccumulated.includes(parseInt(o))) ? "2px solid var(--bs-gray-500)" : ""
+                                }}
+                                onClick={() => onWeekClick(year, parseInt(o))}>
                                 {(parseInt(o) % 52) + 1}
                             </div>
                         ))}
@@ -116,6 +125,7 @@ function CalendarYear({year}: {year:number}) {
                                         key={`${o?.getFullYear()}-${o?.getMonth()}-${o?.getDate()}`}
                                         className='week-date' 
                                         role='button'
+                                        onClick={() => onDateClick(o?.getFullYear(), o?.getMonth(), o?.getDate())}
                                         style={{
                                             backgroundColor: getColor(groups, o)?? "#eee", 
                                             borderTop: (o?.getMonth() > 0 && o?.getDate() == 1 && o?.getDay() != 1)? "2px solid var(--bs-gray-500)" : "",

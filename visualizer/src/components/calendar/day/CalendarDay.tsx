@@ -4,6 +4,7 @@ import mockdatapresses from '../../../mock_data_presses.json';
 import * as Plot from "@observablehq/plot";
 import { Col, Container, Row } from 'react-bootstrap';
 
+
 // https://observablehq.com/plot/getting-started
 function CalendarDay({year, month, date}:{year: number, month: number, date: number}){
     let _data = mockdatapresses.map(o => ({timestamp: new Date(o.timestamp), duration: o.duration}))
@@ -49,10 +50,11 @@ function CalendarDay({year, month, date}:{year: number, month: number, date: num
             y1: (d) => timeFloat(d.timestamp),
             y2: (d) => timeFloat(new Date(d.timestamp.getTime() + d.duration * 1000)),
             // lay the days out in the x direction based on day of the week
-            x: (d) => d.timestamp.getUTCDay(),
-            fx: (d) => d.timestamp.getUTCDay(),
+            x: (d) => d.timestamp.getDate(),
+            fx: (d) => d.timestamp.getDate(),
             fill: "duration",
             title: (d) => d.timestamp.toISOString().split('T')[0],
+            facet: "auto"
           }),
           Plot.axisFx({
             dy: -14,

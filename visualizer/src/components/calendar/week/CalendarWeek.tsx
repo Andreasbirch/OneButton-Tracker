@@ -4,34 +4,23 @@ import mockdatapresses from '../../../mock_data_presses.json';
 import * as Plot from "@observablehq/plot";
 import { Col, Container, Row } from 'react-bootstrap';
 
-function CalendarWeek({year, week}: {year: number, week: number}) {
+type CalendarWeekProps = {
+  year: number,
+  week: number,
+  width: number
+}
+
+function CalendarWeek({year, week, width}: CalendarWeekProps) {
     let _data = mockdatapresses.map(o => ({timestamp: new Date(o.timestamp), duration: o.duration}))
     .filter(o => o.timestamp.getFullYear() == year)
     .filter(o => getWeek(o.timestamp) == week);
-    
-    const columnRef = useRef<HTMLDivElement>(null);
-    const [plotWidth, setPlotWidth] = useState<number>(0);
-    useEffect(() => {
-      const updateWidth = () => {
-        if (columnRef.current) {
-          setPlotWidth(columnRef.current.getBoundingClientRect().width);
-        }
-      };
-      
-      // Initial width calculation
-      updateWidth();
-
-      // Update width on window resize
-      window.addEventListener('resize', updateWidth);
-      return () => window.removeEventListener('resize', updateWidth);
-    }, []); // Run on mount
     
     const containerRef = useRef<any>(null);
     const [data, setData] = useState(_data);
     useEffect(() => {
       if (data === undefined) return;
       const plot = Plot.plot({
-        width: plotWidth,
+        width: width,
         x: {
           // padding: 0,
           tickFormat: Plot.formatWeekday("dk", "short"),
@@ -86,7 +75,7 @@ function CalendarWeek({year, week}: {year: number, week: number}) {
 
     return <Container>
       <Row>
-        <Col ref={columnRef}>
+        <Col>
           <div ref={containerRef}/>
         </Col>
       </Row>

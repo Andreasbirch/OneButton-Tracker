@@ -3,6 +3,12 @@ import { groupBy, getWeek, getColor } from '../helpers';
 import mockdatapresses from '../../../mock_data_presses.json';
 import { Col, Container, Row } from 'react-bootstrap';
 
+type CalendarMonthProps = {
+    year: number,
+    month: number
+    onWeekClick: (year:number, week: number) => void;
+    onDateClick: (year: number, month: number, date: number) => void;
+}
 
 function GetCalendar(year: number, month: number) {
     let firstDayInMonth = new Date(year, month, 1);
@@ -23,7 +29,7 @@ function GetCalendar(year: number, month: number) {
     return weeks;
 }
 
-function CalendarMonth({year, month}: {year: number, month: number}) {
+function CalendarMonth({year, month, onWeekClick, onDateClick}:CalendarMonthProps) {
     var data = mockdatapresses.map(o => ({timestamp: new Date(o.timestamp), duration: o.duration}))
         .filter(o => o.timestamp.getFullYear() == year)
         .filter(o => o.timestamp.getMonth() == month);
@@ -49,14 +55,20 @@ function CalendarMonth({year, month}: {year: number, month: number}) {
             </div>
             {Object.keys(calendar).map(k => 
                 <div className='calendar-week' key={k}>
-                    <div className='week-number' key={`${k}-week`}>{k}</div>
+                    <div className='week-number' key={`${k}-week`} role='button' onClick={() => onWeekClick(year, parseInt(k))}>{k}</div>
                     <div className='week-days'>
                         {calendar[k].map((o: Date, i:number) => 
-                        <div 
-                            className='week-day'
-                            style={{backgroundColor: getColor(groups, o)?? ""}}
-                            key={`${k}-${i}`}>{o?.getDate()}
-                        </div>)}
+                        {
+                            if(!o) 
+                                return <div className='week-day'></div>
+                            return <div 
+                                role='button'
+                                className='week-day'
+                                style={{backgroundColor: getColor(groups, o)?? ""}}
+                                onClick={() => onDateClick(o?.getFullYear(), o?.getMonth(), o?.getDate())}
+                                key={`${k}-${i}`}>{o?.getDate()}
+                            </div>
+                        })}
                     </div>
                 </div>
             )}

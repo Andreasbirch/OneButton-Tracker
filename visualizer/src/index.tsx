@@ -12,7 +12,7 @@ root.render(
   // <React.StrictMode>
   <>
     <App />
-    <Calendar year={2024} month={1}/>
+    <Calendar/>
   </>
   // </React.StrictMode>
 );
