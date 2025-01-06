@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { ipcRenderer } from 'electron';
 import Devices from './components/devices';
+import Calendar from './components/calendar/Calendar';
 
 ipcRenderer.send('send-message', 'ping');
 
@@ -9,10 +10,10 @@ function App() {
     function handleDeviceSelected() {
         setDeviceSelected(true);
     }
-    
+
     return <>
         {
-            deviceSelected ? <></> : <Devices handleDeviceSelected={handleDeviceSelected}></Devices>
+            deviceSelected ? <Calendar></Calendar> : <Devices handleDeviceSelected={handleDeviceSelected}></Devices>
         }
     </>
 }

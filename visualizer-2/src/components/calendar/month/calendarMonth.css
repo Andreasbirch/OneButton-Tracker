@@ -1,0 +1,69 @@
+/* General Calendar Styling */
+#calendar {
+  display: grid;
+  grid-template-rows: auto repeat(4, 1fr); /* Header row + 5 weeks */
+  gap: 4px;
+  padding: 8px;
+  /* max-width: 1000px; */
+  margin: 0 auto;
+}
+
+/* Week Row Styling */
+.calendar-week {
+  display: grid;
+  grid-template-columns: .1fr repeat(7, 1fr); /* One for week number, seven for week days */
+  align-items: stretch;
+}
+
+/* Week Number Styling */
+.week-number {
+  text-align: center;
+  font-weight: lighter;
+  padding: 8px;
+  display: flex;
+  justify-content: flex-end;
+  font-size: 0.8em;
+}
+
+/* Week Days Styling */
+.week-days {
+  display: contents; /* Ensure week-day aligns properly in the grid */
+}
+
+/* Individual Day Cell */
+.week-day {
+  text-align: center;
+  border: 1px solid #ddd;
+  min-height: 50px;
+  aspect-ratio: 1.80;
+  padding: 8px 9px 8px 8px;
+  background-color: #fff;
+  font-size: 0.9em;
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* Empty Day Cells */
+.week-day:empty {
+  background-color: #f4f4f4;
+}
+
+/* Calendar Header Styling */
+.calendar-header {
+  display: grid;
+  grid-template-columns: .1fr repeat(7, 1fr); /* One for week label, seven for days */
+  text-align: center;
+  font-weight: bold;
+  gap: 3px;
+}
+
+.calendar-header div {
+  padding: 8px;
+}
+
+.week-day:hover:not(:empty) {
+  background-color: #fff; /* Highlight color, adjust as needed */
+  color: white; /* Change text color for better contrast */
+  transform: scale(1.05); /* Slight zoom effect */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+}
