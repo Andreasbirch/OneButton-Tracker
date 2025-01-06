@@ -1,7 +1,7 @@
 import React from 'react';
-const { ipcRenderer } = window.require('electron');
+import { ipcRenderer } from 'electron';
 
-ipcRenderer.send('anything-asynchronous', 'ping');
+// ipcRenderer.send('send-message', 'ping');
 
 function App() {
     return <div>
