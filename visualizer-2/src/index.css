@@ -1,7 +1,137 @@
-body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica,
-    Arial, sans-serif;
-  margin: auto;
-  max-width: 38rem;
-  padding: 2rem;
+/* General Calendar Styling */
+#calendar-month {
+  display: grid;
+  grid-template-rows: auto repeat(4, 1fr); /* Header row + 5 weeks */
+  gap: 4px;
+  padding: 8px;
+  /* max-width: 1000px; */
+  margin: 0 auto;
+}
+
+/* Week Row Styling */
+#calendar-month .calendar-week {
+  display: grid;
+  grid-template-columns: .15fr repeat(7, 1fr); /* One for week number, seven for week days */
+  align-items: stretch;
+}
+
+/* Week Number Styling */
+#calendar-month .week-number {
+  text-align: center;
+  font-weight: lighter;
+  padding: 8px;
+  display: flex;
+  justify-content: flex-end;
+  font-size: 0.8em;
+}
+
+#calendar-month .week-number:hover {
+  text-decoration: underline;
+}
+
+/* Week Days Styling */
+#calendar-month .week-days {
+  display: contents; /* Ensure week-day aligns properly in the grid */
+}
+
+/* Individual Day Cell */
+#calendar-month .week-day {
+  text-align: center;
+  border: 1px solid #ddd;
+  min-height: 50px;
+  aspect-ratio: 1.80;
+  padding: 8px 9px 8px 8px;
+  background-color: #fff;
+  font-size: 0.9em;
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* Empty Day Cells */
+#calendar-month .week-day:empty {
+  background-color: #f4f4f4;
+}
+
+/* Calendar Header Styling */
+#calendar-month .calendar-header {
+  display: grid;
+  grid-template-columns: .1fr repeat(7, 1fr); /* One for week label, seven for days */
+  text-align: center;
+  font-weight: bold;
+  gap: 3px;
+}
+
+#calendar-month .calendar-header div {
+  padding: 8px;
+}
+
+#calendar-month .week-day:hover:not(:empty) {
+  /*background-color: #fff;*/ /* Highlight color, adjust as needed */
+  font-weight: bold;
+  /*color: white;*/ /* Change text color for better contrast */
+  transform: scale(1.05); /* Slight zoom effect */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+}
+
+
+
+
+
+
+
+/*Styling for yearly calendar*/
+#calendar-year .week-date:hover:not(:empty) {
+  font-weight: bold;
+  /*
+  outline: 2px solid black;
+  transform: scale(1.1); /*Slight zoom effect
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow for depth
+  */
+}
+
+#calendar-year .weeks > div:hover:not(:empty) {
+  font-weight: bold;
+}
+
+
+
+#calendar-year .months, .weeks, .week-row {
+  text-align: center;
+  gap: 2px 2px;
+}
+
+#calendar-year .weeks > div{
+  font-weight: lighter;
+  font-size: .75em;
+}
+
+#calendar-year .month-name {
+  text-align: left;
+  font-weight: bold;
+  border-bottom: 2px solid black;
+}
+
+#calendar-year .month-name:hover {
+    text-decoration: underline;
+}
+
+#calendar-year .week-date, .week-day {
+  display: flex;
+  align-items: center; /* Align content vertically */
+  justify-content: center; /* Align content horizontally */
+  height: 100%; /* Ensure full height of grid cell */
+}
+
+#calendar-year .week-day {
+  font-weight: bold;
+  text-align: center;
+}
+
+#calendar-year .week-date {
+  font-size: .9em;
+  text-align: center;
+}
+
+#calendar-year .week-date:empty {
+  background-color: transparent !important;
 }
