@@ -8,17 +8,14 @@ ipcRenderer.send('available-devices-request', '');
 function Devices({handleDeviceSelected}: {handleDeviceSelected: () => void}) {
     const [drives, setDrives] = useState<Drive[]>([]);
     const [usbDevices, setUsbDevices] = useState<UsbDevice[]>([]);
-
-     useEffect(() => {
-        const handleAvailableDevices = (e: Electron.IpcRendererEvent, args: { drives: Drive[], usbDevices: UsbDevice[] }) => {
-            console.log("Received devices from broadcast", args);
-            setDrives(args.drives);
-            setUsbDevices(args.usbDevices);
-        };
-        ipcRenderer.on('available-devices-broadcast', handleAvailableDevices);
+    
+    useEffect(() => {
+        ipcRenderer.on('available-devices-broadcast', (e: Electron.IpcRendererEvent, args: { drives: Drive[], usbDevices: UsbDevice[] }) => {
+          console.log("Received devices from broadcast", args);
+          setDrives(args.drives);
+          setUsbDevices(args.usbDevices);
+        });
         ipcRenderer.send('available-devices-request', '');
-        
-
     }, []); // Empty dependency array ensures this runs once on mount
 
 

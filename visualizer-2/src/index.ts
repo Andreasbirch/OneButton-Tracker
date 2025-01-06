@@ -87,13 +87,14 @@ ipcMain.on('send-message', (event, arg) => {
 
 const getAvailableCircuitpyDrives = async (): Promise<Drive[]> => {
   const drives = await driveList.list();
+  
   if(!drives)
     return null;
-  
   const usbDrives = drives.filter((drive:any) => drive.isUSB);
   const circuitpyDrives = usbDrives.filter((drive:any) =>
     drive.mountpoints.some((o:any) => o.label === 'CIRCUITPY')
-  );
+);
+console.log(usbDrives, circuitpyDrives.length);
   if(drives.length === 0 || usbDrives.length === 0 || circuitpyDrives.length === 0)
     return [];
   
@@ -123,7 +124,7 @@ const handleDeviceConnect = async () => {
   let attempts = 60;
   for (let attempt = 0; attempt < attempts; attempt++) {
     let _circuitpyDrives = await getAvailableCircuitpyDrives();
-    if(_circuitpyDrives) {
+    if(_circuitpyDrives &&_circuitpyDrives.length > 0) {
       circuitpyDrives = _circuitpyDrives;
       break;
     }
@@ -131,7 +132,6 @@ const handleDeviceConnect = async () => {
     await new Promise(resolve => setTimeout(resolve, 500)); //Sleep 1 sec
   }
   let USBDevices = await getAvailableUSBDevices(); 
-  console.log(circuitpyDrives, USBDevices);
   broadcastAvailableDevices(circuitpyDrives, USBDevices);
 }
 
