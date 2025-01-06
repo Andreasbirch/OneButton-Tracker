@@ -47,6 +47,7 @@
     "drivelist": "^12.0.2",
     "electron-squirrel-startup": "^1.0.1",
     "react": "^19.0.0",
+    "react-bootstrap": "^2.10.7",
     "react-dom": "^19.0.0",
     "usb": "^2.14.0"
   }
