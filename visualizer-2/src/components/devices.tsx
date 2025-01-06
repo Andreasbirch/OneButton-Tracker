@@ -5,7 +5,7 @@ import { Drive } from './../models/Drive';
 import { Button, Col, Container, Row } from 'react-bootstrap';
 ipcRenderer.send('available-devices-request', '');
 
-function Devices() {
+function Devices({handleDeviceSelected}: {handleDeviceSelected: () => void}) {
     const [drives, setDrives] = useState<Drive[]>([]);
     const [usbDevices, setUsbDevices] = useState<UsbDevice[]>([]);
 
@@ -31,11 +31,14 @@ function Devices() {
                         color: '#FFF',
                         borderRadius: 10
                     }}></Button> :
-                    <Button className='btn btn-primary' style={{
-                        backgroundColor: '#D44343',
-                        color: '#FFF',
-                        borderRadius: 10
-                    }}>{drives[0].label}</Button>
+                    <Button 
+                        className='btn btn-primary' 
+                        onClick={handleDeviceSelected}
+                        style={{
+                            backgroundColor: '#D44343',
+                            color: '#FFF',
+                            borderRadius: 10
+                        }}>{drives[0].label}</Button>
                 }
                 </Col>
             </Row>
