@@ -1,6 +1,7 @@
 import { app, BrowserWindow, ipcMain } from 'electron';
 import path from 'path';
-import {WebUSB} from 'usb';
+// import {WebUSB} from 'usb';
+const usb = require('usb')
 // import driveList from 'driveList';
 const driveList = require('drivelist');
 
@@ -21,6 +22,9 @@ if (require('electron-squirrel-startup')) {
 }
 
 let win: BrowserWindow = null;
+const webusb = new usb.WebUSB({
+  allowAllDevices: true
+});
 
 const createWindow = (): void => {
   // Create the browser window.  
@@ -58,8 +62,8 @@ app.whenReady().then(() => {
 // for applications and their menu bar to stay active until the user quits
 // explicitly with Cmd + Q.
 app.on('window-all-closed', () => {
-  webusb.removeEventListener('connect', showAvailableDevices);
-  webusb.removeEventListener('disconnect', showAvailableDevices);
+  webusb.removeEventListener('connect', broadcastAvailableDevices);
+  webusb.removeEventListener('disconnect', broadcastAvailableDevices);
   if (process.platform !== 'darwin') {
     app.quit();
   }
@@ -78,10 +82,6 @@ app.on('activate', () => {
 ipcMain.on('send-message', (event, arg) => {
   //execute tasks on behalf of renderer process 
   console.log(arg) // prints "ping"
-});
-
-const webusb = new WebUSB({
-  allowAllDevices: true
 });
 
 const getCircuitpyDrives = async () => {
@@ -131,6 +131,7 @@ const getDeviceMapping = async () => {
 }
 
 const handleDeviceConnect = async () => {
+  console.log("Device was connected");
   let data = [];
   let attempts = 60;
   for (let attempt = 0; attempt < attempts; attempt++) {
@@ -143,16 +144,17 @@ const handleDeviceConnect = async () => {
     await new Promise(resolve => setTimeout(resolve, 500)); //Sleep 1 sec
   }
   
-  showAvailableDevices(data);
+  broadcastAvailableDevices(data);
 }
 
 const handleDeviceDisconnect = async () => {
+  console.log("Device was disconnected");
   let circuitpyDrives = await getCircuitpyDrives();
-  showAvailableDevices(circuitpyDrives?? []);
+  broadcastAvailableDevices(circuitpyDrives?? []);
 }
 
 //https://github.com/node-usb/node-usb-example-electron/blob/main/main.js
-const showAvailableDevices = (data: any) => {
+const broadcastAvailableDevices = (data: any) => {
   win.webContents.send('available-devices-broadcast', data);
 };
 
