@@ -1,18 +1,24 @@
-import React, { Suspense, useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { ipcRenderer } from 'electron';
+import { UsbDevice } from './../models/UsbDevice';
+import { Drive } from './../models/Drive';
+
+ipcRenderer.send('available-devices-request', '');
 
 function Devices() {
-    const [devices, setDevices] = useState<string[]>([]);
+    const [drives, setDrives] = useState<Drive[]>([]);
+    const [usbDevices, setUsbDevices] = useState<UsbDevice[]>([]);
 
-    ipcRenderer.on('available-devices-broadcast', (e, args) => {
+    ipcRenderer.on('available-devices-broadcast', (e, args: {drives: Drive[], usbDevices: UsbDevice[]}) => {
         console.log("Received devices from broadcast", args);
-        setDevices(args);
+        setDrives(args.drives);
+        setUsbDevices(args.usbDevices);
     });
 
     return <>
         {
-            (!devices || devices.length === 0) ? <div> no devices found...</div> : devices.map(device => {
-                return <div>{device}</div>
+            (!drives || drives.length === 0) ? <div> no devices found...</div> : drives.map(drive => {
+                return <div key={drive.path}>{drive.label} {drive.path}</div>
             })
         }
     </>

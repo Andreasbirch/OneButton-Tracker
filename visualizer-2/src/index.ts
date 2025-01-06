@@ -1,5 +1,7 @@
 import { app, BrowserWindow, ipcMain } from 'electron';
 import path from 'path';
+import { UsbDevice } from './models/UsbDevice';
+import { Drive } from './models/Drive';
 // import {WebUSB} from 'usb';
 const usb = require('usb')
 // import driveList from 'driveList';
@@ -55,7 +57,6 @@ app.whenReady().then(() => {
   createWindow();
 
   handleDeviceConnect();
-  getDeviceMapping();
 });
 
 // Quit when all windows are closed, except on macOS. There, it's common
@@ -84,84 +85,76 @@ ipcMain.on('send-message', (event, arg) => {
   console.log(arg) // prints "ping"
 });
 
-const getCircuitpyDrives = async () => {
+const getAvailableCircuitpyDrives = async (): Promise<Drive[]> => {
   const drives = await driveList.list();
-
-  if (!drives || drives.length === 0) {
-    console.log("No devices found");
-  } else {
-    const usbDrives = drives.filter((drive:any) => drive.isUSB);
-    if (usbDrives.length > 0) {
-      const circuitpyDrives = usbDrives.filter((drive:any) =>
-        drive.mountpoints.some((o:any) => o.label === 'CIRCUITPY')
-      );
-      if (circuitpyDrives.length > 0) {
-        const circuitpyMountPoints = circuitpyDrives.map((drive:any) => {
-          const circuitpyMountPoint = drive.mountpoints.find((o:any) => o.label === 'CIRCUITPY');
-          return `${circuitpyMountPoint.label} ${circuitpyMountPoint.path}`;
-        });
-        return circuitpyMountPoints;
-      }
-    }
-  }
-  return null;
+  if(!drives)
+    return null;
+  
+  const usbDrives = drives.filter((drive:any) => drive.isUSB);
+  const circuitpyDrives = usbDrives.filter((drive:any) =>
+    drive.mountpoints.some((o:any) => o.label === 'CIRCUITPY')
+  );
+  if(drives.length === 0 || usbDrives.length === 0 || circuitpyDrives.length === 0)
+    return [];
+  
+  return circuitpyDrives.map((drive:any) => {
+    const circuitpyMountPoint = drive.mountpoints.find((o:any) => o.label === 'CIRCUITPY');
+    return {
+      device: drive.device,
+      description: drive.description,
+      isUSB: drive.isUSB,
+      label: circuitpyMountPoint.label,
+      path: circuitpyMountPoint.path
+    };
+  });
 }
 
-const getDeviceMapping = async () => {
+const getAvailableUSBDevices = async (): Promise<UsbDevice[]> => {
   let usbDevices = await webusb.getDevices();
-  let drives = await driveList.list();
-
-  let deviceInfo = usbDevices;
-  // let deviceInfo = usbDevices.map(device => ({
-  //   serialNumber: device.serialNumber,
-  //   vendorId: device.vendorId,
-  //   productId: device.productId,
-  // }));
-
-  let driveInfo = drives.map((drive:any) => ({
-    device: drive.device,
-    description: drive.description,
-    isUSB: drive.isUSB,
+  return usbDevices.map((device: any) => ({
+      serialNumber: device.serialNumber,
+      vendorId: device.vendorId,
+      productId: device.productId
   }));
-
-  console.log('USB Devices:', deviceInfo);
-  console.log('Drives:', driveInfo);
-
-  return { deviceInfo, driveInfo };
 }
 
 const handleDeviceConnect = async () => {
-  console.log("Device was connected");
-  let data = [];
+  let circuitpyDrives: Drive[] = [];
   let attempts = 60;
   for (let attempt = 0; attempt < attempts; attempt++) {
-    let circuitpyDrives = await getCircuitpyDrives();
-    if(circuitpyDrives) {
-      data = circuitpyDrives;
+    let _circuitpyDrives = await getAvailableCircuitpyDrives();
+    if(_circuitpyDrives) {
+      circuitpyDrives = _circuitpyDrives;
       break;
     }
     
     await new Promise(resolve => setTimeout(resolve, 500)); //Sleep 1 sec
   }
-  
-  broadcastAvailableDevices(data);
+  let USBDevices = await getAvailableUSBDevices(); 
+  console.log(circuitpyDrives, USBDevices);
+  broadcastAvailableDevices(circuitpyDrives, USBDevices);
 }
 
 const handleDeviceDisconnect = async () => {
-  console.log("Device was disconnected");
-  let circuitpyDrives = await getCircuitpyDrives();
-  broadcastAvailableDevices(circuitpyDrives?? []);
+  let circuitpyDrives = await getAvailableCircuitpyDrives();
+  let USBDevices = await getAvailableUSBDevices(); 
+  broadcastAvailableDevices(circuitpyDrives, USBDevices);
 }
 
+
 //https://github.com/node-usb/node-usb-example-electron/blob/main/main.js
-const broadcastAvailableDevices = (data: any) => {
-  win.webContents.send('available-devices-broadcast', data);
+const broadcastAvailableDevices = (circuitpyDrives: Drive[], usbDevices: UsbDevice[]) => {
+  win.webContents.send('available-devices-broadcast', {drives: circuitpyDrives ?? [], usbDevices: usbDevices ?? []});
 };
 
 ipcMain.on('get-usb-devices-request', (event) => {
   console.log("Received request")
-  getCircuitpyDrives().then((data) => {
+  getAvailableCircuitpyDrives().then((data) => {
     console.log("Got drives, ", data);
     event.reply('get-usb-devices-response', data);
   });
+});
+
+ipcMain.on('available-devices-request', (event) => {
+  handleDeviceConnect();
 });
