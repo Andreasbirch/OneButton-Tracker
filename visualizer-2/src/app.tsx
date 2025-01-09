@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { ipcRenderer } from 'electron';
-import Devices from './components/devices';
+import Devices from './components/devices/devices';
 import Calendar from './components/calendar/Calendar';
 
 ipcRenderer.send('send-message', 'ping');

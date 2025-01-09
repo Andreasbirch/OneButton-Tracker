@@ -1,17 +1,18 @@
 import { app, BrowserWindow, ipcMain } from 'electron';
 import path from 'path';
 import { UsbDevice } from './models/UsbDevice';
-import { ActivityTypes, Patient } from './models/Patient';
+import { ActivityTypes, Patient, PatientMetaData } from './models/Patient';
 import _deviceMap from './data/device_map.json';
 import { WebUSBDevice } from 'usb/dist';
 import { Drive } from 'drivelist/js';
 import fs from 'fs';
+import { UnknownOBTDevice } from './models/UnknownOBTDevice';
 // import {WebUSB} from 'usb';
 const usb = require('usb')
 // import driveList from 'driveList';
 const driveList = require('drivelist');
 const deviceMap: Patient[] = _deviceMap.map((patient) => ({
-    ...patient,
+    metaData: patient.metaData,
     data: patient.data.map((session) => ({
         ...session,
         gaps: session.gaps.map((gap) => ({
@@ -107,7 +108,7 @@ ipcMain.on('send-message', (event, arg) => {
     console.log(arg) // prints "ping"
 });
 
-const getAvailableUSBDrives = (drives: Drive[], devices: UsbDevice[]): {patientDrives:Patient[],unknownDrives:{ deviceId: string; devicePath: string; fullPath: string; }[]} => {
+const getAvailableUSBDrives = (drives: Drive[], devices: UsbDevice[]): {patientData:PatientMetaData[],unknownDrives:{ deviceId: string; devicePath: string; fullPath: string; }[]} => {
     if(!drives || !devices || drives.length === 0 || devices.length === 0)
         return null;
 
@@ -137,13 +138,13 @@ const getAvailableUSBDrives = (drives: Drive[], devices: UsbDevice[]): {patientD
     
 
     let mappedDevices: Patient[] = obtDevices.map(o => {
-        let found = deviceMap.find(m => m.deviceId == o.deviceId);
+        let found = deviceMap.find(m => m.metaData.deviceId == o.deviceId);
         if(!found)
             return null;
         return found;
     }).filter(o => o);
 
-    return {patientDrives: mappedDevices, unknownDrives: obtDevices.filter(o => !mappedDevices.some(d => d.deviceId == o.deviceId))}
+    return {patientData: mappedDevices.map(o => o.metaData), unknownDrives: obtDevices.filter(o => !mappedDevices.some(d => d.metaData.deviceId == o.deviceId))}
 
     const circuitpyDrives = usbDrives;
     if(drives.length === 0 || usbDrives.length === 0 || circuitpyDrives.length === 0)
@@ -198,7 +199,7 @@ const handleDeviceConnect = async () => {
 
 
 //https://github.com/node-usb/node-usb-example-electron/blob/main/main.js
-const broadcastAvailableDevices = (usbDrives: { patientDrives: Patient[]; unknownDrives: { deviceId: string; devicePath: string; fullPath: string; }[]; }) => {
+const broadcastAvailableDevices = (usbDrives: { patientData: PatientMetaData[]; unknownDrives: UnknownOBTDevice[]; }) => {
     win.webContents.send('available-devices-broadcast', usbDrives);
 };
 

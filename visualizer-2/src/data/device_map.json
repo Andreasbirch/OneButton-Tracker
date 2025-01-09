@@ -1,8 +1,10 @@
 [
     {
-        "deviceId": "0M3KP9GNV0",
-        "devicePath": "Volumes/not_present",
-        "patientName": "Alice Alison",
+        "metaData": {
+            "deviceId": "0M3KP9GNV0",
+            "devicePath": "Volumes/not_present",
+            "patientName": "Alice Alison"
+        },
         "data": [
             {
                 "gaps": [
