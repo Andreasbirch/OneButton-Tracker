@@ -25,3 +25,7 @@ export type PatientData = {
     id: string;
     sessions: Session[];
 };
+
+export type PatientDataMap = {
+    [id: string]: PatientData;
+}

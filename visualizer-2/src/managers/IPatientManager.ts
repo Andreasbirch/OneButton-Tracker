@@ -1,5 +1,5 @@
 import { PatientDevice, PatientDeviceMap } from '../models/patients/PatientDevice';
-import { PatientData, Session } from '../models/patients/PatientData';
+import { PatientData, PatientDataMap, Session } from '../models/patients/PatientData';
 
 export type IPatientDeviceManager = {
   getPatientDeviceMap: () => PatientDeviceMap;
@@ -9,7 +9,7 @@ export type IPatientDeviceManager = {
 }
 
 export type IPatientDataManager = {
-  getPatientDatas: () => PatientData[];
+  getPatientDataMap: () => PatientDataMap;
   getPatientData: (id: string) => PatientData;
   addPatientData: (patientData: PatientData) => void;
   addPatientSession: (id:string, session: Session) => void;
