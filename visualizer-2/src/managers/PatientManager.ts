@@ -3,9 +3,8 @@ import { IPatientDataManager, IPatientDeviceManager } from "./IPatientManager";
 import { PatientDevice, PatientDeviceMap } from "../models/patients/PatientDevice";
 
 import fs from 'fs';
-
-const patientDevicesPath = "../data/patient_devices.json";
-const patientDataPath = "../data/patient_data.json";
+const patientDevicesPath = "src/data/patient_devices.json";
+const patientDataPath = "src/data/patient_data.json";
 
 const convertToMap = (data: any): PatientDataMap => {
     const result: PatientDataMap = {};

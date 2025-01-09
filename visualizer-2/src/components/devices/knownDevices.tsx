@@ -1,13 +1,13 @@
 import React from 'react';
 import { Button } from 'react-bootstrap';
-import { PatientMetaData } from '../../models/Patient';
+import { PatientDevice } from '../../models/patients/PatientDevice';
 
 type KnownDeviceProps = {
-    patientData: PatientMetaData;
+    patientDevice: PatientDevice;
     handleDeviceSelected: () => void;
 }
 
-function KnownDevice({patientData, handleDeviceSelected}: KnownDeviceProps  ) {
+function KnownDevice({patientDevice, handleDeviceSelected}: KnownDeviceProps  ) {
     return <Button
                 size="lg"
                 onClick={handleDeviceSelected}
@@ -20,7 +20,7 @@ function KnownDevice({patientData, handleDeviceSelected}: KnownDeviceProps  ) {
                     alignItems: 'center',
                     padding: '10px 20px'
                 }}>
-                <span>{patientData.patientName}</span>
+                <span>{patientDevice.patientName}</span>
                 <span style={{ fontSize: '1.2em' }}>→</span>
                 </Button>
 }

@@ -3,5 +3,10 @@
         "id": "DF625857C7603C2B",
         "devicePath": "CIRCUITPY",
         "patientName": "James A"
+    },
+    "B1A5BBCE325437532020203928130BFF": {
+        "id": "B1A5BBCE325437532020203928130BFF",
+        "devicePath": "OBTOTHER",
+        "patientName": "Jebediah K."
     }
 }

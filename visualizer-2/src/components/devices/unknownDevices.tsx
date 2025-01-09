@@ -1,14 +1,14 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Button } from 'react-bootstrap';
-import { UnknownOBTDevice } from '../../models/UnknownOBTDevice';
+import { UnknownDevice } from '../../models/patients/PatientDevice';
 
 type UnknownDeviceProps = {
-    unknownDevice: UnknownOBTDevice;
-    handleDeviceSelected: (selectedDevice: UnknownOBTDevice) => void;
+    unknownDevice: UnknownDevice;
+    handleDeviceSelected: (selectedDevice: UnknownDevice) => void;
 }
 
 
-function UnknownDevice({unknownDevice, handleDeviceSelected}: UnknownDeviceProps  ) {
+function UnknownDeviceComponent({unknownDevice, handleDeviceSelected}: UnknownDeviceProps  ) {
 
     console.log("Unknown device", unknownDevice);
     return <Button
@@ -23,9 +23,9 @@ function UnknownDevice({unknownDevice, handleDeviceSelected}: UnknownDeviceProps
                     alignItems: 'center',
                     padding: '10px 20px'
                 }}>
-                <span>{unknownDevice.fullPath}</span>
+                <span>{unknownDevice.devicePath}</span>
                 <span style={{ fontSize: '1.2em' }}>+</span>
                 </Button>
 }
 
-export default UnknownDevice;
+export default UnknownDeviceComponent;

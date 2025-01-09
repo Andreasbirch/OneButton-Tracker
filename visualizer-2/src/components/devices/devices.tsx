@@ -1,25 +1,24 @@
 import React, { useEffect, useState } from 'react';
 import { ipcRenderer } from 'electron';
 import { Button, Col, Container, Form, FormGroup, Row } from 'react-bootstrap';
-import { Patient, PatientMetaData } from '../../models/Patient';
-import { UnknownOBTDevice } from '../../models/UnknownOBTDevice';
 import KnownDevice from './knownDevices';
-import UnknownDevice from './unknownDevices';
+import { PatientDevice, UnknownDevice } from '../../models/patients/PatientDevice';
+import UnknownDeviceComponent from './unknownDevices';
 ipcRenderer.send('available-devices-request', '');
 
 function Devices({handleDeviceSelected}: {handleDeviceSelected: () => void}) {
-    const [patientData, setPatientData] = useState<PatientMetaData[]>([]);
-    const [unknownDevices, setUnknownDevices] = useState<UnknownOBTDevice[]>([]);
-    const [selectedDevice, setSelectedDevice] = useState<UnknownOBTDevice | null>(null);
+    const [patientDevice, setPatientDevice] = useState<PatientDevice[]>([]);
+    const [unknownDevices, setUnknownDevices] = useState<UnknownDevice[]>([]);
+    const [selectedDevice, setSelectedDevice] = useState<UnknownDevice | null>(null);
     const [isFormVisible, setIsFormVisible] = useState(false);
     const [patientName, setPatientName] = useState<string>(''); // State for capturing the user name
 
     useEffect(() => {
-        ipcRenderer.on('available-devices-broadcast', (e: Electron.IpcRendererEvent, args: { patientData: PatientMetaData[], unknownDrives: UnknownOBTDevice[] }) => {
+        ipcRenderer.on('available-devices-broadcast', (e: Electron.IpcRendererEvent, args: { patientDevices: PatientDevice[], unknownDevices: UnknownDevice[] }) => {
           console.log("Received devices from broadcast", args);
-          setPatientData(args?.patientData?? []);
-          setUnknownDevices(args?.unknownDrives?? []);
-          console.log(patientData, unknownDevices);
+          setPatientDevice(args?.patientDevices?? []);
+          setUnknownDevices(args?.unknownDevices?? []);
+          console.log(patientDevice, unknownDevices);
         });
         ipcRenderer.send('available-devices-request', '');
     }, []); // Empty dependency array ensures this runs once on mount
@@ -28,7 +27,7 @@ function Devices({handleDeviceSelected}: {handleDeviceSelected: () => void}) {
     }, [unknownDevices]);
 
 
-    const handleUnknownDeviceClick = (device: UnknownOBTDevice) => {
+    const handleUnknownDeviceClick = (device: UnknownDevice) => {
         setSelectedDevice(device);
         setIsFormVisible(true); // Show the form when an unknown device is clicked
     };
@@ -41,12 +40,12 @@ function Devices({handleDeviceSelected}: {handleDeviceSelected: () => void}) {
     const handleCreateClick = () => {
         if (selectedDevice) {
             ipcRenderer.invoke('create-device', selectedDevice, patientName).then(() => {
-              handleBackClick();
+                handleBackClick();
             });
         }
     };
 
-    const isEmptyDeviceList = patientData.length === 0 && unknownDevices.length === 0;
+    const isEmptyDeviceList = patientDevice.length === 0 && unknownDevices.length === 0;
 
     return (
         <Container
@@ -77,7 +76,7 @@ function Devices({handleDeviceSelected}: {handleDeviceSelected: () => void}) {
                                     <Col sm={8}>
                                         <Form.Control
                                             type="text"
-                                            value={selectedDevice.deviceId}
+                                            value={selectedDevice.id}
                                             readOnly
                                         />
                                     </Col>
@@ -128,10 +127,15 @@ function Devices({handleDeviceSelected}: {handleDeviceSelected: () => void}) {
                             <p>No devices found.</p> // Show this message if no devices are found
                         ) : (
                             <>
-                                {patientData && patientData.map((d, i) => <KnownDevice key={`${i} ${d.deviceId}`} patientData={d} handleDeviceSelected={() => {}} />)}
+                                {patientDevice?.map((d, i) => (
+                                    <KnownDevice 
+                                        key={`${i} ${d.id}`} 
+                                        patientDevice={d} 
+                                        handleDeviceSelected={() => {}} />
+                                ))}
                                 {unknownDevices?.map((d,i) => (
-                                    <UnknownDevice
-                                        key={`${i} ${d.deviceId}`}
+                                    <UnknownDeviceComponent
+                                        key={`${i} ${d.id}`}
                                         unknownDevice={d}
                                         handleDeviceSelected={() => handleUnknownDeviceClick(d)}
                                     />
