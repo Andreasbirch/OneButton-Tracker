@@ -21,13 +21,7 @@ export type Session = {
     activities: Activity[];
 }
 
-export type PatientMetaData = {
-    deviceId: String;
-    devicePath: String;
-    patientName: String;
-}
-
-export type Patient = {
-    metaData: PatientMetaData;
-    data: Session[];
+export type PatientData = {
+    id: string;
+    sessions: Session[];
 };
