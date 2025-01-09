@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { ipcRenderer } from 'electron';
 import { UsbDevice } from './../models/UsbDevice';
-import { Drive } from './../models/Drive';
+import { UsbDrive } from './../models/UsbDrive';
 import { Button, Col, Container, Form, FormGroup, Row } from 'react-bootstrap';
 ipcRenderer.send('available-devices-request', '');
 
 function Devices({handleDeviceSelected}: {handleDeviceSelected: () => void}) {
-    const [drives, setDrives] = useState<Drive[]>([]);
+    const [drives, setDrives] = useState<UsbDrive[]>([]);
     const [usbDevices, setUsbDevices] = useState<UsbDevice[]>([]);
     
     useEffect(() => {
-        ipcRenderer.on('available-devices-broadcast', (e: Electron.IpcRendererEvent, args: { drives: Drive[], usbDevices: UsbDevice[] }) => {
+        ipcRenderer.on('available-devices-broadcast', (e: Electron.IpcRendererEvent, args: { drives: UsbDrive[], usbDevices: UsbDevice[] }) => {
           console.log("Received devices from broadcast", args);
           setDrives(args.drives);
           setUsbDevices(args.usbDevices);

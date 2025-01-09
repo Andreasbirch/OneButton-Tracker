@@ -1,4 +1,4 @@
-export type Drive = {
+export type UsbDrive = {
     device: string;
     description: string;
     isUSB: true;

@@ -1,6 +1,6 @@
 [
     {
-        "id": "0M3KP9GNV0",
+        "deviceId": "0M3KP9GNV0",
         "devicePath": "Volumes/not_present",
         "patientName": "Alice Alison",
         "data": [
@@ -29993,7 +29993,7 @@
                         "duration": 694
                     }
                 ],
-                "activity": []
+                "activities": []
             }
         ]
     }
