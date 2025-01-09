@@ -12,12 +12,13 @@ function Devices({handleDeviceSelected}: {handleDeviceSelected: () => void}) {
     const [unknownDevices, setUnknownDevices] = useState<UnknownOBTDevice[]>([]);
     const [selectedDevice, setSelectedDevice] = useState<UnknownOBTDevice | null>(null);
     const [isFormVisible, setIsFormVisible] = useState(false);
+    const [patientName, setPatientName] = useState<string>(''); // State for capturing the user name
 
     useEffect(() => {
         ipcRenderer.on('available-devices-broadcast', (e: Electron.IpcRendererEvent, args: { patientData: PatientMetaData[], unknownDrives: UnknownOBTDevice[] }) => {
           console.log("Received devices from broadcast", args);
-          setPatientData([...args.patientData]);
-          setUnknownDevices([...args.unknownDrives]);
+          setPatientData(args?.patientData?? []);
+          setUnknownDevices(args?.unknownDrives?? []);
           console.log(patientData, unknownDevices);
         });
         ipcRenderer.send('available-devices-request', '');
@@ -39,11 +40,13 @@ function Devices({handleDeviceSelected}: {handleDeviceSelected: () => void}) {
 
     const handleCreateClick = () => {
         if (selectedDevice) {
-            ipcRenderer.send('create-device', '');
+            ipcRenderer.invoke('create-device', selectedDevice, patientName).then(() => {
+              handleBackClick();
+            });
         }
     };
 
-
+    const isEmptyDeviceList = patientData.length === 0 && unknownDevices.length === 0;
 
     return (
         <Container
@@ -89,12 +92,14 @@ function Devices({handleDeviceSelected}: {handleDeviceSelected: () => void}) {
                                         />
                                     </Col>
                                 </FormGroup>
-                                <FormGroup as={Row} controlId="userName">
-                                    <Form.Label column sm={4}>User Name</Form.Label>
+                                <FormGroup as={Row} controlId="patientName">
+                                    <Form.Label column sm={4}>Patient Name</Form.Label>
                                     <Col sm={8}>
                                         <Form.Control
                                             type="text"
-                                            placeholder="Enter user name"
+                                            placeholder="Enter patient name"
+                                            value={patientName}
+                                            onChange={(e) => setPatientName(e.target.value)}
                                         />
                                     </Col>
                                 </FormGroup>
@@ -119,14 +124,20 @@ function Devices({handleDeviceSelected}: {handleDeviceSelected: () => void}) {
                     // Device list view
                     <>
                         <h2 style={{ marginBottom: '30px' }}>Devices</h2>
-                        {patientData && patientData.map(d => <KnownDevice key={d.id} patientData={d} handleDeviceSelected={() => {}} />)}
-                        {unknownDevices?.map(d => (
-                            <UnknownDevice
-                                key={d.deviceId}
-                                unknownDevice={d}
-                                handleDeviceSelected={() => handleUnknownDeviceClick(d)}
-                            />
-                        ))}
+                        {isEmptyDeviceList ? (
+                            <p>No devices found.</p> // Show this message if no devices are found
+                        ) : (
+                            <>
+                                {patientData && patientData.map((d, i) => <KnownDevice key={`${i} ${d.deviceId}`} patientData={d} handleDeviceSelected={() => {}} />)}
+                                {unknownDevices?.map((d,i) => (
+                                    <UnknownDevice
+                                        key={`${i} ${d.deviceId}`}
+                                        unknownDevice={d}
+                                        handleDeviceSelected={() => handleUnknownDeviceClick(d)}
+                                    />
+                                ))}
+                            </>
+                        )}
                         <a
                             onClick={handleDeviceSelected}
                             href="#"

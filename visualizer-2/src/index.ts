@@ -143,7 +143,7 @@ const getAvailableUSBDrives = (drives: Drive[], devices: UsbDevice[]): {patientD
             return null;
         return found;
     }).filter(o => o);
-
+    console.log("MappedDevices", mappedDevices);
     return {patientData: mappedDevices.map(o => o.metaData), unknownDrives: obtDevices.filter(o => !mappedDevices.some(d => d.metaData.deviceId == o.deviceId))}
 
     const circuitpyDrives = usbDrives;
@@ -213,4 +213,32 @@ const broadcastAvailableDevices = (usbDrives: { patientData: PatientMetaData[]; 
 
 ipcMain.on('available-devices-request', (event) => {
     handleDeviceConnect();
+});
+
+ipcMain.handle('create-device', async (e, device:UnknownOBTDevice, patientName: string) => {
+    console.log("Create-device", e);
+    let existingPatient = deviceMap.find(o => o.metaData.deviceId == device.deviceId);
+    if(existingPatient) {
+        existingPatient.metaData.devicePath = device.devicePath;
+        existingPatient.metaData.patientName = patientName;
+    } else {
+        deviceMap.push({
+            metaData: {
+                deviceId: device.deviceId,
+                devicePath: device.devicePath,
+                patientName: patientName
+            },
+            data: []
+        } as Patient);
+    }
+
+    let filePath = 'src/data/device_map.json';
+    fs.readFile(filePath, 'utf8', function readFileCallback(err, data){
+        if (err){
+            console.log(err);
+        } else {
+        let json = JSON.stringify(deviceMap); //convert it back to json
+        fs.writeFile(filePath, json, 'utf8', () => handleDeviceConnect()); // write it back 
+    }});
+    return;
 });
