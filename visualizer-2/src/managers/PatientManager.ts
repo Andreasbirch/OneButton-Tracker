@@ -2,10 +2,10 @@ import { PatientData, PatientDataMap, Presses, Session } from "../models/patient
 import { IPatientDataManager, IPatientDeviceManager } from "./IPatientManager";
 import { PatientDevice, PatientDeviceMap } from "../models/patients/PatientDevice";
 
-import patient_device_map from '../data/patient_devices.json';
-import patient_data_map from '../data/patient_data.json';
+import fs from 'fs';
 
-const patientDeviceMap: PatientDeviceMap = patient_device_map as PatientDeviceMap;
+const patientDevicesPath = "../data/patient_devices.json";
+const patientDataPath = "../data/patient_data.json";
 
 const convertToMap = (data: any): PatientDataMap => {
     const result: PatientDataMap = {};
@@ -39,29 +39,32 @@ const convertToMap = (data: any): PatientDataMap => {
 
     return result;
 };
-const patientDataMap: PatientDataMap = convertToMap(patient_data_map);
-
-
 
 class PatientManager implements IPatientDeviceManager, IPatientDataManager {
     // Patient Device Manager
     getPatientDeviceMap = (): PatientDeviceMap => {
+        var patientDeviceMap = JSON.parse(fs.readFileSync(patientDevicesPath, 'utf8')) as PatientDeviceMap;
         return patientDeviceMap;
     };
 
     getPatientDevice = (id: string): PatientDevice => {
-        return patientDeviceMap[id];
+        return this.getPatientDeviceMap()[id];
     };
 
     addPatientDevice = (patientDevice: PatientDevice): void => {
+        var patientDeviceMap = this.getPatientDeviceMap();
         if (patientDeviceMap[patientDevice.id])
             throw new Error("Patient already exists");
+
         patientDeviceMap[patientDevice.id] = patientDevice;
+        fs.writeFileSync(patientDevicesPath, JSON.stringify(patientDeviceMap, null, 4));
     };
 
     updatePatientDevice = (patientDevice: PatientDevice): void => {
+        var patientDeviceMap = this.getPatientDeviceMap();
         if (patientDeviceMap[patientDevice.id]) {
             patientDeviceMap[patientDevice.id] = patientDevice;
+            fs.writeFileSync(patientDevicesPath, JSON.stringify(patientDeviceMap, null, 4));
         } else {
             throw new Error("Patient device not found for id " + patientDevice.id);
         }
@@ -72,31 +75,40 @@ class PatientManager implements IPatientDeviceManager, IPatientDataManager {
 
     // Patient data manager
     getPatientDataMap = () => {
+        var patientDataMap = convertToMap(JSON.parse(fs.readFileSync(patientDataPath, 'utf8')));
         return patientDataMap;
     };
     getPatientData = (id: string) => {
+        var patientDataMap = this.getPatientDataMap();
         return patientDataMap[id];
     };
     addPatientData = (patientData: PatientData) => {
+        var patientDataMap = this.getPatientDataMap();
         if(patientDataMap[patientData.id]) {
             throw new Error("Patient already exists");
         } else {
             patientDataMap[patientData.id] = patientData;
+            fs.writeFileSync(patientDataPath, JSON.stringify(patientDataMap, null, 4));
         }
     };
     updatePatientData = (patientData: PatientData) => {
+        var patientDataMap = this.getPatientDataMap();
         if(patientDataMap[patientData.id]) {
             patientDataMap[patientData.id] = patientData;
+            fs.writeFileSync(patientDataPath, JSON.stringify(patientDataMap, null, 4));
         } else {
             throw new Error("Patient data not found for id " + patientData.id);
         }
-
     }
     addPatientSession = (id: string, session: Session) => {
+        var patientDataMap = this.getPatientDataMap();
         if(!patientDataMap[id].sessions) {
             patientDataMap[id].sessions = [session];   
         } else {
             patientDataMap[id].sessions.push(session);
         }
+        fs.writeFileSync(patientDataPath, JSON.stringify(patientDataMap, null, 4));
     }
 }
+
+export {PatientManager};

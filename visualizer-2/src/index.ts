@@ -1,34 +1,14 @@
 import { app, BrowserWindow, ipcMain } from 'electron';
 import path from 'path';
 import { UsbDevice } from './models/UsbDevice';
-import { ActivityTypes, Patient, PatientMetaData } from './models/Patient';
-import _deviceMap from './data/device_map.json';
 import { WebUSBDevice } from 'usb/dist';
 import { Drive } from 'drivelist/js';
 import fs from 'fs';
 import { UnknownOBTDevice } from './models/UnknownOBTDevice';
-// import {WebUSB} from 'usb';
+import { PatientManager } from './managers/PatientManager';
+import { DeviceManager } from './managers/DeviceManager';
 const usb = require('usb')
-// import driveList from 'driveList';
-const driveList = require('drivelist');
-const deviceMap: Patient[] = _deviceMap.map((patient) => ({
-    metaData: patient.metaData,
-    data: patient.data.map((session) => ({
-        ...session,
-        gaps: session.gaps.map((gap) => ({
-            start: new Date(gap.start), // Convert start to Date
-            end: new Date(gap.end),   // Convert end to Date
-        })),
-        presses: session.presses.map((press) => ({
-            timestamp: new Date(press.timestamp), // Convert timestamp to Date
-            duration: press.duration,
-        })),
-        activities: session.activities.map((activity) => ({
-            timestamp: new Date(activity.timestamp), // Convert timestamp to Date
-            activity: activity.activity as ActivityTypes, // Ensure activity matches the type
-        })),
-    })),
-}));
+
 // Sources:
 // https://www.electronforge.io/guides/framework-integration/react-with-typescript
 // https://medium.com/@vamsikrishnaadusumalli999/creating-cross-platform-desktop-app-with-electron-js-and-react-to-understand-the-ipc-communication-518439877d9b
@@ -38,13 +18,14 @@ const deviceMap: Patient[] = _deviceMap.map((patient) => ({
 // plugin that tells the Electron app where to look for the Webpack-bundled app code (depending on
 // whether you're running in development or production).
 declare const MAIN_WINDOW_WEBPACK_ENTRY: string;
-declare const MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY: string;
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) {
     app.quit();
 }
 
+const patientManager: PatientManager = new PatientManager();
+const deviceManager: DeviceManager = null;
 let win: BrowserWindow = null;
 const webusb = new usb.WebUSB({
     allowAllDevices: true

@@ -7,3 +7,8 @@ export type PatientDevice = {
 export type PatientDeviceMap = {
     [id: string]: PatientDevice;
 }
+
+export type UnknownDevice = {
+    id: string;
+    devicePath: string;
+}
