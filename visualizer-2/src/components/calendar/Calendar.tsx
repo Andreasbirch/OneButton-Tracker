@@ -45,6 +45,10 @@ function Calendar({selectedDeviceId}: {selectedDeviceId: string}) {
         setScope(Scope.Day);
     };
 
+    const handleSelectedSessionsUpdate = (sessionsIndices: number[]) => {
+        setSelectedSessions(sessionsIndices.map(i => patientData.sessions[i]));
+    }
+
     const colRef = useRef<HTMLDivElement>(null); // Ref to access Col's DOM node
     const [colWidth, setColWidth] = useState<number>(0); // State to store width
 
@@ -73,7 +77,7 @@ function Calendar({selectedDeviceId}: {selectedDeviceId: string}) {
         <Container>
             <Row>
                 <Col md={2}>
-                    <SideBar></SideBar>
+                    <SideBar sessionIndices={patientData.sessions.map((_,i) => i)} onSessionsSelected={handleSelectedSessionsUpdate}></SideBar>
                 </Col>
                 <Col>
                     <CalendarYear
