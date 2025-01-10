@@ -10,6 +10,7 @@ function SideBar({sessionIndices, onSessionsSelected}:{sessionIndices: number[],
             ...prevState,
             [buttonKey]: !prevState[buttonKey],
         }));
+        setSessions(Object.keys(selected).filter((o:any) => selected[o]).map(o => parseInt(o)));
         onSessionsSelected(sessions);
     };
     
