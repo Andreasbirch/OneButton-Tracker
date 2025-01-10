@@ -81,26 +81,6 @@ function Devices({handleDeviceSelected}: {handleDeviceSelected: (deviceId: strin
                             <h2 style={{ marginBottom: '30px' }}>Create Device</h2>
                             {selectedDevice && (
                                 <Form>
-                                    <FormGroup as={Row} controlId="deviceId">
-                                        <Form.Label column sm={4}>Device ID</Form.Label>
-                                        <Col sm={8}>
-                                            <Form.Control
-                                                type="text"
-                                                value={selectedDevice.id}
-                                                readOnly
-                                            />
-                                        </Col>
-                                    </FormGroup>
-                                    <FormGroup as={Row} controlId="devicePath">
-                                        <Form.Label column sm={4}>Device Path</Form.Label>
-                                        <Col sm={8}>
-                                            <Form.Control
-                                                type="text"
-                                                value={selectedDevice.devicePath}
-                                                readOnly
-                                            />
-                                        </Col>
-                                    </FormGroup>
                                     <FormGroup as={Row} controlId="patientName">
                                         <Form.Label column sm={4}>Patient Name</Form.Label>
                                         <Col sm={8}>
