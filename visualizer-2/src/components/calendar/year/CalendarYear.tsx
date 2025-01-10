@@ -1,15 +1,16 @@
 import React, { useState } from 'react';
 import { getColor, getDaysArray, getWeek, groupBy } from '../helpers';
-import mockdatapresses from './../../../data/mock_data_presses.json';
 import { Button, ButtonGroup, Col, Container, Row, Table } from 'react-bootstrap';
 import { ChevronLeft, ChevronRight } from 'react-bootstrap-icons';
 import { Scope } from '../../../models/enums';
+import { Session } from '../../../models/patients/PatientData';
 
 type CalendarYearProps = {
     scope: Scope;
     selectedMonth: number | null;
     selectedWeek: number | null;
     selectedDate: number | null;
+    sessions: Session[];
     onMonthClick: (month: number) => void;
     onWeekClick: (year: number, week: number) => void;
     onDateClick: (year: number, month: number, date: number) => void;
@@ -56,12 +57,11 @@ function GetCalendar(year: number) {
     return [calendar, weekSpans];
 }
 
-function CalendarYear({scope, selectedMonth, selectedWeek, selectedDate, onMonthClick, onWeekClick, onDateClick}: CalendarYearProps) {
+function CalendarYear({scope, selectedMonth, selectedWeek, selectedDate, sessions, onMonthClick, onWeekClick, onDateClick}: CalendarYearProps) {
     console.log(scope, selectedMonth, selectedWeek, selectedDate);
     const [year, setYear] = useState(new Date().getFullYear())
 
-    let data = mockdatapresses.map(o => ({timestamp: new Date(o.timestamp), duration: o.duration}))
-        .filter(o => o.timestamp.getFullYear() == year);
+    let data = sessions.flatMap(o => o.presses).filter(o => o.timestamp.getFullYear() == year);
     let groups = groupBy(data, o => o.timestamp.toISOString().split('T')[0]);
     let [calendar, weekSpans] = GetCalendar(year);
     

@@ -1,22 +1,23 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { getWeek, timeFloat } from '../helpers';
-import mockdatapresses from './../../../data/mock_data_presses.json';
 import * as Plot from "@observablehq/plot";
 import { Button, ButtonGroup, Col, Container, Row } from 'react-bootstrap';
 import { ChevronLeft, ChevronRight } from 'react-bootstrap-icons';
+import { Session } from '../../../models/patients/PatientData';
 
 type CalendarWeekProps = {
   year: number,
   _week: number,
   width: number
+  sessions: Session[];
 }
 
-function CalendarWeek({year, _week, width}: CalendarWeekProps) {
+function CalendarWeek({year, _week, width, sessions}: CalendarWeekProps) {
   const [week, setWeek] = useState(_week);
   
-  let _data = mockdatapresses.map(o => ({timestamp: new Date(o.timestamp), duration: o.duration}))
-  .filter(o => o.timestamp.getFullYear() == year)
-  .filter(o => getWeek(o.timestamp) == week);
+  let _data = sessions.flatMap(o => o.presses)
+    .filter(o => o.timestamp.getFullYear() == year)
+    .filter(o => getWeek(o.timestamp) == week);
 
     const containerRef = useRef<any>(null);
     const [data, setData] = useState(_data);

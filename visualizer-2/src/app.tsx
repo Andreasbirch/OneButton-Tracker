@@ -6,14 +6,15 @@ import Calendar from './components/calendar/Calendar';
 ipcRenderer.send('send-message', 'ping');
 
 function App() {
-    const [deviceSelected, setDeviceSelected] = useState(false);
-    function handleDeviceSelected() {
-        setDeviceSelected(true);
+    // const [deviceSelected, setDeviceSelected] = useState(false);
+    const [selectedDeviceId, setSelectedDeviceId] = useState<string>(null);
+    function handleDeviceSelected(deviceId:string) {
+        setSelectedDeviceId(deviceId);
     }
 
     return <>
         {
-            deviceSelected ? <Calendar></Calendar> : <Devices handleDeviceSelected={handleDeviceSelected}></Devices>
+            selectedDeviceId ? <Calendar selectedDeviceId={selectedDeviceId} ></Calendar> : <Devices handleDeviceSelected={handleDeviceSelected}></Devices>
         }
     </>
 }

@@ -3,7 +3,7 @@ export type Gaps = {
     end: Date;
 };
 
-export type Presses = {
+export type Press = {
     timestamp: Date;
     duration: Number;
 }
@@ -16,7 +16,7 @@ export type Activity = {
 }
 
 export type Session = {
-    presses: Presses[];
+    presses: Press[];
     gaps: Gaps[];
     activities: Activity[];
 }

@@ -1,24 +1,24 @@
 import React, { useEffect, useRef, useState } from 'react';
-import mockdatapresses from './../../../data/mock_data_presses.json';
-import mock_data_gaps from './../../../data/mock_data_gaps.json';
 import * as Plot from "@observablehq/plot";
 import { Button, ButtonGroup, Col, Container, Row } from 'react-bootstrap';
 import { ChevronLeft, ChevronRight } from 'react-bootstrap-icons';
 import { GetGapIntersectForDate } from '../helpers';
+import { Gaps, Press, Session } from '../../../models/patients/PatientData';
 
 type CalendarDayProps = {
   year: number, 
   month: number, 
   _date: number, 
   width: number
+  sessions: Session[];
 }
 
 // https://observablehq.com/plot/getting-started
-function CalendarDay({year, month, _date, width}:CalendarDayProps){
+function CalendarDay({year, month, _date, width, sessions}:CalendarDayProps){
     const [date, setDate] = useState(_date);
     const containerRef = useRef<any>(null);
-    const [data, setData] = useState<{timestamp: Date, duration: number}[]>([]);
-    const [nonWearData, setNonWearData] = useState<{start: Date, end: Date}[]>([]);
+    const [data, setData] = useState<Press[]>([]);
+    const [nonWearData, setNonWearData] = useState<Gaps[]>([]);
 
     useEffect(() => {
         setDate(_date);
@@ -26,10 +26,12 @@ function CalendarDay({year, month, _date, width}:CalendarDayProps){
 
     useEffect(() => {
         let targetDate = new Date(year, month, date);
-        let _nonWearData = GetGapIntersectForDate(mock_data_gaps.map(o => ({start: new Date(o.start), end: new Date(o.end)})), targetDate);
+        let dataGaps = sessions.flatMap(o => o.gaps);
+        let presses = sessions.flatMap(o => o.presses);
+        console.log(dataGaps, presses);
+        let _nonWearData = GetGapIntersectForDate(dataGaps.map(o => ({start: new Date(o.start), end: new Date(o.end)})), targetDate);
         console.log(_nonWearData);
-        let _data = mockdatapresses
-            .map(o => ({ timestamp: new Date(o.timestamp), duration: o.duration }))
+        let _data = presses
             .filter(o => o.timestamp.getFullYear() === year)
             .filter(o => o.timestamp.getMonth() === month)
             .filter(o => o.timestamp.getDate() === date);
@@ -40,7 +42,7 @@ function CalendarDay({year, month, _date, width}:CalendarDayProps){
         let emptyFirst = { timestamp: firstDate, duration: 0 };
 
         let lastDate = new Date(Date.UTC(tempFirstDate.getFullYear(), tempFirstDate.getMonth(), tempFirstDate.getDate(), 23, 59, 59));
-        let emptyLast = { timestamp: lastDate, duration: 0 };
+        let emptyLast:Press = { timestamp: lastDate, duration: 0 };
 
         setData([emptyFirst, ..._data, emptyLast]); // Update state with new data
         setNonWearData(_nonWearData);

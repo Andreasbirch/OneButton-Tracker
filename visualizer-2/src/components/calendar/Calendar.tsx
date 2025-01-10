@@ -1,29 +1,30 @@
 import React, { useEffect, useRef, useState } from 'react';
 import CalendarMonth from './month/CalendarMonth';
 import CalendarWeek from './week/CalendarWeek';
-import CalendarDay from './day/CalendarDay';
 import CalendarYear from './year/CalendarYear';
 import CalendarDayHorizontal from './day/CalendarDayHorizontal';
 import { Col, Container, Row } from 'react-bootstrap';
 import { Scope } from '../../models/enums';
-
-type Props = {
-    year?: number, 
-    month?: number,
-    week?: number,
-    day?: number
-}
+import SideBar from '../sidebar/sideBar';
+import { PatientManager } from '../../managers/PatientManager';
+import { Session } from '../../models/patients/PatientData';
 
 
-function Calendar() {
+function Calendar({selectedDeviceId}: {selectedDeviceId: string}) {
     let today = new Date();
     let year = today.getFullYear();
     
+    const patientDataManager = new PatientManager();
+    const patientData = patientDataManager.getPatientData(selectedDeviceId);
+
+    console.log("Patient data for id " + selectedDeviceId, patientData);
+
     const [scope, setScope] = useState<Scope>(Scope.Year);
     const [selectedYear, setSelectedYear] = useState<number | null>(year);
     const [selectedMonth, setSelectedMonth] = useState<number | null>(null);
     const [selectedWeek, setSelectedWeek] = useState<number | null>(null);
     const [selectedDay, setSelectedDay] = useState<number | null>(null);
+    const [selectedSessions, setSelectedSessions] = useState<Session[]>(patientData.sessions);
 
     const handleMonthClick = (month: number) => {
         setSelectedMonth(month);
@@ -69,20 +70,28 @@ function Calendar() {
                 </Col>
             </Row>
         </Container>
-        <CalendarYear
-            onMonthClick={handleMonthClick}
-            onWeekClick={handleWeekClick}
-            onDateClick={handleDateClick}
-            scope={scope}
-            selectedMonth={selectedMonth}
-            selectedWeek={selectedWeek}
-            selectedDate={selectedDay}></CalendarYear>
-            <>
-                { scope == Scope.Month && selectedMonth && (<CalendarMonth year={year} _month={selectedMonth} onWeekClick={handleWeekClick} onDateClick={handleDateClick}></CalendarMonth>)}
-                { scope == Scope.Week && selectedWeek && (<CalendarWeek year={year} _week={selectedWeek} width={colWidth}></CalendarWeek>)}
-                {/* {selectedYear && selectedMonth && selectedDay && (<CalendarDay year={year} month={selectedMonth} date={selectedDay}></CalendarDay>)} */}
-                { scope == Scope.Day && selectedYear && selectedMonth && selectedDay && (<CalendarDayHorizontal year={year} month={selectedMonth} _date={selectedDay} width={colWidth}></CalendarDayHorizontal>)}
-            </>
+        <Container>
+            <Row>
+                <Col md={2}>
+                    <SideBar></SideBar>
+                </Col>
+                <Col>
+                    <CalendarYear
+                        onMonthClick={handleMonthClick}
+                        onWeekClick={handleWeekClick}
+                        onDateClick={handleDateClick}
+                        scope={scope}
+                        selectedMonth={selectedMonth}
+                        selectedWeek={selectedWeek}
+                        selectedDate={selectedDay}
+                        sessions={selectedSessions}></CalendarYear>
+                        { scope == Scope.Month && selectedMonth && (<CalendarMonth year={year} _month={selectedMonth} sessions={selectedSessions} onWeekClick={handleWeekClick} onDateClick={handleDateClick}></CalendarMonth>)}
+                        { scope == Scope.Week && selectedWeek && (<CalendarWeek year={year} _week={selectedWeek} width={colWidth} sessions={selectedSessions}></CalendarWeek>)}
+                        {/* {selectedYear && selectedMonth && selectedDay && (<CalendarDay year={year} month={selectedMonth} date={selectedDay}></CalendarDay>)} */}
+                        { scope == Scope.Day && selectedYear && selectedMonth && selectedDay && (<CalendarDayHorizontal year={year} month={selectedMonth} _date={selectedDay} width={colWidth} sessions={selectedSessions}></CalendarDayHorizontal>)}
+                </Col>
+            </Row>
+        </Container>
     </>
 }
 

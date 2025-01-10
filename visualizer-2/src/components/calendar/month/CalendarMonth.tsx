@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { groupBy, getWeek, getColor } from '../helpers';
-import mockdatapresses from './../../../data/mock_data_presses.json';
 import { Button, ButtonGroup, Col, Container, Row } from 'react-bootstrap';
 import { ChevronLeft, ChevronRight } from 'react-bootstrap-icons';
+import { Session } from '../../../models/patients/PatientData';
 
 type CalendarMonthProps = {
     year: number;
     _month: number;
+    sessions: Session[];
     onWeekClick: (year:number, week: number) => void;
     onDateClick: (year: number, month: number, date: number) => void;
 }
@@ -31,7 +32,7 @@ function GetCalendar(year: number, month: number) {
     return weeks;
 }
 
-function CalendarMonth({year, _month, onWeekClick, onDateClick}:CalendarMonthProps) {
+function CalendarMonth({year, _month, sessions, onWeekClick, onDateClick}:CalendarMonthProps) {
     const [month, setMonth] = useState(_month);
     const [calendar, setCalendar] = useState<Record<string, (Date)[]>>({});
     const [groups, setGroups] = useState<Record<string, any>>({});
@@ -39,7 +40,7 @@ function CalendarMonth({year, _month, onWeekClick, onDateClick}:CalendarMonthPro
             setMonth(_month);
         }, [_month]);
     useEffect(() => {
-        var data = mockdatapresses.map(o => ({timestamp: new Date(o.timestamp), duration: o.duration}))
+        var data = sessions.flatMap(o => o.presses)
                 .filter(o => o.timestamp.getFullYear() == year)
                 .filter(o => o.timestamp.getMonth() == month);
         setGroups(groupBy(data, o => o.timestamp.toISOString().split('T')[0]));

@@ -1,4 +1,4 @@
-import { PatientData, PatientDataMap, Presses, Session } from "../models/patients/PatientData";
+import { PatientData, PatientDataMap, Press, Session } from "../models/patients/PatientData";
 import { IPatientDataManager, IPatientDeviceManager } from "./IPatientManager";
 import { PatientDevice, PatientDeviceMap } from "../models/patients/PatientDevice";
 
@@ -18,7 +18,7 @@ const convertToMap = (data: any): PatientDataMap => {
                 end: new Date(gap.end),
             }));
 
-            const convertedPresses = session.presses.map((press: any): Presses => ({
+            const convertedPresses = session.presses.map((press: any): Press => ({
                 timestamp: new Date(press.timestamp),
                 duration: press.duration,
             }));
