@@ -24,6 +24,7 @@ const convertToMap = (data: any): PatientDataMap => {
             }));
 
             return {
+                id: session.id,
                 gaps: convertedGaps,
                 presses: convertedPresses,
                 activities: session.activities,

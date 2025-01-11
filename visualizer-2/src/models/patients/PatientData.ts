@@ -16,6 +16,7 @@ export type Activity = {
 }
 
 export type Session = {
+    id: number;
     presses: Press[];
     gaps: Gaps[];
     activities: Activity[];

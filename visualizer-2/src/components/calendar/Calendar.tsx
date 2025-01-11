@@ -45,8 +45,9 @@ function Calendar({selectedDeviceId}: {selectedDeviceId: string}) {
         setScope(Scope.Day);
     };
 
-    const handleSelectedSessionsUpdate = (sessionsIndices: number[]) => {
-        setSelectedSessions(sessionsIndices.map(i => patientData.sessions[i]));
+    const handleSelectedSessionsUpdate = (sessions: Session[]) => {
+        console.log("Selected sessions", sessions);
+        setSelectedSessions(sessions);
     }
 
     const colRef = useRef<HTMLDivElement>(null); // Ref to access Col's DOM node
@@ -77,7 +78,7 @@ function Calendar({selectedDeviceId}: {selectedDeviceId: string}) {
         <Container>
             <Row>
                 <Col md={2}>
-                    <SideBar sessionIndices={patientData.sessions.map((_,i) => i)} onSessionsSelected={handleSelectedSessionsUpdate}></SideBar>
+                    <SideBar _sessions={patientData.sessions} onSessionsSelected={handleSelectedSessionsUpdate}></SideBar>
                 </Col>
                 <Col>
                     <CalendarYear
