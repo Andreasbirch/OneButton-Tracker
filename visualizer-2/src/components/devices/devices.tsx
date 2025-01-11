@@ -5,6 +5,7 @@ import KnownDevice from './knownDevices';
 import { PatientDevice, UnknownDevice } from '../../models/patients/PatientDevice';
 import UnknownDeviceComponent from './unknownDevices';
 import { PatientManager } from '../../managers/PatientManager';
+import deviceImg from '../../data/plug-in-icon.png';
 ipcRenderer.send('available-devices-request', '');
 
 enum ViewType {
@@ -141,7 +142,15 @@ function Devices({handleDeviceSelected}: {handleDeviceSelected: (deviceId: strin
                         return <>
                             <h2 style={{ marginBottom: '30px' }}>Devices</h2>
                             {isEmptyDeviceList ? (
-                                <p>No devices found.</p> // Show this message if no devices are found
+                                // Show this message if no devices are found
+                                <Container>
+                                    <Row>
+                                        <Col>
+                                            <p>Plug in a patient's device to get started.</p> 
+                                            <img src={deviceImg} className="img-fluid border"></img>{/*Screenshot from here: https://arstechnica.com/gadgets/2014/08/a-brief-history-of-usb-what-it-replaced-and-what-has-failed-to-replace-it/*/}
+                                        </Col>
+                                    </Row>
+                                </Container>
                             ) : (
                                 <>
                                     {patientDevice?.map((d, i) => (
