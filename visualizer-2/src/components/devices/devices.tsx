@@ -5,6 +5,7 @@ import KnownDevice from './knownDevices';
 import { PatientDevice, UnknownDevice } from '../../models/patients/PatientDevice';
 import UnknownDeviceComponent from './unknownDevices';
 import { PatientManager } from '../../managers/PatientManager';
+// @ts-ignore
 import deviceImg from '../../data/plug-in-icon.png';
 ipcRenderer.send('available-devices-request', '');
 
