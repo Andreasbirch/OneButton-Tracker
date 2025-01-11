@@ -5,7 +5,7 @@ export type Gaps = {
 
 export type Press = {
     timestamp: Date;
-    duration: Number;
+    duration: number;
 }
 
 export type ActivityTypes = "nonwear" | "still" | "moving" | "in vehicle";
@@ -15,11 +15,18 @@ export type Activity = {
     activity: ActivityTypes;
 }
 
+export type ActivitySpan = {
+    start: Date;
+    end: Date;
+    activity: ActivityTypes;
+}
+
 export type Session = {
     id: number;
     presses: Press[];
     gaps: Gaps[];
     activities: Activity[];
+    activitiesSpan: ActivitySpan[];
 }
 
 export type PatientData = {

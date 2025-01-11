@@ -28,6 +28,7 @@ const convertToMap = (data: any): PatientDataMap => {
                 gaps: convertedGaps,
                 presses: convertedPresses,
                 activities: session.activities,
+                activitiesSpan: session.activitiesSpan
             };
         });
 

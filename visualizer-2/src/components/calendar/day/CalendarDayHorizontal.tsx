@@ -2,8 +2,8 @@ import React, { useEffect, useRef, useState } from 'react';
 import * as Plot from "@observablehq/plot";
 import { Button, ButtonGroup, Col, Container, Row } from 'react-bootstrap';
 import { ChevronLeft, ChevronRight } from 'react-bootstrap-icons';
-import { GetGapIntersectForDate } from '../helpers';
-import { Gaps, Press, Session } from '../../../models/patients/PatientData';
+import { getColor, GetGapIntersectForDate } from '../helpers';
+import { ActivitySpan, ActivityTypes, Gaps, Press, Session } from '../../../models/patients/PatientData';
 
 type CalendarDayProps = {
   year: number, 
@@ -13,12 +13,26 @@ type CalendarDayProps = {
   sessions: Session[];
 }
 
+const activityColorMap:{[id:string]:string} = {
+  'nonwear': '#eee',
+  'still': '#4269d0',
+  'moving': '#6bc5b0',
+  'in vehicle': '#ff8ab7'
+}
+
+type DataPoint = {
+  timestamp: Date,
+  duration: number,
+  activity: ActivityTypes
+}
+
 // https://observablehq.com/plot/getting-started
 function CalendarDay({year, month, _date, width, sessions}:CalendarDayProps){
     const [date, setDate] = useState(_date);
     const containerRef = useRef<any>(null);
     const [data, setData] = useState<Press[]>([]);
     const [nonWearData, setNonWearData] = useState<Gaps[]>([]);
+    const [activitiesSpan, setActivitiesSpan] = useState<ActivitySpan[]>([]);
 
     useEffect(() => {
         setDate(_date);
@@ -28,10 +42,13 @@ function CalendarDay({year, month, _date, width, sessions}:CalendarDayProps){
         let targetDate = new Date(year, month, date);
         let dataGaps = sessions.flatMap(o => o.gaps);
         let presses = sessions.flatMap(o => o.presses);
-        console.log(dataGaps, presses);
-        let _nonWearData = GetGapIntersectForDate(dataGaps.map(o => ({start: new Date(o.start), end: new Date(o.end)})), targetDate);
-        console.log(_nonWearData);
-        let _data = presses
+        let activities = sessions.flatMap(o => o.activities);
+        let activitySpans = sessions.flatMap(o => o.activitiesSpan);
+        let _nonWearData = GetGapIntersectForDate<Gaps>(dataGaps, targetDate);
+        let _activitiesGaps = GetGapIntersectForDate<ActivitySpan>(activitySpans, targetDate);
+        
+        let _data: DataPoint[] = presses
+            .map((o,i) => ({...o, activity: activities[i].activity}))
             .filter(o => o.timestamp.getFullYear() === year)
             .filter(o => o.timestamp.getMonth() === month)
             .filter(o => o.timestamp.getDate() === date);
@@ -46,6 +63,7 @@ function CalendarDay({year, month, _date, width, sessions}:CalendarDayProps){
 
         setData([emptyFirst, ..._data, emptyLast]); // Update state with new data
         setNonWearData(_nonWearData);
+        setActivitiesSpan(_activitiesGaps);
     }, [year, month, date]);
 
     useEffect(() => {
@@ -62,15 +80,25 @@ function CalendarDay({year, month, _date, width, sessions}:CalendarDayProps){
           grid: true
         },
         color: {
-          scheme: "Oranges"
+          // scheme: "Oranges",
+          legend: true,
+          scheme: 'Category10',
+          unknown: '#eee',
         },
         marks: [
+          Plot.barX(activitiesSpan, {
+            x1: 'start',
+            x2: 'end',
+            fill: 'activity'
+          }),
           Plot.ruleX(data, {
-            x: (d) => d.timestamp,
-            stroke: "duration",
+            x: (d:DataPoint) => d.timestamp,
+            // stroke: "activity",
+            // fill: 'activity',
+            // stroke: (d:DataPoint) => activityColorMap[d.activity],
             strokeWidth: 4,
             // lay the days out in the x direction based on day of the week
-            fill: "duration",
+            // fill: (d:DataPoint) => activityColorMap[d.activity],
             title: (d) => d.timestamp,
             y: (d) => d.duration / 1000
           }),
@@ -78,15 +106,13 @@ function CalendarDay({year, month, _date, width, sessions}:CalendarDayProps){
             x1: 'start',
             x2: 'end',
             fill: 'lightgray'
-          })
-        ]
+          }),
+        ],
       });
       containerRef.current.append(plot);
         
       return () => plot.remove();
     }, [data]); // Run on data change
-
-        //return data.filter(o => o.date.getDay() == 4)
 
     return <Container>
       <Row>

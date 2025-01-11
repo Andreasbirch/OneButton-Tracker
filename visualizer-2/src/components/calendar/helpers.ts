@@ -53,7 +53,11 @@ export function getColor(groups: Record<string, Press[]>, date: Date): string | 
 }
 
 // Trims gaps which the target date starts in, ends in, or if the gap is wholly within said date
-export function GetGapIntersectForDate(gaps: {start: Date, end: Date}[], date: Date): {start: Date, end:Date}[] {
+// https://www.typescriptlang.org/docs/handbook/2/generics.html
+export function GetGapIntersectForDate<T extends { start: Date; end: Date }>(
+  gaps: T[],
+  date: Date
+): T[] {
   const targetDate = new Date(date);
   const nextDate = new Date(targetDate);
   nextDate.setDate(nextDate.getDate() + 1);
@@ -78,6 +82,7 @@ export function GetGapIntersectForDate(gaps: {start: Date, end: Date}[], date: D
           const adjustedEnd = gapEnd > endOfDay ? endOfDay : gapEnd;
 
           return {
+              ...gap,
               start: adjustedStart,
               end: adjustedEnd
           };
