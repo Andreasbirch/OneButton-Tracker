@@ -13,19 +13,19 @@ import busio
 import math
 from analogio import AnalogIn
 
-TILT_X_1 = DigitalInOut(board.D6) # Right
+TILT_X_1 = DigitalInOut(board.D6)
 TILT_X_1.direction = Direction.INPUT
 TILT_X_1.pull = Pull.UP
 
-TILT_X_2 = DigitalInOut(board.D13) # Left
+TILT_X_2 = DigitalInOut(board.D13)
 TILT_X_2.direction = Direction.INPUT
 TILT_X_2.pull = Pull.UP
 
-TILT_Y_1 = DigitalInOut(board.D5) # Backward
+TILT_Y_1 = DigitalInOut(board.D5)
 TILT_Y_1.direction = Direction.INPUT
 TILT_Y_1.pull = Pull.UP
 
-TILT_Y_2 = DigitalInOut(board.D9) # Forward
+TILT_Y_2 = DigitalInOut(board.D9)
 TILT_Y_2.direction = Direction.INPUT
 TILT_Y_2.pull = Pull.UP
 
