@@ -10,14 +10,6 @@ from adafruit_bno08x.i2c import BNO08X_I2C
 from adafruit_bno08x import BNO_REPORT_ACCELEROMETER, BNO_REPORT_STABILITY_CLASSIFIER
 import busio
 from analogio import AnalogIn
-from os import stat
-
-# Terminate the program if we're too close to full storage space
-try:
-    if stat("/data")[6] > 7_000_000:
-        exit()
-except OSError:
-    pass
 
 rtc_alarm = alarm.pin.PinAlarm(board.D10, value=False, pull=True, edge=True)
 
@@ -68,9 +60,9 @@ for i in range(5): # Take 5 samples
 
     data.append([
         timestamp_unix,
-        round(x, 2),
-        round(y, 2),
-        round(z, 2),
+        x,
+        y,
+        z,
         stability,
         int(TILT_X_1.value),
         int(TILT_Y_1.value),
@@ -80,13 +72,31 @@ for i in range(5): # Take 5 samples
 
 
 ## DS3231 section
+print(rtc.alarm1)
+alrm1 = rtc.alarm1
+a1 = alrm1[0]
+t1 = alrm1[1]
+print("{}-{}-{}:{}:{}:{}   {}   {}   {}".format(a1.tm_year, a1.tm_mon, a1.tm_mday, a1.tm_hour, a1.tm_min, a1.tm_sec, t1, rtc.alarm1_status, rtc.alarm1_interrupt))
+
+alrm2 = rtc.alarm2 
+a2 = alrm2[0]
+t2 = alrm2[1]
+print("{}-{}-{}:{}:{}:{}   {}   {}   {}".format(a2.tm_year, a2.tm_mon, a2.tm_mday, a2.tm_hour, a2.tm_min, a2.tm_sec, t2, rtc.alarm2_status, rtc.alarm2_interrupt))
+
+
+time_alarm = rtc.alarm1_status
 battery_alarm = rtc.alarm2_status
+# Suspend alarm from interrupting
+
+rtc.alarm1_interrupt = False
+rtc.alarm2_interrupt = False
+rtc.alarm1_status = False
+rtc.alarm2_status = False
 
 # If alarm 2 is alarming, we log battery
 if battery_alarm:
-    rtc.alarm2 = (time.struct_time(2017, 1, 1, 12, timestamp.tm_min + 30, 0, 0, -1, -1), "hourly")
+    rtc.alarm2 = (time.struct_time((timestamp.tm_year, timestamp.tm_mon, timestamp.tm_mday, timestamp.tm_hour, timestamp.tm_min + 30, timestamp.tm_sec, 0, -1, -1)), "hourly")
     rtc.alarm2_interrupt = True
-    rtc.alarm2_status = False
     data.append([(AnalogIn(board.A2).value * 3.3) / 65536 * 2])
 ## End DS3231 section
 
@@ -100,7 +110,7 @@ y_alarm = None
 wakealarm = alarm.wake_alarm
 BUTTON.deinit()
 button_alarm = alarm.pin.PinAlarm(board.D12, value=False, pull=True, edge=False)
-if rtc.alarm1_status:
+if time_alarm:
     print("Woke from sleep")
     if TILT_X_1.value: # LEFT
         TILT_X_2.deinit()
@@ -116,15 +126,13 @@ if rtc.alarm1_status:
         TILT_Y_1.deinit()
         y_alarm = alarm.pin.PinAlarm(board.D5, value=False, pull=True, edge=True)
     time.sleep(.2)
-
-    # Set alarm
-    rtc.alarm1_interrupt = False
-    rtc.alarm1_status = False
-
     alarm.exit_and_deep_sleep_until_alarms(rtc_alarm, x_alarm, y_alarm, button_alarm)
 else:
+    print("Woke from movement")
     # Set timer 1 minute ahead
-    rtc.alarm1 = (time.struct_time((2017, 1, 1, 12, timestamp.tm_hour, timestamp.tm_min + 1, timestamp.tm_sec, -1, -1)), "minutely")
+    rtc.alarm1 = (time.struct_time((2017, 1, 1, 12, 10, timestamp.tm_min + 1, 0, -1, -1)), "hourly")
+    rtc.alarm1 = (time.struct_time((timestamp.tm_year, timestamp.tm_mon, timestamp.tm_mday, timestamp.tm_hour, timestamp.tm_min + 1, timestamp.tm_sec + 60, 0, -1, -1)), "minutely")
+    print(rtc.alarm1)
+    # Enable timer interrups:
     rtc.alarm1_interrupt = True
-    rtc.alarm1_status = True
     alarm.exit_and_deep_sleep_until_alarms(rtc_alarm, button_alarm)

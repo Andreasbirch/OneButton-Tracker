@@ -1,17 +1,9 @@
 import board
 import storage
-from os import stat
 from analogio import AnalogIn
 
 usb_voltage = AnalogIn(board.A1)
 
-# Terminate the program if we're too close to full storage space
-try:
-    if stat("/data")[6] > 7_000_000:
-        exit()
-except OSError:
-    pass
- 
 def get_voltage(pin):
     return (pin.value * 3.3) / 65536 * 2
 
