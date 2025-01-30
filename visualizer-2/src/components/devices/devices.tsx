@@ -4,7 +4,7 @@ import { Button, Col, Container, Form, FormGroup, Row } from 'react-bootstrap';
 import KnownDevice from './knownDevices';
 import { PatientDevice, UnknownDevice } from '../../models/patients/PatientDevice';
 import UnknownDeviceComponent from './unknownDevices';
-import { PatientManager } from '../../managers/PatientManager';
+import { PatientRepository } from '../../managers/PatientRepository';
 // @ts-ignore
 import deviceImg from '../../data/plug-in-icon.png';
 ipcRenderer.send('available-devices-request', '');
@@ -16,7 +16,7 @@ enum ViewType {
 }
 
 function Devices({handleDeviceSelected}: {handleDeviceSelected: (deviceId: string) => void}) {
-    const patientManager = new PatientManager();
+    const patientManager = new PatientRepository();
 
     const [patientDevice, setPatientDevice] = useState<PatientDevice[]>([]);
     const [unknownDevices, setUnknownDevices] = useState<UnknownDevice[]>([]);

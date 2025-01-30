@@ -1,6 +1,6 @@
 import { app, BrowserWindow, ipcMain } from 'electron';
-import { PatientManager } from './managers/PatientManager';
-import { DeviceManager } from './managers/DeviceManager';
+import { PatientRepository } from './managers/PatientRepository';
+import { DeviceService } from './managers/DeviceService';
 import { UnknownDevice } from './models/patients/PatientDevice';
 const usb = require('usb')
 
@@ -19,8 +19,8 @@ if (require('electron-squirrel-startup')) {
     app.quit();
 }
 
-const patientManager: PatientManager = new PatientManager();
-const deviceManager: DeviceManager = new DeviceManager();
+const patientManager: PatientRepository = new PatientRepository();
+const deviceManager: DeviceService = new DeviceService();
 let win: BrowserWindow = null;
 const webusb = new usb.WebUSB({
     allowAllDevices: true

@@ -1,14 +1,14 @@
 import { PatientDevice, PatientDeviceMap } from '../models/patients/PatientDevice';
 import { PatientData, PatientDataMap, Session } from '../models/patients/PatientData';
 
-export type IPatientDeviceManager = {
+export type IPatientDeviceRepository = {
   getPatientDeviceMap: () => PatientDeviceMap;
   getPatientDevice: (id: string) => PatientDevice;
   addPatientDevice: (patientDevice: PatientDevice) => void;
   updatePatientDevice: (patientDevice: PatientDevice) => void;
 }
 
-export type IPatientDataManager = {
+export type IPatientDataRepository = {
   getPatientDataMap: () => PatientDataMap;
   getPatientData: (id: string) => PatientData;
   addPatientData: (patientData: PatientData) => void;

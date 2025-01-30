@@ -1,5 +1,5 @@
 import { PatientData, PatientDataMap, Press, Session } from "../models/patients/PatientData";
-import { IPatientDataManager, IPatientDeviceManager } from "./IPatientManager";
+import { IPatientDataRepository, IPatientDeviceRepository } from "./IPatientRepository";
 import { PatientDevice, PatientDeviceMap } from "../models/patients/PatientDevice";
 
 import fs from 'fs';
@@ -41,8 +41,8 @@ const convertToMap = (data: any): PatientDataMap => {
     return result;
 };
 
-class PatientManager implements IPatientDeviceManager, IPatientDataManager {
-    // Patient Device Manager
+class PatientRepository implements IPatientDeviceRepository, IPatientDataRepository {
+    // Patient Device Repository
     getPatientDeviceMap = (): PatientDeviceMap => {
         var patientDeviceMap = JSON.parse(fs.readFileSync(patientDevicesPath, 'utf8')) as PatientDeviceMap;
         return patientDeviceMap;
@@ -74,7 +74,7 @@ class PatientManager implements IPatientDeviceManager, IPatientDataManager {
 
 
 
-    // Patient data manager
+    // Patient data Repository
     getPatientDataMap = () => {
         var patientDataMap = convertToMap(JSON.parse(fs.readFileSync(patientDataPath, 'utf8')));
         return patientDataMap;
@@ -112,4 +112,4 @@ class PatientManager implements IPatientDeviceManager, IPatientDataManager {
     }
 }
 
-export {PatientManager};
+export {PatientRepository};

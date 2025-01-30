@@ -6,7 +6,7 @@ import CalendarDayHorizontal from './day/CalendarDayHorizontal';
 import { Col, Container, Row } from 'react-bootstrap';
 import { Scope } from '../../models/enums';
 import SideBar from '../sidebar/sideBar';
-import { PatientManager } from '../../managers/PatientManager';
+import { PatientRepository } from '../../managers/PatientRepository';
 import { Session } from '../../models/patients/PatientData';
 
 
@@ -14,7 +14,7 @@ function Calendar({selectedDeviceId}: {selectedDeviceId: string}) {
     let today = new Date();
     let year = today.getFullYear();
     
-    const patientDataManager = new PatientManager();
+    const patientDataManager = new PatientRepository();
     const patientData = patientDataManager.getPatientData(selectedDeviceId);
 
     console.log("Patient data for id " + selectedDeviceId, patientData);

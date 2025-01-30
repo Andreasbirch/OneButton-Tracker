@@ -1,14 +1,14 @@
 import { Drive } from 'drivelist/js';
 import fs from 'fs';
 import path from 'path';
-import { IDeviceManager } from './IDeviceManager';
+import { IDeviceService as IDeviceService } from './IDeviceService';
 import { PatientDevice, UnknownDevice } from '../models/patients/PatientDevice';
-import { PatientManager } from './PatientManager';
+import { PatientRepository } from './PatientRepository';
 const usb = require('usb');
 const driveList = require('drivelist');
 
 
-export class DeviceManager implements IDeviceManager{
+export class DeviceService implements IDeviceService{
     handleDeviceConnected = async ():Promise<{ patientDevices: PatientDevice[]; unknownDevices: UnknownDevice[]; }> => {
         return this.getAvailableDevices();
     };
@@ -17,7 +17,7 @@ export class DeviceManager implements IDeviceManager{
         return this.getAvailableDevices();
     };
     
-    private patientManager = new PatientManager();
+    private patientManager = new PatientRepository();
     private webusb = new usb.WebUSB({ allowAllDevices: true });
 
     public getAvailableDevices = async ():Promise<{ patientDevices: PatientDevice[]; unknownDevices: UnknownDevice[]; }> => {
