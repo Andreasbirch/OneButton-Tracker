@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { ipcRenderer } from 'electron';
-import { Button, Col, Container, Form, FormGroup, Row } from 'react-bootstrap';
+import { Button, Col, Container, Form, FormGroup, Row, Spinner } from 'react-bootstrap';
 import KnownDevice from './knownDevices';
 import { PatientDevice, UnknownDevice } from '../../models/patients/PatientDevice';
 import UnknownDeviceComponent from './unknownDevices';
@@ -20,13 +20,23 @@ function Devices({handleDeviceSelected}: {handleDeviceSelected: (deviceId: strin
 
     const [patientDevice, setPatientDevice] = useState<PatientDevice[]>([]);
     const [unknownDevices, setUnknownDevices] = useState<UnknownDevice[]>([]);
+    const [loadingDevices, setLoadingDevices] = useState<string[]>([]);
     const [selectedDevice, setSelectedDevice] = useState<UnknownDevice | null>(null);
     const [currentView, setCurrentView] = useState(ViewType.default);
     const [patientName, setPatientName] = useState<string>(''); // State for capturing the user name
 
     useEffect(() => {
+        ipcRenderer.on('device-plugged-in', (e: Electron.IpcRendererEvent, args: string[]) => {
+            console.log('Received devices', args);
+            setLoadingDevices([...args]);
+        });
+
         ipcRenderer.on('available-devices-broadcast', (e: Electron.IpcRendererEvent, args: { patientDevices: PatientDevice[], unknownDevices: UnknownDevice[] }) => {
           console.log("Received devices from broadcast", args);
+          // Remove from loadingdevices, if the drivewas found somewhere
+          setLoadingDevices(loadingDevices.filter(o => !args?.patientDevices.find(d => d.id === o) 
+                                                    && !args?.unknownDevices.find(d => d.id === o)))
+          
           setPatientDevice(args?.patientDevices?? []);
           setUnknownDevices(args?.unknownDevices?? []);
           console.log(patientDevice, unknownDevices);
@@ -56,7 +66,7 @@ function Devices({handleDeviceSelected}: {handleDeviceSelected: (deviceId: strin
         }
     };
 
-    const isEmptyDeviceList = patientDevice.length === 0 && unknownDevices.length === 0;
+    const isEmptyDeviceList = loadingDevices.length === 0 && patientDevice.length === 0 && unknownDevices.length === 0;
     return (
         <Container
           fluid
@@ -154,6 +164,22 @@ function Devices({handleDeviceSelected}: {handleDeviceSelected: (deviceId: strin
                                 </Container>
                             ) : (
                                 <>
+                                    {loadingDevices?.map(o => {
+                                        return <Button
+                                            size="lg"
+                                            style={{
+                                                backgroundColor: 'lightgray',
+                                                width: '100%',
+                                                marginBottom: '20px',
+                                                display: 'flex',
+                                                justifyContent: 'space-between',
+                                                alignItems: 'center',
+                                                padding: '10px 20px'
+                                            }}>
+                                            <span>Reading device...</span>
+                                            <span><Spinner animation='border'/></span>
+                                        </Button>
+                                    })}
                                     {patientDevice?.map((d, i) => (
                                         <KnownDevice 
                                             key={`${i} ${d.id}`} 

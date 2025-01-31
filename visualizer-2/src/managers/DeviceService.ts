@@ -83,9 +83,27 @@ export class DeviceService implements IDeviceService{
             console.log(drive, dir);
             if (!dir || dir.length === 0)
                 return null;
-    
-            const matchingDevice = usbDevices.find(d => dir.some(o => path.parse(o).name === `.OBT${d.serialNumber}`));
-            console.log("matchingDevice", matchingDevice);
+            
+            // Get matching device for drive by reading boot_out.txt
+            let matchingDevice: any = null;
+            try {
+                const data = fs.readFileSync(`${mountpoint.path}/boot_out.txt`, "utf8");
+                const lines = data.split("\n");
+            
+                for (const line of lines) {
+                    if (line.startsWith("UID:")) {
+                        const uid = line.split(":")[1].trim();
+                        matchingDevice = usbDevices.find(d => d.serialNumber === uid);
+                        console.log("matchingDevice", matchingDevice);
+                        break;
+                    }
+                }
+            } catch (err) {
+                console.error("Error reading file:", err);
+            }
+
+            // const matchingDevice = usbDevices.find(d => dir.some(o => path.parse(o).name === `.OBT${d.serialNumber}`));
+            
             if (!matchingDevice)
                 return null;
     

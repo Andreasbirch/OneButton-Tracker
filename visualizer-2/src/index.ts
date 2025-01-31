@@ -51,7 +51,7 @@ const createWindow = (): void => {
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.whenReady().then(() => {
-    webusb.addEventListener('connect', handleDeviceConnected);
+    webusb.addEventListener('connect', handleDevicePluggedIn);
     webusb.addEventListener('disconnect', handleDeviceDisconnected);
     createWindow();
 
@@ -62,7 +62,7 @@ app.whenReady().then(() => {
 // for applications and their menu bar to stay active until the user quits
 // explicitly with Cmd + Q.
 app.on('window-all-closed', () => {
-    webusb.removeEventListener('connect', handleDeviceConnected);
+    webusb.removeEventListener('connect', handleDevicePluggedIn);
     webusb.removeEventListener('disconnect', handleDeviceConnected);
     if (process.platform !== 'darwin') {
         app.quit();
@@ -83,6 +83,13 @@ ipcMain.on('send-message', (event, arg) => {
     //execute tasks on behalf of renderer process 
     console.log(arg) // prints "ping"
 });
+
+const handleDevicePluggedIn = async () => {
+    let _usbDevices = await webusb.getDevices();
+    console.log('device plugged in', _usbDevices);
+    win.webContents.send('device-plugged-in', _usbDevices.map((o: any) => o.serialNumber))
+    handleDeviceConnected();
+}
 
 const handleDeviceConnected = async () => {
     console.log("HandleDeviceConnected");
