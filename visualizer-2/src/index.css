@@ -78,60 +78,92 @@
 
 
 
-
-/*Styling for yearly calendar*/
-#calendar-year .week-date:hover:not(:empty) {
-  font-weight: bold;
-  /*
-  outline: 2px solid black;
-  transform: scale(1.1); /*Slight zoom effect
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow for depth
-  */
-}
-
-#calendar-year .weeks > div:hover:not(:empty) {
-  font-weight: bold;
-}
-
-
-
-#calendar-year .months, .weeks, .week-row {
-  text-align: center;
-  gap: 2px 2px;
-}
-
-#calendar-year .weeks > div{
-  font-weight: lighter;
-  font-size: .75em;
-}
-
-#calendar-year .month-name {
-  text-align: left;
-  font-weight: bold;
-  border-bottom: 2px solid black;
-}
-
-#calendar-year .month-name:hover {
-    text-decoration: underline;
-}
-
-#calendar-year .week-date, .week-day {
+/* Calendar Year */
+/* Container for all months */
+.compact-calendar-container {
   display: flex;
-  align-items: center; /* Align content vertically */
-  justify-content: center; /* Align content horizontally */
-  height: 100%; /* Ensure full height of grid cell */
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2px; /* Minimize space between months */
 }
 
-#calendar-year .week-day {
+/* Calendar Month */
+.compact-calendar-month {
+  display: grid;
+  grid-template-rows: auto repeat(1, 1fr); /* Header row + 5 weeks */
+  gap: 1px;
+  padding: 1px;
+  margin: 0;
+  width: 80px; /* Make each month narrower */
+  font-size: 0.5em;
+}
+
+.compact-calendar-month .calendar-month {
+  margin-left: 10;
   font-weight: bold;
-  text-align: center;
+}
+.compact-calendar-month .calendar-month:hover {
+  text-decoration: underline;
 }
 
-#calendar-year .week-date {
-  font-size: .9em;
-  text-align: center;
+/* Week Row Styling */
+.compact-calendar-month .calendar-week {
+  display: grid;
+  grid-template-columns: auto repeat(7, 1fr);
+  align-items: stretch;
 }
 
-#calendar-year .week-date:empty {
-  background-color: transparent !important;
+/* Week Number Styling */
+.compact-calendar-month .week-number {
+  text-align: center;
+  font-weight: lighter;
+  padding: 1px;
+  font-size: 0.45em; /* Even smaller */
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* Week Days Styling */
+.compact-calendar-month .week-days {
+  display: contents;
+}
+
+/* Individual Day Cell */
+.compact-calendar-month .week-day {
+  text-align: center;
+  border: 1px solid #ddd;
+  min-height: 12px; /* Minimal height */
+  width: 12px; /* Fixed size */
+  padding: 1px;
+  font-size: 0.55em; /* Keep text readable */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  line-height: 1;
+}
+
+/* Empty Day Cells */
+.compact-calendar-month .week-day:empty {
+  background-color: #f4f4f4;
+}
+
+/* Calendar Header Styling */
+.compact-calendar-month .calendar-header {
+  display: grid;
+  grid-template-columns: auto repeat(7, 1fr);
+  text-align: center;
+  font-weight: bold;
+  gap: 1px;
+  font-size: 0.5em;
+}
+
+.compact-calendar-month .calendar-header div {
+  padding: 1px;
+}
+
+/* Hover Effects */
+.compact-calendar-month .week-day:hover:not(:empty) {
+  font-weight: bold;
+  transform: scale(1.02);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 }

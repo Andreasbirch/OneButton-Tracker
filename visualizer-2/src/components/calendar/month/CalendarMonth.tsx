@@ -47,7 +47,7 @@ function CalendarMonth({year, _month, sessions, onWeekClick, onDateClick}:Calend
         setCalendar(GetCalendar(year, month));
     }, [year, month]);
 
-    console.log(groups, calendar);
+    console.log("MONTH", groups, calendar);
     return <Container id='calendar-month'>
     <Row>
         <Col style={{display: 'flex', justifyContent: 'center'}}>
