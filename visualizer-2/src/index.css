@@ -144,7 +144,8 @@
 
 /* Empty Day Cells */
 .compact-calendar-month .week-day:empty {
-  background-color: #f4f4f4;
+  background-color: transparent;
+  border: none;
 }
 
 /* Calendar Header Styling */
