@@ -115,7 +115,7 @@ function CalendarDay({year, month, _date, width, sessions}:CalendarDayProps){
     }, [data]); // Run on data change
 
     return <Container>
-      <Row>
+      {/* <Row>
         <Col style={{display: 'flex', justifyContent: 'center'}}>
             <ButtonGroup style={{alignItems: 'center'}}>
                 <Button className='btn btn-light' onClick={() => setDate(date - 1)}><ChevronLeft></ChevronLeft></Button>
@@ -123,7 +123,7 @@ function CalendarDay({year, month, _date, width, sessions}:CalendarDayProps){
                 <Button className='btn btn-light' onClick={() => setDate(date + 1)}><ChevronRight></ChevronRight></Button>
             </ButtonGroup>
         </Col>
-      </Row>
+      </Row> */}
       <Row>
         <Col>
           <div ref={containerRef}/>

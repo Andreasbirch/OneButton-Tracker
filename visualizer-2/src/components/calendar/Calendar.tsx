@@ -84,6 +84,7 @@ function Calendar({selectedDeviceId}: {selectedDeviceId: string}) {
                         onDateClick={handleDateClick}
                         onSessionsSelected={handleSelectedSessionsUpdate}
                         scope={scope}
+                        setScope={setScope}
                         selectedMonth={selectedMonth}
                         selectedWeek={selectedWeek}
                         selectedDate={selectedDay}

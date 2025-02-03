@@ -49,7 +49,7 @@ function CalendarMonth({year, _month, sessions, onWeekClick, onDateClick}:Calend
 
     console.log("MONTH", groups, calendar);
     return <Container id='calendar-month'>
-    <Row>
+    {/* <Row>
         <Col style={{display: 'flex', justifyContent: 'center'}}>
             <ButtonGroup style={{alignItems: 'center'}}>
                 <Button className='btn btn-light' onClick={() => setMonth(month - 1)}><ChevronLeft></ChevronLeft></Button>
@@ -57,7 +57,7 @@ function CalendarMonth({year, _month, sessions, onWeekClick, onDateClick}:Calend
                 <Button className='btn btn-light' onClick={() => setMonth(month + 1)}><ChevronRight></ChevronRight></Button>
             </ButtonGroup>
         </Col>
-    </Row>
+    </Row> */}
     <Row>
       <Col>
         <div>

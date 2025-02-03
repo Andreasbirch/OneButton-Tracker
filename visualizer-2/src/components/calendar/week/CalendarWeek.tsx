@@ -72,7 +72,7 @@ function CalendarWeek({year, _week, width, sessions}: CalendarWeekProps) {
         //return data.filter(o => o.date.getDay() == 4)
 
     return <Container>
-      <Row>
+      {/* <Row>
         <Col style={{display: 'flex', justifyContent: 'center'}}>
             <ButtonGroup style={{alignItems: 'center'}}>
                 <Button className='btn btn-light' onClick={() => setWeek(week - 1)}><ChevronLeft></ChevronLeft></Button>
@@ -80,7 +80,7 @@ function CalendarWeek({year, _week, width, sessions}: CalendarWeekProps) {
                 <Button className='btn btn-light' onClick={() => setWeek(week + 1)}><ChevronRight></ChevronRight></Button>
             </ButtonGroup>
         </Col>
-      </Row>
+      </Row> */}
       <Row>
         <Col>
           <div ref={containerRef}/>

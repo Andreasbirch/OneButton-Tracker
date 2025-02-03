@@ -8,6 +8,7 @@ import SideBar from '../../../../src/components/sidebar/sideBar';
 
 type CalendarYearProps = {
     scope: Scope;
+    setScope: (scope: Scope) => void;
     selectedMonth: number | null;
     selectedWeek: number | null;
     selectedDate: number | null;
@@ -41,20 +42,48 @@ function GetCalendar(year: number, month: number) {
 
 const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
-function CalendarYear({scope, selectedMonth, selectedWeek, selectedDate, sessions, allSessions, onSessionsSelected, onMonthClick, onWeekClick, onDateClick}: CalendarYearProps) {
+function CalendarYear({scope, setScope, selectedMonth, selectedWeek, selectedDate, sessions, allSessions, onSessionsSelected, onMonthClick, onWeekClick, onDateClick}: CalendarYearProps) {
     console.log(scope, selectedMonth, selectedWeek, selectedDate);
     const [year, setYear] = useState(new Date().getFullYear())
+
+    const increment = () => {
+        if (scope === Scope.Year) setYear(year + 1);
+        else if (scope === Scope.Month && selectedMonth !== null) onMonthClick((selectedMonth + 1) % 12);
+        else if (scope === Scope.Week && selectedWeek !== null) onWeekClick(year, selectedWeek + 1);
+        else if (scope === Scope.Day && selectedDate !== null) onDateClick(year, selectedMonth, selectedDate + 1);
+    };
+
+    const decrement = () => {
+        if (scope === Scope.Year) setYear(year - 1);
+        else if (scope === Scope.Month && selectedMonth !== null) onMonthClick((selectedMonth - 1 + 12) % 12);
+        else if (scope === Scope.Week && selectedWeek !== null) onWeekClick(year, selectedWeek - 1);
+        else if (scope === Scope.Day && selectedDate !== null) onDateClick(year, selectedMonth, selectedDate - 1);
+    };
 
     let data = sessions.flatMap(o => o.presses).filter(o => o.timestamp.getFullYear() == year);
     let groups = groupBy(data, o => o.timestamp.toISOString().split('T')[0]);
 
     return <Container fluid={true} id='calendar-year'>
         <Row>
-            <Col style={{display: 'flex', justifyContent: 'center'}}>
-                <ButtonGroup style={{alignItems: 'center'}}>
-                    <Button className='btn btn-light' onClick={() => setYear(year - 1)}><ChevronLeft></ChevronLeft></Button>
-                    <div className='h3 bg-light' style={{marginBottom: 0}}>{year}</div>
-                    <Button className='btn btn-light' onClick={() => setYear(year + 1)}><ChevronRight></ChevronRight></Button>
+            <Col style={{ display: 'flex', justifyContent: 'center' }}>
+                <ButtonGroup className='date-navigator-group' style={{ alignItems: 'center' }}>
+                    <Button className='btn btn-light' onClick={decrement}><ChevronLeft /></Button>
+                    
+                    <div className='h3 bg-light' style={{ marginBottom: 0 }}>
+                        {scope == Scope.Day && (
+                            <><span role="button" onClick={() => onDateClick(year, selectedMonth, selectedDate)}>{selectedDate}</span>{" "}
+                            <span role="button" onClick={() => onMonthClick(selectedMonth)}>{months[selectedMonth]}{" "}</span></>
+                        )}
+                        {scope == Scope.Week && (
+                            <><span role="button" onClick={() => onWeekClick(year, selectedMonth)}>Week {selectedWeek}</span>{" "}</>
+                        )}
+                        {scope == Scope.Month && (
+                            <><span role="button" onClick={() => onMonthClick(selectedMonth)}>{months[selectedMonth]}</span>{" "}</>
+                        )}
+                        <span role="button" onClick={() => setScope(Scope.Year)}>{year}</span>
+                    </div>
+
+                    <Button className='btn btn-light' onClick={increment}><ChevronRight /></Button>
                 </ButtonGroup>
             </Col>
         </Row>
@@ -65,7 +94,7 @@ function CalendarYear({scope, selectedMonth, selectedWeek, selectedDate, session
                 return (
                     <Col key={i} style={{ flex: '1 1 auto', padding: '5px' }}>
                         <Table className='table-fit' bordered>
-                            <caption style={{ captionSide: 'top', textAlign: 'center' }}>{m}</caption>
+                            <caption className='calendar-month' role='button' style={{ captionSide: 'top', textAlign: 'left' }} onClick={() => onMonthClick(i) }>{m}</caption>
                             <thead>
                                 <tr>
                                     {['','m', 't', 'w', 't', 'f', 's', 's'].map((d, idx) => (
