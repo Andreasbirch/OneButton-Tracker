@@ -77,19 +77,18 @@ function Calendar({selectedDeviceId}: {selectedDeviceId: string}) {
         </Container>
         <Container fluid={true}>
             <Row>
-                {/* <Col md={2}>
-                    <SideBar _sessions={patientData.sessions} onSessionsSelected={handleSelectedSessionsUpdate}></SideBar>
-                </Col> */}
                 <Col>
                     <CalendarYear
                         onMonthClick={handleMonthClick}
                         onWeekClick={handleWeekClick}
                         onDateClick={handleDateClick}
+                        onSessionsSelected={handleSelectedSessionsUpdate}
                         scope={scope}
                         selectedMonth={selectedMonth}
                         selectedWeek={selectedWeek}
                         selectedDate={selectedDay}
-                        sessions={selectedSessions}></CalendarYear>
+                        sessions={selectedSessions}
+                        allSessions={patientData.sessions}></CalendarYear>
                         { scope == Scope.Month && selectedMonth && (<CalendarMonth year={year} _month={selectedMonth} sessions={selectedSessions} onWeekClick={handleWeekClick} onDateClick={handleDateClick}></CalendarMonth>)}
                         { scope == Scope.Week && selectedWeek && (<CalendarWeek year={year} _week={selectedWeek} width={colWidth} sessions={selectedSessions}></CalendarWeek>)}
                         {/* {selectedYear && selectedMonth && selectedDay && (<CalendarDay year={year} month={selectedMonth} date={selectedDay}></CalendarDay>)} */}

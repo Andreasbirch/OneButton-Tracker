@@ -4,6 +4,7 @@ import { Button, ButtonGroup, Col, Container, Row, Table } from 'react-bootstrap
 import { ChevronLeft, ChevronRight } from 'react-bootstrap-icons';
 import { Scope } from '../../../models/enums';
 import { Session } from '../../../models/patients/PatientData';
+import SideBar from '../../../../src/components/sidebar/sideBar';
 
 type CalendarYearProps = {
     scope: Scope;
@@ -11,6 +12,8 @@ type CalendarYearProps = {
     selectedWeek: number | null;
     selectedDate: number | null;
     sessions: Session[];
+    allSessions: Session[];
+    onSessionsSelected: (sessions: Session[]) => void;
     onMonthClick: (month: number) => void;
     onWeekClick: (year: number, week: number) => void;
     onDateClick: (year: number, month: number, date: number) => void;
@@ -38,7 +41,7 @@ function GetCalendar(year: number, month: number) {
 
 const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
-function CalendarYear({scope, selectedMonth, selectedWeek, selectedDate, sessions, onMonthClick, onWeekClick, onDateClick}: CalendarYearProps) {
+function CalendarYear({scope, selectedMonth, selectedWeek, selectedDate, sessions, allSessions, onSessionsSelected, onMonthClick, onWeekClick, onDateClick}: CalendarYearProps) {
     console.log(scope, selectedMonth, selectedWeek, selectedDate);
     const [year, setYear] = useState(new Date().getFullYear())
 
@@ -55,50 +58,51 @@ function CalendarYear({scope, selectedMonth, selectedWeek, selectedDate, session
                 </ButtonGroup>
             </Col>
         </Row>
+        <SideBar _sessions={allSessions} onSessionsSelected={onSessionsSelected}></SideBar>
         <Row style={{ display: 'flex', flexWrap: 'nowrap', overflowX: 'auto' }}>
-    {months.map((m, i) => {
-        let calendar = GetCalendar(year, i);
-        return (
-            <Col key={i} style={{ flex: '1 1 auto', padding: '5px' }}>
-                <Table className='table-fit' bordered>
-                    <caption style={{ captionSide: 'top', textAlign: 'center' }}>{m}</caption>
-                    <thead>
-                        <tr>
-                            {['','m', 't', 'w', 't', 'f', 's', 's'].map((d, idx) => (
-                                <th style={{fontWeight: 'lighter', fontSize: 10}} key={idx}>{d.toUpperCase()}</th>
-                            ))}
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {Object.keys(calendar).map((k) => (
-                            <tr key={k}>
-                                <td role='button' onClick={() => onWeekClick(year, parseInt(k))}>
-                                    {k}
-                                </td>
-                                {calendar[k].map((o: Date, idx: number) => {
-                                    if (!o) return <td key={idx}></td>;
-                                    return (
-                                        <td
-                                            className='table-day'
-                                            key={`${k}-${idx}`}
-                                            role="button"
-                                            style={{ backgroundColor: getColor(groups, o) ?? '', fontSize: 12 }}
-                                            onClick={() =>
-                                                onDateClick(o?.getFullYear(), o?.getMonth(), o?.getDate())
-                                            }
-                                        >
-                                            {o?.getDate()}
+            {months.map((m, i) => {
+                let calendar = GetCalendar(year, i);
+                return (
+                    <Col key={i} style={{ flex: '1 1 auto', padding: '5px' }}>
+                        <Table className='table-fit' bordered>
+                            <caption style={{ captionSide: 'top', textAlign: 'center' }}>{m}</caption>
+                            <thead>
+                                <tr>
+                                    {['','m', 't', 'w', 't', 'f', 's', 's'].map((d, idx) => (
+                                        <th style={{fontWeight: 'lighter', fontSize: 10}} key={idx}>{d.toUpperCase()}</th>
+                                    ))}
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {Object.keys(calendar).map((k) => (
+                                    <tr key={k}>
+                                        <td role='button' onClick={() => onWeekClick(year, parseInt(k))}>
+                                            {k}
                                         </td>
-                                    );
-                                })}
-                            </tr>
-                        ))}
-                    </tbody>
-                </Table>
-            </Col>
-        );
-    })}
-</Row>
+                                        {calendar[k].map((o: Date, idx: number) => {
+                                            if (!o) return <td key={idx}></td>;
+                                            return (
+                                                <td
+                                                    className='table-day'
+                                                    key={`${k}-${idx}`}
+                                                    role="button"
+                                                    style={{ backgroundColor: getColor(groups, o) ?? '', fontSize: 12 }}
+                                                    onClick={() =>
+                                                        onDateClick(o?.getFullYear(), o?.getMonth(), o?.getDate())
+                                                    }
+                                                >
+                                                    {o?.getDate()}
+                                                </td>
+                                            );
+                                        })}
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </Table>
+                    </Col>
+                );
+            })}
+        </Row>
 
 
         {/* <Row>
