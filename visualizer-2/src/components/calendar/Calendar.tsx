@@ -75,11 +75,11 @@ function Calendar({selectedDeviceId}: {selectedDeviceId: string}) {
                 </Col>
             </Row>
         </Container>
-        <Container>
+        <Container fluid={true}>
             <Row>
-                <Col md={2}>
+                {/* <Col md={2}>
                     <SideBar _sessions={patientData.sessions} onSessionsSelected={handleSelectedSessionsUpdate}></SideBar>
-                </Col>
+                </Col> */}
                 <Col>
                     <CalendarYear
                         onMonthClick={handleMonthClick}

@@ -45,7 +45,7 @@ function CalendarYear({scope, selectedMonth, selectedWeek, selectedDate, session
     let data = sessions.flatMap(o => o.presses).filter(o => o.timestamp.getFullYear() == year);
     let groups = groupBy(data, o => o.timestamp.toISOString().split('T')[0]);
 
-    return <Container id='calendar-year'>
+    return <Container fluid={true} id='calendar-year'>
         <Row>
             <Col style={{display: 'flex', justifyContent: 'center'}}>
                 <ButtonGroup style={{alignItems: 'center'}}>
@@ -55,7 +55,53 @@ function CalendarYear({scope, selectedMonth, selectedWeek, selectedDate, session
                 </ButtonGroup>
             </Col>
         </Row>
-        <Row>
+        <Row style={{ display: 'flex', flexWrap: 'nowrap', overflowX: 'auto' }}>
+    {months.map((m, i) => {
+        let calendar = GetCalendar(year, i);
+        return (
+            <Col key={i} style={{ flex: '1 1 auto', padding: '5px' }}>
+                <Table className='table-fit' bordered>
+                    <caption style={{ captionSide: 'top', textAlign: 'center' }}>{m}</caption>
+                    <thead>
+                        <tr>
+                            {['','m', 't', 'w', 't', 'f', 's', 's'].map((d, idx) => (
+                                <th style={{fontWeight: 'lighter', fontSize: 10}} key={idx}>{d.toUpperCase()}</th>
+                            ))}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {Object.keys(calendar).map((k) => (
+                            <tr key={k}>
+                                <td role='button' onClick={() => onWeekClick(year, parseInt(k))}>
+                                    {k}
+                                </td>
+                                {calendar[k].map((o: Date, idx: number) => {
+                                    if (!o) return <td key={idx}></td>;
+                                    return (
+                                        <td
+                                            className='table-day'
+                                            key={`${k}-${idx}`}
+                                            role="button"
+                                            style={{ backgroundColor: getColor(groups, o) ?? '', fontSize: 12 }}
+                                            onClick={() =>
+                                                onDateClick(o?.getFullYear(), o?.getMonth(), o?.getDate())
+                                            }
+                                        >
+                                            {o?.getDate()}
+                                        </td>
+                                    );
+                                })}
+                            </tr>
+                        ))}
+                    </tbody>
+                </Table>
+            </Col>
+        );
+    })}
+</Row>
+
+
+        {/* <Row>
             <div className='compact-calendar-container'>
             {months.map((m,i) => {
                 let calendar = GetCalendar(year, i);
@@ -95,7 +141,7 @@ function CalendarYear({scope, selectedMonth, selectedWeek, selectedDate, session
                 </Col>
             })}
             </div>
-        </Row>
+        </Row> */}
     </Container>
 }
 
