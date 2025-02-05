@@ -23,7 +23,7 @@ function UnknownDeviceComponent({unknownDevice, handleDeviceSelected}: UnknownDe
                     alignItems: 'center',
                     padding: '10px 20px'
                 }}>
-                <span>{unknownDevice.devicePath}</span>
+                <span>Add patient</span>
                 <span style={{ fontSize: '1.2em' }}>+</span>
                 </Button>
 }

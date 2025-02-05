@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import * as Plot from "@observablehq/plot";
 import { Button, ButtonGroup, Col, Container, Row } from 'react-bootstrap';
-import { ChevronLeft, ChevronRight } from 'react-bootstrap-icons';
+import { ChevronLeft, ChevronRight, SquareFill } from 'react-bootstrap-icons';
 import { getColor, GetGapIntersectForDate } from '../helpers';
 import { ActivitySpan, ActivityTypes, Gaps, Press, Session } from '../../../models/patients/PatientData';
 
@@ -86,10 +86,20 @@ function CalendarDay({year, month, _date, width, sessions}:CalendarDayProps){
           unknown: '#eee',
         },
         marks: [
-          Plot.barX(activitiesSpan, {
+          Plot.barX([new Date(year, month, date, 0, 0, 0), new Date(year, month, date, 23, 59, 59)],{
+            x1: new Date(year, month, date, 0, 0, 0),
+            x2: new Date(year, month, date, 23, 59, 59),
+            fill: 'lightblue'
+          }),
+          Plot.barX(activitiesSpan.filter(o => o.activity === 'still'), {
             x1: 'start',
             x2: 'end',
-            fill: 'activity'
+            fill: 'lightgreen'
+          }),
+          Plot.barX(nonWearData, {
+            x1: 'start',
+            x2: 'end',
+            fill: 'lightgray'
           }),
           Plot.ruleX(data, {
             x: (d:DataPoint) => d.timestamp,
@@ -101,11 +111,6 @@ function CalendarDay({year, month, _date, width, sessions}:CalendarDayProps){
             // fill: (d:DataPoint) => activityColorMap[d.activity],
             title: (d) => d.timestamp,
             y: (d) => d.duration / 1000
-          }),
-          Plot.barX(nonWearData, {
-            x1: 'start',
-            x2: 'end',
-            fill: 'lightgray'
           }),
         ],
       });
@@ -124,6 +129,13 @@ function CalendarDay({year, month, _date, width, sessions}:CalendarDayProps){
             </ButtonGroup>
         </Col>
       </Row> */}
+      <Row>
+        <Col style={{display: 'flex', gap: 10, alignItems: 'center'}}>
+          <><SquareFill color='lightgray'/>Non wear</>
+          <><SquareFill color='lightgreen'/>Still wear</>
+          <><SquareFill color='lightblue'/>Active wear</>
+        </Col>
+      </Row>
       <Row>
         <Col>
           <div ref={containerRef}/>

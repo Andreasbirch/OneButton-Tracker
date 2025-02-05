@@ -110,14 +110,16 @@ function CalendarYear({scope, setScope, selectedMonth, selectedWeek, selectedDat
                                         </td>
                                         {calendar[k].map((o: Date, idx: number) => {
                                             if (!o) return <td key={idx}></td>;
+                                            let colr = getColor(groups, o);
+                                            // console.log(color);
                                             return (
                                                 <td
-                                                    className='table-day'
+                                                    className={`table-day ${colr? '' : 'disabled'}`}
                                                     key={`${k}-${idx}`}
                                                     role="button"
-                                                    style={{ backgroundColor: getColor(groups, o) ?? '', fontSize: 12 }}
+                                                    style={{ backgroundColor: colr ?? '', color: colr? '#000' : '#BBB' , fontSize: 12 }}
                                                     onClick={() =>
-                                                        onDateClick(o?.getFullYear(), o?.getMonth(), o?.getDate())
+                                                        colr? onDateClick(o?.getFullYear(), o?.getMonth(), o?.getDate()) : null
                                                     }
                                                 >
                                                     {o?.getDate()}
