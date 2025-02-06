@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { GetGapIntersectForDate, getWeek, timeFloat } from '../helpers';
 import * as Plot from "@observablehq/plot";
-import { Col, Container, Row } from 'react-bootstrap';
+import { Button, Col, Container, Row } from 'react-bootstrap';
 import { SquareFill } from 'react-bootstrap-icons';
 import { ActivitySpan, Gaps, Session } from '../../../models/patients/PatientData';
 
@@ -10,9 +10,10 @@ type CalendarWeekProps = {
   _week: number,
   width: number
   sessions: Session[];
+  onMonthClick: (month: number) => void;
 }
 
-function CalendarWeek({year, _week, width, sessions}: CalendarWeekProps) {
+function CalendarWeek({year, _week, width, sessions, onMonthClick}: CalendarWeekProps) {
   const [week, setWeek] = useState(_week);
     let _data = sessions.flatMap(o => o.presses)
       .filter(o => o.timestamp.getFullYear() == year)
@@ -114,6 +115,9 @@ function CalendarWeek({year, _week, width, sessions}: CalendarWeekProps) {
           <><SquareFill color='lightgray'/>Non wear</>
           <><SquareFill color='lightgreen'/>Still wear</>
           <><SquareFill color='lightblue'/>Active wear</>
+        </Col>
+        <Col style={{display: 'flex', gap: 10, alignItems: 'center', justifyContent: 'flex-end'}}>
+          <Button variant='link' onClick={() => onMonthClick(datesInWeek[0].getMonth())} style={{color:'#000'}}>Month</Button>
         </Col>
       </Row>
       <Row>

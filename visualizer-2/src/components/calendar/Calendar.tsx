@@ -91,9 +91,9 @@ function Calendar({selectedDeviceId}: {selectedDeviceId: string}) {
                         sessions={selectedSessions}
                         allSessions={patientData.sessions}></CalendarYear>
                         { scope == Scope.Month && selectedMonth && (<CalendarMonth year={year} _month={selectedMonth} sessions={selectedSessions} onWeekClick={handleWeekClick} onDateClick={handleDateClick}></CalendarMonth>)}
-                        { scope == Scope.Week && selectedWeek && (<CalendarWeek year={year} _week={selectedWeek} width={colWidth} sessions={selectedSessions}></CalendarWeek>)}
+                        { scope == Scope.Week && selectedWeek && (<CalendarWeek year={year} _week={selectedWeek} width={colWidth} sessions={selectedSessions} onMonthClick={handleMonthClick}></CalendarWeek>)}
                         {/* {selectedYear && selectedMonth && selectedDay && (<CalendarDay year={year} month={selectedMonth} date={selectedDay}></CalendarDay>)} */}
-                        { scope == Scope.Day && selectedYear && selectedMonth && selectedDay && (<CalendarDayHorizontal year={year} month={selectedMonth} _date={selectedDay} width={colWidth} sessions={selectedSessions}></CalendarDayHorizontal>)}
+                        { scope == Scope.Day && selectedYear && selectedMonth && selectedDay && (<CalendarDayHorizontal year={year} month={selectedMonth} _date={selectedDay} width={colWidth} sessions={selectedSessions} onWeekClick={handleWeekClick} onMonthClick={handleMonthClick}></CalendarDayHorizontal>)}
                 </Col>
             </Row>
         </Container>
