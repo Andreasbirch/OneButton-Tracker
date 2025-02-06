@@ -1,9 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { getWeek, timeFloat } from '../helpers';
+import { GetGapIntersectForDate, getWeek, timeFloat } from '../helpers';
 import * as Plot from "@observablehq/plot";
 import { Button, ButtonGroup, Col, Container, Row } from 'react-bootstrap';
 import { ChevronLeft, ChevronRight } from 'react-bootstrap-icons';
-import { Session } from '../../../models/patients/PatientData';
+import { Gaps, Session } from '../../../models/patients/PatientData';
 
 type CalendarWeekProps = {
   year: number,
@@ -15,10 +15,18 @@ type CalendarWeekProps = {
 function CalendarWeek({year, _week, width, sessions}: CalendarWeekProps) {
   const [week, setWeek] = useState(_week);
   
-  let _data = sessions.flatMap(o => o.presses)
-    .filter(o => o.timestamp.getFullYear() == year)
-    .filter(o => getWeek(o.timestamp) == week);
+    let _data = sessions.flatMap(o => o.presses)
+      .filter(o => o.timestamp.getFullYear() == year)
+      .filter(o => getWeek(o.timestamp) == week);
+    let activity = sessions.flatMap(o => o.activities)
+    let dataGaps = sessions.flatMap(o => o.gaps);
+    
+    let activitySpans = sessions.flatMap(o => o.activitiesSpan)
+      .filter(o => new Date(o.start).getFullYear() == year)
+      .filter(o => getWeek(new Date(o.start)) == week);
 
+    // let _nonWearData = GetGapIntersectForDate<Gaps>(dataGaps, targetDate);
+    
     const containerRef = useRef<any>(null);
     const [data, setData] = useState(_data);
     useEffect(() => {
@@ -42,6 +50,26 @@ function CalendarWeek({year, _week, width, sessions}: CalendarWeekProps) {
           type: "diverging"
         },
         marks: [
+          Plot.barY([...Array(7).keys()].map((o,i) => ({y1: 0, y2: 24, x: i})),{
+            y1: 0,
+            y2: 23.99,
+            fill: 'lightgray',
+            x: 'x',
+          }),
+          Plot.barY(activitySpans.filter(o => o.activity !== 'still'), {
+            y1: (d) => timeFloat(d.start),
+            y2: (d) => timeFloat(d.end),
+            x: (d) => new Date(d.start).getUTCDay(),
+            fill: 'lightblue',
+            fx: (d) => getWeek(d.start)
+          }),
+          Plot.barY(activitySpans.filter(o => o.activity === 'still'), {
+            y1: (d) => timeFloat(d.start),
+            y2: (d) => timeFloat(d.end),
+            x: (d) => new Date(d.start).getUTCDay(),
+            fill: 'lightgreen',
+            fx: (d) => getWeek(d.start)
+          }),
           Plot.barY(data, {
             // lay the days out in the x direction based on the week of the year
             y1: (d) => timeFloat(d.timestamp),

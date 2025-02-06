@@ -96,11 +96,6 @@ function CalendarDay({year, month, _date, width, sessions}:CalendarDayProps){
             x2: 'end',
             fill: 'lightgreen'
           }),
-          Plot.barX(nonWearData, {
-            x1: 'start',
-            x2: 'end',
-            fill: 'lightgray'
-          }),
           Plot.ruleX(data, {
             x: (d:DataPoint) => d.timestamp,
             // stroke: "activity",
@@ -111,6 +106,11 @@ function CalendarDay({year, month, _date, width, sessions}:CalendarDayProps){
             // fill: (d:DataPoint) => activityColorMap[d.activity],
             title: (d) => d.timestamp,
             y: (d) => d.duration / 1000
+          }),
+          Plot.barX(nonWearData, {
+            x1: 'start',
+            x2: 'end',
+            fill: 'lightgray'
           }),
         ],
       });
