@@ -26,7 +26,7 @@ function SideBar({_sessions, onSessionsSelected}:{_sessions: Session[], onSessio
     };
     
     return <> 
-        <ButtonGroup role="group" style={{ display: "flex", gap: 5, maxWidth: 350}}>
+        <ButtonGroup role="group" style={{ display: "flex", gap: 5 }}>
             {sessions.map((s) => {
                 const start = s.presses[0].timestamp;
                 const end = s.presses[s.presses.length - 1].timestamp;
@@ -43,7 +43,7 @@ function SideBar({_sessions, onSessionsSelected}:{_sessions: Session[], onSessio
                     key={s.id}
                     type="button"
                     variant={selected.includes(s.id) ? "secondary" : "outline-secondary"}
-                    style={{ height: 'fit-content' }}
+                    style={{ height: 'fit-content', maxWidth: 350 }}
                     onClick={() => toggleButton(s.id)}
                 >
                     <div className="d-flex align-items-center">

@@ -23,8 +23,8 @@ export function getWeek(dt: Date) {
 };
 
 export function timeFloat(timestamp: Date) {
-    const hours = new Date(timestamp).getUTCHours();
-    const minutes = new Date(timestamp).getUTCMinutes();
+    const hours = new Date(timestamp).getHours();
+    const minutes = new Date(timestamp).getMinutes();
     return hours + minutes / 60;
   };
 

@@ -135,6 +135,12 @@ function CalendarDay({year, month, _date, width, sessions}:CalendarDayProps){
           <><SquareFill color='lightgreen'/>Still wear</>
           <><SquareFill color='lightblue'/>Active wear</>
         </Col>
+        <Col>
+          <Row>
+            <Col>{data.length} observations</Col>
+            <Col>Average observation length: {(data.reduce((total, next) => total + next.duration, 0) / data.length).toFixed(2)} ms</Col>
+          </Row>
+        </Col>
       </Row>
       <Row>
         <Col>

@@ -1,9 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { GetGapIntersectForDate, getWeek, timeFloat } from '../helpers';
 import * as Plot from "@observablehq/plot";
-import { Button, ButtonGroup, Col, Container, Row } from 'react-bootstrap';
-import { ChevronLeft, ChevronRight } from 'react-bootstrap-icons';
-import { Gaps, Session } from '../../../models/patients/PatientData';
+import { Col, Container, Row } from 'react-bootstrap';
+import { SquareFill } from 'react-bootstrap-icons';
+import { ActivitySpan, Gaps, Session } from '../../../models/patients/PatientData';
 
 type CalendarWeekProps = {
   year: number,
@@ -14,19 +14,21 @@ type CalendarWeekProps = {
 
 function CalendarWeek({year, _week, width, sessions}: CalendarWeekProps) {
   const [week, setWeek] = useState(_week);
-  
     let _data = sessions.flatMap(o => o.presses)
       .filter(o => o.timestamp.getFullYear() == year)
       .filter(o => getWeek(o.timestamp) == week);
-    let activity = sessions.flatMap(o => o.activities)
-    let dataGaps = sessions.flatMap(o => o.gaps);
-    
-    let activitySpans = sessions.flatMap(o => o.activitiesSpan)
-      .filter(o => new Date(o.start).getFullYear() == year)
-      .filter(o => getWeek(new Date(o.start)) == week);
 
-    // let _nonWearData = GetGapIntersectForDate<Gaps>(dataGaps, targetDate);
-    
+    let datesInWeek = _data.map(o => new Date(o.timestamp.getUTCFullYear(), o.timestamp.getUTCMonth(), o.timestamp.getUTCDate())).filter((date, i, self) => 
+      self.findIndex(d => d.getTime() === date.getTime()) === i
+    );
+
+
+    let activities = datesInWeek.flatMap(o => GetGapIntersectForDate<ActivitySpan>(sessions.flatMap(s => s.activitiesSpan), o).map(d => ({...d, 'dayInWeek': o.getDay()})));
+    let nonwear = datesInWeek.flatMap(o => GetGapIntersectForDate<Gaps>(sessions.flatMap(s => s.gaps), o).map(d => ({...d, 'dayInWeek': o.getDay()})));
+    console.log("GAPSSE", activities, nonwear);
+    console.log(timeFloat(nonwear[0].start), timeFloat(nonwear[0].end));
+
+
     const containerRef = useRef<any>(null);
     const [data, setData] = useState(_data);
     useEffect(() => {
@@ -50,25 +52,17 @@ function CalendarWeek({year, _week, width, sessions}: CalendarWeekProps) {
           type: "diverging"
         },
         marks: [
-          Plot.barY([...Array(7).keys()].map((o,i) => ({y1: 0, y2: 24, x: i})),{
+          Plot.barY(datesInWeek, {
             y1: 0,
-            y2: 23.99,
-            fill: 'lightgray',
-            x: 'x',
+            y2: 23.59,
+            x: (d) => d.getDay(),
+            fill: 'lightblue'
           }),
-          Plot.barY(activitySpans.filter(o => o.activity !== 'still'), {
-            y1: (d) => timeFloat(d.start),
-            y2: (d) => timeFloat(d.end),
-            x: (d) => new Date(d.start).getUTCDay(),
-            fill: 'lightblue',
-            fx: (d) => getWeek(d.start)
-          }),
-          Plot.barY(activitySpans.filter(o => o.activity === 'still'), {
-            y1: (d) => timeFloat(d.start),
-            y2: (d) => timeFloat(d.end),
-            x: (d) => new Date(d.start).getUTCDay(),
+          Plot.barY(activities.filter(o => o.activity === 'still'), {
+            y1: (d) => timeFloat(new Date(d.start)),
+            y2: (d) => timeFloat(new Date(d.end)),
+            x: 'dayInWeek',
             fill: 'lightgreen',
-            fx: (d) => getWeek(d.start)
           }),
           Plot.barY(data, {
             // lay the days out in the x direction based on the week of the year
@@ -79,6 +73,12 @@ function CalendarWeek({year, _week, width, sessions}: CalendarWeekProps) {
             fill: "duration",
             title: (d) => d.timestamp,
             fx: (d) => getWeek(d.timestamp),
+          }),
+          Plot.barY(nonwear, {
+            y1: (d) => timeFloat(d.start),
+            y2: (d) => timeFloat(d.end),
+            x: 'dayInWeek',
+            fill: 'lightgray',
           }),
           // Plot.barY(timechunk_data.filter(o => o.start.getFullYear() == 2024 && o.start.getMonth() == 3 && o.start.getWeek() == 16), {
           //   // lay the days out in the x direction based on the week of the year
@@ -109,6 +109,13 @@ function CalendarWeek({year, _week, width, sessions}: CalendarWeekProps) {
             </ButtonGroup>
         </Col>
       </Row> */}
+      <Row>
+        <Col style={{display: 'flex', gap: 10, alignItems: 'center'}}>
+          <><SquareFill color='lightgray'/>Non wear</>
+          <><SquareFill color='lightgreen'/>Still wear</>
+          <><SquareFill color='lightblue'/>Active wear</>
+        </Col>
+      </Row>
       <Row>
         <Col>
           <div ref={containerRef}/>
