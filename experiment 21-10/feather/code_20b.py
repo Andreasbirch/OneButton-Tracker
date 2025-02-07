@@ -18,5 +18,16 @@ btn.direction = Direction.INPUT
 btn.pull = Pull.UP
 
 while True:
-    time.sleep(.1)
-    pass
+    stability = bno.stability_classification
+    x, y, z = bno.acceleration
+    try:
+        tilt_val = tilt.value
+    except:
+        pass
+    
+    try:
+        btn_val = btn.value
+    except:
+        pass
+    time_alarm = alarm.time.TimeAlarm(monotonic_time=time.monotonic() + 1000)
+    alarm.exit_and_deep_sleep_until_alarms(time_alarm)
