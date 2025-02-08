@@ -18,5 +18,4 @@ btn.direction = Direction.INPUT
 btn.pull = Pull.UP
 
 while True:
-    time.sleep(.1)
     pass

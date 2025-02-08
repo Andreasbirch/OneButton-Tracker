@@ -16,7 +16,7 @@ btn = DigitalInOut(board.D6)
 btn.direction = Direction.INPUT
 btn.pull = Pull.UP
 
-repeat_times = 10000
+repeat_times = 1000
 time_before = time.monotonic_ns()
 for i in range(repeat_times):
     stability = bno.stability_classification
