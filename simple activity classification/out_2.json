@@ -1,0 +1,472 @@
+{
+    "02-12": {
+        "accelerometer": {
+            "accuracy": null,
+            "avg": {
+                "precision": 0.6115782518097163,
+                "recall": 0.7695935244909845,
+                "f1-score": 0.6153826075237753,
+                "support": 54940.0
+            },
+            "weighted": {
+                "precision": 0.8277177874555127,
+                "recall": 0.6137604659628686,
+                "f1-score": 0.6503976357244252,
+                "support": 54940.0
+            }
+        },
+        "tilt_switch": {
+            "accuracy": null,
+            "avg": {
+                "precision": 0.7573161818236617,
+                "recall": 0.843165634996498,
+                "f1-score": 0.782632043681831,
+                "support": 54940.0
+            },
+            "weighted": {
+                "precision": 0.9509368235795711,
+                "recall": 0.9305060065526028,
+                "f1-score": 0.9386980748768774,
+                "support": 54940.0
+            }
+        },
+        "mixed": {
+            "accuracy": null,
+            "avg": {
+                "precision": 0.6920778336248915,
+                "recall": 0.6594121691076161,
+                "f1-score": 0.47295381798343916,
+                "support": 16563.0
+            },
+            "weighted": {
+                "precision": 0.817798735281446,
+                "recall": 0.7451548632494114,
+                "f1-score": 0.6875870435465039,
+                "support": 16563.0
+            }
+        }
+    },
+    "04-11": {
+        "accelerometer": {
+            "accuracy": null,
+            "avg": {
+                "precision": 0.8489092048475045,
+                "recall": 0.8663179323697826,
+                "f1-score": 0.8489052533830767,
+                "support": 13751.0
+            },
+            "weighted": {
+                "precision": 0.912930486648883,
+                "recall": 0.9046614791651516,
+                "f1-score": 0.903820811075397,
+                "support": 13751.0
+            }
+        },
+        "tilt_switch": {
+            "accuracy": null,
+            "avg": {
+                "precision": 0.7173729991705325,
+                "recall": 0.738871866430923,
+                "f1-score": 0.6693968388515171,
+                "support": 13751.0
+            },
+            "weighted": {
+                "precision": 0.7823083863201444,
+                "recall": 0.7326739873463748,
+                "f1-score": 0.7039164027572312,
+                "support": 13751.0
+            }
+        },
+        "mixed": {
+            "accuracy": null,
+            "avg": {
+                "precision": 0.5419994042755961,
+                "recall": 0.6303083776390083,
+                "f1-score": 0.5390516028475946,
+                "support": 2591.0
+            },
+            "weighted": {
+                "precision": 0.8297840878214439,
+                "recall": 0.7124662292551138,
+                "f1-score": 0.7331247364416268,
+                "support": 2591.0
+            }
+        }
+    },
+    "07-10": {
+        "accelerometer": {
+            "accuracy": 0.6791107382550335,
+            "avg": {
+                "precision": 0.6082718880283272,
+                "recall": 0.7567644366273889,
+                "f1-score": 0.6371962868187862,
+                "support": 14304.0
+            },
+            "weighted": {
+                "precision": 0.8274335922641161,
+                "recall": 0.6791107382550335,
+                "f1-score": 0.7218945851892522,
+                "support": 14304.0
+            }
+        },
+        "tilt_switch": {
+            "accuracy": 0.8712947427293065,
+            "avg": {
+                "precision": 0.680870193307961,
+                "recall": 0.7928834535826633,
+                "f1-score": 0.6889286388710465,
+                "support": 14304.0
+            },
+            "weighted": {
+                "precision": 0.9148052129173947,
+                "recall": 0.8712947427293065,
+                "f1-score": 0.8804953681307445,
+                "support": 14304.0
+            }
+        },
+        "mixed": {
+            "accuracy": 0.9028058134840533,
+            "avg": {
+                "precision": 0.687577188999189,
+                "recall": 0.8847712168399656,
+                "f1-score": 0.7427835061709449,
+                "support": 9908.0
+            },
+            "weighted": {
+                "precision": 0.9174622605381452,
+                "recall": 0.9028058134840533,
+                "f1-score": 0.9081082021567727,
+                "support": 9908.0
+            }
+        }
+    },
+    "08-10": {
+        "accelerometer": {
+            "accuracy": null,
+            "avg": {
+                "precision": 0.6554128727275674,
+                "recall": 0.750107487158371,
+                "f1-score": 0.6393441742651528,
+                "support": 32776.0
+            },
+            "weighted": {
+                "precision": 0.7774382042653336,
+                "recall": 0.5945508908957774,
+                "f1-score": 0.6100530934376999,
+                "support": 32776.0
+            }
+        },
+        "tilt_switch": {
+            "accuracy": null,
+            "avg": {
+                "precision": 0.3144977855030808,
+                "recall": 0.5274240259965731,
+                "f1-score": 0.34355352982763065,
+                "support": 32776.0
+            },
+            "weighted": {
+                "precision": 0.37190672672841807,
+                "recall": 0.361972174762021,
+                "f1-score": 0.3578332837756267,
+                "support": 32776.0
+            }
+        },
+        "mixed": {
+            "accuracy": null,
+            "avg": {
+                "precision": 0.5870648054005705,
+                "recall": 0.8501830640049738,
+                "f1-score": 0.6378043247797741,
+                "support": 24225.0
+            },
+            "weighted": {
+                "precision": 0.8689268315303832,
+                "recall": 0.7206604747162023,
+                "f1-score": 0.7556310220752067,
+                "support": 24225.0
+            }
+        }
+    },
+    "09-10": {
+        "accelerometer": {
+            "accuracy": null,
+            "avg": {
+                "precision": 0.6045867653631932,
+                "recall": 0.6495873417563026,
+                "f1-score": 0.6082388938146547,
+                "support": 6236.0
+            },
+            "weighted": {
+                "precision": 0.5946609071030937,
+                "recall": 0.6281270044900578,
+                "f1-score": 0.5957200385591777,
+                "support": 6236.0
+            }
+        },
+        "tilt_switch": {
+            "accuracy": null,
+            "avg": {
+                "precision": 0.46886409584831984,
+                "recall": 0.5146993119741307,
+                "f1-score": 0.46459830112882655,
+                "support": 6236.0
+            },
+            "weighted": {
+                "precision": 0.9246134401846534,
+                "recall": 0.7285118665811418,
+                "f1-score": 0.8030435075725183,
+                "support": 6236.0
+            }
+        },
+        "mixed": {
+            "accuracy": null,
+            "avg": {
+                "precision": 0.4215860318672782,
+                "recall": 0.5447783397798275,
+                "f1-score": 0.4193053869920271,
+                "support": 3695.0
+            },
+            "weighted": {
+                "precision": 0.8586912461271226,
+                "recall": 0.6219215155615697,
+                "f1-score": 0.7079267517563457,
+                "support": 3695.0
+            }
+        }
+    },
+    "10-10": {
+        "accelerometer": {
+            "accuracy": 0.7515986227250369,
+            "avg": {
+                "precision": 0.7012216582715635,
+                "recall": 0.5926456244653462,
+                "f1-score": 0.6183040270984935,
+                "support": 2033.0
+            },
+            "weighted": {
+                "precision": 0.7426624126213796,
+                "recall": 0.7515986227250369,
+                "f1-score": 0.7305623402270329,
+                "support": 2033.0
+            }
+        },
+        "tilt_switch": {
+            "accuracy": 0.719626168224299,
+            "avg": {
+                "precision": 0.370786550776882,
+                "recall": 0.5264186184637266,
+                "f1-score": 0.3919139264572968,
+                "support": 2033.0
+            },
+            "weighted": {
+                "precision": 0.7718986788691139,
+                "recall": 0.719626168224299,
+                "f1-score": 0.7380222082080024,
+                "support": 2033.0
+            }
+        },
+        "mixed": {
+            "accuracy": 0.8396946564885496,
+            "avg": {
+                "precision": 0.41339885447929375,
+                "recall": 0.5118019182368546,
+                "f1-score": 0.4396053954227739,
+                "support": 1310.0
+            },
+            "weighted": {
+                "precision": 0.8820411419692246,
+                "recall": 0.8396946564885496,
+                "f1-score": 0.8566677320176517,
+                "support": 1310.0
+            }
+        }
+    },
+    "25-11": {
+        "accelerometer": {
+            "accuracy": null,
+            "avg": {
+                "precision": 0.5674581790242822,
+                "recall": 0.8111235293529742,
+                "f1-score": 0.6040243957463988,
+                "support": 108178.0
+            },
+            "weighted": {
+                "precision": 0.8882035895279138,
+                "recall": 0.7072787442918154,
+                "f1-score": 0.7528172149660644,
+                "support": 108178.0
+            }
+        },
+        "tilt_switch": {
+            "accuracy": null,
+            "avg": {
+                "precision": 0.5884597449611784,
+                "recall": 0.7918693346117198,
+                "f1-score": 0.604696197728669,
+                "support": 108178.0
+            },
+            "weighted": {
+                "precision": 0.8085858095128391,
+                "recall": 0.7606907134537522,
+                "f1-score": 0.7647125809754584,
+                "support": 108178.0
+            }
+        },
+        "mixed": {
+            "accuracy": null,
+            "avg": {
+                "precision": 0.732215472979262,
+                "recall": 0.9750124022062492,
+                "f1-score": 0.7736439824407612,
+                "support": 64942.0
+            },
+            "weighted": {
+                "precision": 0.982173024419978,
+                "recall": 0.968664346647778,
+                "f1-score": 0.9740827083187334,
+                "support": 64942.0
+            }
+        }
+    },
+    "29-10": {
+        "accelerometer": {
+            "accuracy": 0.6203909923286315,
+            "avg": {
+                "precision": 0.6754478108369342,
+                "recall": 0.6256416132775521,
+                "f1-score": 0.5226000076664697,
+                "support": 8082.0
+            },
+            "weighted": {
+                "precision": 0.6596162308798414,
+                "recall": 0.6203909923286315,
+                "f1-score": 0.5212592207463891,
+                "support": 8082.0
+            }
+        },
+        "tilt_switch": {
+            "accuracy": 0.8442217272952239,
+            "avg": {
+                "precision": 0.5206159369759367,
+                "recall": 0.5312110878471392,
+                "f1-score": 0.5250382127948513,
+                "support": 8082.0
+            },
+            "weighted": {
+                "precision": 0.8630886623346861,
+                "recall": 0.8442217272952239,
+                "f1-score": 0.8528002069054246,
+                "support": 8082.0
+            }
+        },
+        "mixed": {
+            "accuracy": 0.8500303582270795,
+            "avg": {
+                "precision": 0.48070891894280915,
+                "recall": 0.614527027027027,
+                "f1-score": 0.510648217675974,
+                "support": 3294.0
+            },
+            "weighted": {
+                "precision": 0.9338182824633782,
+                "recall": 0.8500303582270795,
+                "f1-score": 0.8768045567008094,
+                "support": 3294.0
+            }
+        }
+    },
+    "11-01": {
+        "accelerometer": {
+            "accuracy": null,
+            "avg": {
+                "precision": 0.1461187214611872,
+                "recall": 0.1855072463768116,
+                "f1-score": 0.16347381864623242,
+                "support": 2421.0
+            },
+            "weighted": {
+                "precision": 0.06246711140534025,
+                "recall": 0.07930607187112763,
+                "f1-score": 0.06988657674467186,
+                "support": 2421.0
+            }
+        },
+        "tilt_switch": {
+            "accuracy": null,
+            "avg": {
+                "precision": 0.11187214611872147,
+                "recall": 0.15755627009646303,
+                "f1-score": 0.1308411214953271,
+                "support": 2421.0
+            },
+            "weighted": {
+                "precision": 0.043113057550089685,
+                "recall": 0.06071871127633209,
+                "f1-score": 0.05042328226152011,
+                "support": 2421.0
+            }
+        },
+        "mixed": {
+            "accuracy": null,
+            "avg": {
+                "precision": 0.10752688172043011,
+                "recall": 0.2032520325203252,
+                "f1-score": 0.14064697609001406,
+                "support": 1004.0
+            },
+            "weighted": {
+                "precision": 0.02634622799126076,
+                "recall": 0.049800796812749,
+                "f1-score": 0.03446131087464488,
+                "support": 1004.0
+            }
+        }
+    },
+    "18-01": {
+        "accelerometer": {
+            "accuracy": null,
+            "avg": {
+                "precision": 0.10387710314557425,
+                "recall": 0.2410865874363328,
+                "f1-score": 0.14519427402862986,
+                "support": 3550.0
+            },
+            "weighted": {
+                "precision": 0.051704462326261885,
+                "recall": 0.12000000000000001,
+                "f1-score": 0.07226993865030674,
+                "support": 3550.0
+            }
+        },
+        "tilt_switch": {
+            "accuracy": null,
+            "avg": {
+                "precision": 0.04437941965374299,
+                "recall": 0.2745098039215686,
+                "f1-score": 0.0764063811922754,
+                "support": 3550.0
+            },
+            "weighted": {
+                "precision": 0.008288325417022986,
+                "recall": 0.05126760563380282,
+                "f1-score": 0.014269698797317912,
+                "support": 3550.0
+            }
+        },
+        "mixed": {
+            "accuracy": null,
+            "avg": {
+                "precision": 0.058898439987265204,
+                "recall": 0.2362707535121328,
+                "f1-score": 0.09429153924566769,
+                "support": 2921.0
+            },
+            "weighted": {
+                "precision": 0.015788250089020423,
+                "recall": 0.06333447449503594,
+                "f1-score": 0.025275684775541866,
+                "support": 2921.0
+            }
+        }
+    }
+}

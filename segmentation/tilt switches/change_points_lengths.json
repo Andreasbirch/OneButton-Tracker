@@ -1,0 +1,122 @@
+{
+    "02-12": {
+        "stability": 574,
+        "compare(change)": {
+            "or": 2563,
+            "xor": 2615,
+            "and": 295,
+            "xnor": 2615
+        },
+        "change(compare)": {
+            "or": 1514,
+            "xor": 2615,
+            "and": 1370,
+            "xnor": 2615
+        }
+    },
+    "04-11": {
+        "stability": 101,
+        "compare(change)": {
+            "or": 1366,
+            "xor": 1486,
+            "and": 383,
+            "xnor": 1486
+        },
+        "change(compare)": {
+            "or": 838,
+            "xor": 1486,
+            "and": 905,
+            "xnor": 1486
+        }
+    },
+    "07-10": {
+        "stability": 129,
+        "compare(change)": {
+            "or": 379,
+            "xor": 375,
+            "and": 33,
+            "xnor": 375
+        },
+        "change(compare)": {
+            "or": 262,
+            "xor": 375,
+            "and": 160,
+            "xnor": 375
+        }
+    },
+    "08-10": {
+        "stability": 371,
+        "compare(change)": {
+            "or": 1040,
+            "xor": 1012,
+            "and": 145,
+            "xnor": 1012
+        },
+        "change(compare)": {
+            "or": 741,
+            "xor": 1012,
+            "and": 436,
+            "xnor": 1012
+        }
+    },
+    "09-10": {
+        "stability": 155,
+        "compare(change)": {
+            "or": 553,
+            "xor": 631,
+            "and": 209,
+            "xnor": 631
+        },
+        "change(compare)": {
+            "or": 447,
+            "xor": 631,
+            "and": 333,
+            "xnor": 631
+        }
+    },
+    "10-10": {
+        "stability": 152,
+        "compare(change)": {
+            "or": 196,
+            "xor": 184,
+            "and": 39,
+            "xnor": 184
+        },
+        "change(compare)": {
+            "or": 125,
+            "xor": 184,
+            "and": 102,
+            "xnor": 184
+        }
+    },
+    "25-11": {
+        "stability": 620,
+        "compare(change)": {
+            "or": 973,
+            "xor": 975,
+            "and": 65,
+            "xnor": 975
+        },
+        "change(compare)": {
+            "or": 631,
+            "xor": 975,
+            "and": 409,
+            "xnor": 975
+        }
+    },
+    "29-10": {
+        "stability": 55,
+        "compare(change)": {
+            "or": 1159,
+            "xor": 1159,
+            "and": 17,
+            "xnor": 1159
+        },
+        "change(compare)": {
+            "or": 468,
+            "xor": 1159,
+            "and": 700,
+            "xnor": 1159
+        }
+    }
+}

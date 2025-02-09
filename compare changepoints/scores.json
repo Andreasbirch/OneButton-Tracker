@@ -1,0 +1,448 @@
+{
+    "02-12": {
+        "compare(change)": {
+            "or": {
+                "intersect": 183,
+                "jaccard": 0.06194989844278944
+            },
+            "xor": {
+                "intersect": 190,
+                "jaccard": 0.06335445148382794
+            },
+            "and": {
+                "intersect": 32,
+                "jaccard": 0.038231780167264036
+            },
+            "xnor": {
+                "intersect": 190,
+                "jaccard": 0.06335445148382794
+            }
+        },
+        "change(compare)": {
+            "or": {
+                "intersect": 111,
+                "jaccard": 0.05614567526555387
+            },
+            "xor": {
+                "intersect": 190,
+                "jaccard": 0.06335445148382794
+            },
+            "and": {
+                "intersect": 108,
+                "jaccard": 0.058823529411764705
+            },
+            "xnor": {
+                "intersect": 190,
+                "jaccard": 0.06335445148382794
+            }
+        },
+        "best": {
+            "intersect": {
+                "score": 0.06335445148382794,
+                "setup": {
+                    "config": "change(compare)",
+                    "op": "xnor"
+                }
+            },
+            "jaccard": {
+                "score": 0.06335445148382794,
+                "setup": {
+                    "config": "change(compare)",
+                    "op": "xnor"
+                }
+            }
+        }
+    },
+    "04-11": {
+        "compare(change)": {
+            "or": {
+                "intersect": 18,
+                "jaccard": 0.012422360248447204
+            },
+            "xor": {
+                "intersect": 18,
+                "jaccard": 0.011472275334608031
+            },
+            "and": {
+                "intersect": 0,
+                "jaccard": 0.0
+            },
+            "xnor": {
+                "intersect": 18,
+                "jaccard": 0.011472275334608031
+            }
+        },
+        "change(compare)": {
+            "or": {
+                "intersect": 16,
+                "jaccard": 0.01733477789815818
+            },
+            "xor": {
+                "intersect": 18,
+                "jaccard": 0.011472275334608031
+            },
+            "and": {
+                "intersect": 6,
+                "jaccard": 0.006
+            },
+            "xnor": {
+                "intersect": 18,
+                "jaccard": 0.011472275334608031
+            }
+        },
+        "best": {
+            "intersect": {
+                "score": 0.011472275334608031,
+                "setup": {
+                    "config": "change(compare)",
+                    "op": "xnor"
+                }
+            },
+            "jaccard": {
+                "score": 0.011472275334608031,
+                "setup": {
+                    "config": "change(compare)",
+                    "op": "xnor"
+                }
+            }
+        }
+    },
+    "07-10": {
+        "compare(change)": {
+            "or": {
+                "intersect": 14,
+                "jaccard": 0.02834008097165992
+            },
+            "xor": {
+                "intersect": 13,
+                "jaccard": 0.026476578411405296
+            },
+            "and": {
+                "intersect": 1,
+                "jaccard": 0.006211180124223602
+            },
+            "xnor": {
+                "intersect": 13,
+                "jaccard": 0.026476578411405296
+            }
+        },
+        "change(compare)": {
+            "or": {
+                "intersect": 6,
+                "jaccard": 0.015584415584415584
+            },
+            "xor": {
+                "intersect": 13,
+                "jaccard": 0.026476578411405296
+            },
+            "and": {
+                "intersect": 9,
+                "jaccard": 0.03214285714285714
+            },
+            "xnor": {
+                "intersect": 13,
+                "jaccard": 0.026476578411405296
+            }
+        },
+        "best": {
+            "intersect": {
+                "score": 0.026476578411405296,
+                "setup": {
+                    "config": "change(compare)",
+                    "op": "xnor"
+                }
+            },
+            "jaccard": {
+                "score": 0.026476578411405296,
+                "setup": {
+                    "config": "change(compare)",
+                    "op": "xnor"
+                }
+            }
+        }
+    },
+    "08-10": {
+        "compare(change)": {
+            "or": {
+                "intersect": 49,
+                "jaccard": 0.035976505139500736
+            },
+            "xor": {
+                "intersect": 45,
+                "jaccard": 0.033632286995515695
+            },
+            "and": {
+                "intersect": 4,
+                "jaccard": 0.0078125
+            },
+            "xnor": {
+                "intersect": 45,
+                "jaccard": 0.033632286995515695
+            }
+        },
+        "change(compare)": {
+            "or": {
+                "intersect": 24,
+                "jaccard": 0.022058823529411766
+            },
+            "xor": {
+                "intersect": 45,
+                "jaccard": 0.033632286995515695
+            },
+            "and": {
+                "intersect": 27,
+                "jaccard": 0.03461538461538462
+            },
+            "xnor": {
+                "intersect": 45,
+                "jaccard": 0.033632286995515695
+            }
+        },
+        "best": {
+            "intersect": {
+                "score": 0.033632286995515695,
+                "setup": {
+                    "config": "change(compare)",
+                    "op": "xnor"
+                }
+            },
+            "jaccard": {
+                "score": 0.033632286995515695,
+                "setup": {
+                    "config": "change(compare)",
+                    "op": "xnor"
+                }
+            }
+        }
+    },
+    "09-10": {
+        "compare(change)": {
+            "or": {
+                "intersect": 17,
+                "jaccard": 0.024602026049204053
+            },
+            "xor": {
+                "intersect": 17,
+                "jaccard": 0.022106631989596878
+            },
+            "and": {
+                "intersect": 5,
+                "jaccard": 0.013927576601671309
+            },
+            "xnor": {
+                "intersect": 17,
+                "jaccard": 0.022106631989596878
+            }
+        },
+        "change(compare)": {
+            "or": {
+                "intersect": 12,
+                "jaccard": 0.020338983050847456
+            },
+            "xor": {
+                "intersect": 17,
+                "jaccard": 0.022106631989596878
+            },
+            "and": {
+                "intersect": 10,
+                "jaccard": 0.02092050209205021
+            },
+            "xnor": {
+                "intersect": 17,
+                "jaccard": 0.022106631989596878
+            }
+        },
+        "best": {
+            "intersect": {
+                "score": 0.022106631989596878,
+                "setup": {
+                    "config": "change(compare)",
+                    "op": "xnor"
+                }
+            },
+            "jaccard": {
+                "score": 0.022106631989596878,
+                "setup": {
+                    "config": "change(compare)",
+                    "op": "xnor"
+                }
+            }
+        }
+    },
+    "10-10": {
+        "compare(change)": {
+            "or": {
+                "intersect": 39,
+                "jaccard": 0.1262135922330097
+            },
+            "xor": {
+                "intersect": 31,
+                "jaccard": 0.10163934426229508
+            },
+            "and": {
+                "intersect": 12,
+                "jaccard": 0.0670391061452514
+            },
+            "xnor": {
+                "intersect": 31,
+                "jaccard": 0.10163934426229508
+            }
+        },
+        "change(compare)": {
+            "or": {
+                "intersect": 20,
+                "jaccard": 0.07782101167315175
+            },
+            "xor": {
+                "intersect": 31,
+                "jaccard": 0.10163934426229508
+            },
+            "and": {
+                "intersect": 23,
+                "jaccard": 0.09956709956709957
+            },
+            "xnor": {
+                "intersect": 31,
+                "jaccard": 0.10163934426229508
+            }
+        },
+        "best": {
+            "intersect": {
+                "score": 0.10163934426229508,
+                "setup": {
+                    "config": "change(compare)",
+                    "op": "xnor"
+                }
+            },
+            "jaccard": {
+                "score": 0.10163934426229508,
+                "setup": {
+                    "config": "change(compare)",
+                    "op": "xnor"
+                }
+            }
+        }
+    },
+    "25-11": {
+        "compare(change)": {
+            "or": {
+                "intersect": 44,
+                "jaccard": 0.028405422853453842
+            },
+            "xor": {
+                "intersect": 44,
+                "jaccard": 0.028368794326241134
+            },
+            "and": {
+                "intersect": 0,
+                "jaccard": 0.0
+            },
+            "xnor": {
+                "intersect": 44,
+                "jaccard": 0.028368794326241134
+            }
+        },
+        "change(compare)": {
+            "or": {
+                "intersect": 13,
+                "jaccard": 0.01050080775444265
+            },
+            "xor": {
+                "intersect": 44,
+                "jaccard": 0.028368794326241134
+            },
+            "and": {
+                "intersect": 31,
+                "jaccard": 0.031062124248496994
+            },
+            "xnor": {
+                "intersect": 44,
+                "jaccard": 0.028368794326241134
+            }
+        },
+        "best": {
+            "intersect": {
+                "score": 0.028368794326241134,
+                "setup": {
+                    "config": "change(compare)",
+                    "op": "xnor"
+                }
+            },
+            "jaccard": {
+                "score": 0.028368794326241134,
+                "setup": {
+                    "config": "change(compare)",
+                    "op": "xnor"
+                }
+            }
+        }
+    },
+    "29-10": {
+        "compare(change)": {
+            "or": {
+                "intersect": 22,
+                "jaccard": 0.018456375838926176
+            },
+            "xor": {
+                "intersect": 22,
+                "jaccard": 0.018456375838926176
+            },
+            "and": {
+                "intersect": 2,
+                "jaccard": 0.02857142857142857
+            },
+            "xnor": {
+                "intersect": 22,
+                "jaccard": 0.018456375838926176
+            }
+        },
+        "change(compare)": {
+            "or": {
+                "intersect": 9,
+                "jaccard": 0.017509727626459144
+            },
+            "xor": {
+                "intersect": 22,
+                "jaccard": 0.018456375838926176
+            },
+            "and": {
+                "intersect": 15,
+                "jaccard": 0.02027027027027027
+            },
+            "xnor": {
+                "intersect": 22,
+                "jaccard": 0.018456375838926176
+            }
+        },
+        "best": {
+            "intersect": {
+                "score": 0.018456375838926176,
+                "setup": {
+                    "config": "change(compare)",
+                    "op": "xnor"
+                }
+            },
+            "jaccard": {
+                "score": 0.018456375838926176,
+                "setup": {
+                    "config": "change(compare)",
+                    "op": "xnor"
+                }
+            }
+        }
+    },
+    "best_overall": {
+        "compare(change)": {
+            "or": 0,
+            "xor": 0,
+            "and": 0,
+            "xnor": 0
+        },
+        "change(compare)": {
+            "or": 0,
+            "xor": 0,
+            "and": 0,
+            "xnor": 8
+        }
+    }
+}

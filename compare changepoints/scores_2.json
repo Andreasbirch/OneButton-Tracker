@@ -1,0 +1,688 @@
+{
+    "02-12": {
+        "compare(change)": {
+            "or": {
+                "intersect": 2,
+                "mse": 0.5591190389515835,
+                "jaccard": 1.0,
+                "cosine": 0.6452472715191572
+            },
+            "xor": {
+                "intersect": 2,
+                "mse": 0.5595376774663269,
+                "jaccard": 1.0,
+                "cosine": 0.6463314700261076
+            },
+            "and": {
+                "intersect": 2,
+                "mse": 0.5577903167091373,
+                "jaccard": 1.0,
+                "cosine": 0.6636119081213797
+            },
+            "xnor": {
+                "intersect": 2,
+                "mse": 0.5595376774663269,
+                "jaccard": 1.0,
+                "cosine": 0.6463314700261076
+            }
+        },
+        "change(compare)": {
+            "or": {
+                "intersect": 2,
+                "mse": 0.2908991627229705,
+                "jaccard": 1.0,
+                "cosine": 0.6416519788037566
+            },
+            "xor": {
+                "intersect": 2,
+                "mse": 0.5595376774663269,
+                "jaccard": 1.0,
+                "cosine": 0.6463314700261076
+            },
+            "and": {
+                "intersect": 2,
+                "mse": 0.28534765198398254,
+                "jaccard": 1.0,
+                "cosine": 0.6516242502740139
+            },
+            "xnor": {
+                "intersect": 2,
+                "mse": 0.5595376774663269,
+                "jaccard": 1.0,
+                "cosine": 0.6463314700261076
+            }
+        },
+        "best": {
+            "intersect": {
+                "score": 2,
+                "setup": {
+                    "config": "compare(change)",
+                    "op": "or"
+                }
+            },
+            "mse": {
+                "score": 2,
+                "setup": {
+                    "config": "compare(change)",
+                    "op": "or"
+                }
+            },
+            "jaccard": {
+                "score": 2,
+                "setup": {
+                    "config": "compare(change)",
+                    "op": "or"
+                }
+            },
+            "cosine": {
+                "score": 2,
+                "setup": {
+                    "config": "compare(change)",
+                    "op": "or"
+                }
+            }
+        }
+    },
+    "04-11": {
+        "compare(change)": {
+            "or": {
+                "intersect": 2,
+                "mse": 0.6460621045742128,
+                "jaccard": 1.0,
+                "cosine": 0.5177978815515232
+            },
+            "xor": {
+                "intersect": 2,
+                "mse": 0.6652607083121228,
+                "jaccard": 1.0,
+                "cosine": 0.5124073890783548
+            },
+            "and": {
+                "intersect": 2,
+                "mse": 0.6717329648752818,
+                "jaccard": 1.0,
+                "cosine": 0.5611277334873758
+            },
+            "xnor": {
+                "intersect": 2,
+                "mse": 0.6652607083121228,
+                "jaccard": 1.0,
+                "cosine": 0.5124073890783548
+            }
+        },
+        "change(compare)": {
+            "or": {
+                "intersect": 2,
+                "mse": 0.2961966402443459,
+                "jaccard": 1.0,
+                "cosine": 0.3664392268747782
+            },
+            "xor": {
+                "intersect": 2,
+                "mse": 0.6652607083121228,
+                "jaccard": 1.0,
+                "cosine": 0.5124073890783548
+            },
+            "and": {
+                "intersect": 2,
+                "mse": 0.2814340775216348,
+                "jaccard": 1.0,
+                "cosine": 0.44871459154269944
+            },
+            "xnor": {
+                "intersect": 2,
+                "mse": 0.6652607083121228,
+                "jaccard": 1.0,
+                "cosine": 0.5124073890783548
+            }
+        },
+        "best": {
+            "intersect": {
+                "score": 2,
+                "setup": {
+                    "config": "compare(change)",
+                    "op": "or"
+                }
+            },
+            "mse": {
+                "score": 2,
+                "setup": {
+                    "config": "compare(change)",
+                    "op": "or"
+                }
+            },
+            "jaccard": {
+                "score": 2,
+                "setup": {
+                    "config": "compare(change)",
+                    "op": "or"
+                }
+            },
+            "cosine": {
+                "score": 2,
+                "setup": {
+                    "config": "compare(change)",
+                    "op": "or"
+                }
+            }
+        }
+    },
+    "07-10": {
+        "compare(change)": {
+            "or": {
+                "intersect": 2,
+                "mse": 0.16093400447427292,
+                "jaccard": 1.0,
+                "cosine": 0.913723348525477
+            },
+            "xor": {
+                "intersect": 2,
+                "mse": 0.16177293064876958,
+                "jaccard": 1.0,
+                "cosine": 0.9133905579853611
+            },
+            "and": {
+                "intersect": 2,
+                "mse": 0.16617729306487697,
+                "jaccard": 1.0,
+                "cosine": 0.9129924534784788
+            },
+            "xnor": {
+                "intersect": 2,
+                "mse": 0.16177293064876958,
+                "jaccard": 1.0,
+                "cosine": 0.9133905579853611
+            }
+        },
+        "change(compare)": {
+            "or": {
+                "intersect": 2,
+                "mse": 0.2398629753914989,
+                "jaccard": 1.0,
+                "cosine": 0.8500037825863658
+            },
+            "xor": {
+                "intersect": 2,
+                "mse": 0.16177293064876958,
+                "jaccard": 1.0,
+                "cosine": 0.9133905579853611
+            },
+            "and": {
+                "intersect": 2,
+                "mse": 0.2490212527964206,
+                "jaccard": 1.0,
+                "cosine": 0.8452428953915899
+            },
+            "xnor": {
+                "intersect": 2,
+                "mse": 0.16177293064876958,
+                "jaccard": 1.0,
+                "cosine": 0.9133905579853611
+            }
+        },
+        "best": {
+            "intersect": {
+                "score": 2,
+                "setup": {
+                    "config": "compare(change)",
+                    "op": "or"
+                }
+            },
+            "mse": {
+                "score": 2,
+                "setup": {
+                    "config": "compare(change)",
+                    "op": "or"
+                }
+            },
+            "jaccard": {
+                "score": 2,
+                "setup": {
+                    "config": "compare(change)",
+                    "op": "or"
+                }
+            },
+            "cosine": {
+                "score": 2,
+                "setup": {
+                    "config": "compare(change)",
+                    "op": "or"
+                }
+            }
+        }
+    },
+    "08-10": {
+        "compare(change)": {
+            "or": {
+                "intersect": 2,
+                "mse": 0.449658286551135,
+                "jaccard": 1.0,
+                "cosine": 0.7324503304535196
+            },
+            "xor": {
+                "intersect": 2,
+                "mse": 0.45069563094947523,
+                "jaccard": 1.0,
+                "cosine": 0.7326689919259514
+            },
+            "and": {
+                "intersect": 2,
+                "mse": 0.4574688796680498,
+                "jaccard": 1.0,
+                "cosine": 0.7356268848595017
+            },
+            "xnor": {
+                "intersect": 2,
+                "mse": 0.45069563094947523,
+                "jaccard": 1.0,
+                "cosine": 0.7326689919259514
+            }
+        },
+        "change(compare)": {
+            "or": {
+                "intersect": 2,
+                "mse": 0.6091042226019038,
+                "jaccard": 1.0,
+                "cosine": 0.2432854661965186
+            },
+            "xor": {
+                "intersect": 2,
+                "mse": 0.45069563094947523,
+                "jaccard": 1.0,
+                "cosine": 0.7326689919259514
+            },
+            "and": {
+                "intersect": 2,
+                "mse": 0.6118501342445692,
+                "jaccard": 1.0,
+                "cosine": 0.25193405871661223
+            },
+            "xnor": {
+                "intersect": 2,
+                "mse": 0.45069563094947523,
+                "jaccard": 1.0,
+                "cosine": 0.7326689919259514
+            }
+        },
+        "best": {
+            "intersect": {
+                "score": 2,
+                "setup": {
+                    "config": "compare(change)",
+                    "op": "or"
+                }
+            },
+            "mse": {
+                "score": 2,
+                "setup": {
+                    "config": "compare(change)",
+                    "op": "or"
+                }
+            },
+            "jaccard": {
+                "score": 2,
+                "setup": {
+                    "config": "compare(change)",
+                    "op": "or"
+                }
+            },
+            "cosine": {
+                "score": 2,
+                "setup": {
+                    "config": "compare(change)",
+                    "op": "or"
+                }
+            }
+        }
+    },
+    "09-10": {
+        "compare(change)": {
+            "or": {
+                "intersect": 2,
+                "mse": 0.6109685695958949,
+                "jaccard": 1.0,
+                "cosine": 0.5752263778224185
+            },
+            "xor": {
+                "intersect": 2,
+                "mse": 0.5928479794740218,
+                "jaccard": 1.0,
+                "cosine": 0.5985200705298671
+            },
+            "and": {
+                "intersect": 2,
+                "mse": 0.5622193713919179,
+                "jaccard": 1.0,
+                "cosine": 0.6534539678921224
+            },
+            "xnor": {
+                "intersect": 2,
+                "mse": 0.5928479794740218,
+                "jaccard": 1.0,
+                "cosine": 0.5985200705298671
+            }
+        },
+        "change(compare)": {
+            "or": {
+                "intersect": 2,
+                "mse": 0.422386144964721,
+                "jaccard": 1.0,
+                "cosine": 0.6285102459371736
+            },
+            "xor": {
+                "intersect": 2,
+                "mse": 0.5928479794740218,
+                "jaccard": 1.0,
+                "cosine": 0.5985200705298671
+            },
+            "and": {
+                "intersect": 2,
+                "mse": 0.3896728672225786,
+                "jaccard": 1.0,
+                "cosine": 0.6668030388507379
+            },
+            "xnor": {
+                "intersect": 2,
+                "mse": 0.5928479794740218,
+                "jaccard": 1.0,
+                "cosine": 0.5985200705298671
+            }
+        },
+        "best": {
+            "intersect": {
+                "score": 2,
+                "setup": {
+                    "config": "compare(change)",
+                    "op": "or"
+                }
+            },
+            "mse": {
+                "score": 2,
+                "setup": {
+                    "config": "compare(change)",
+                    "op": "or"
+                }
+            },
+            "jaccard": {
+                "score": 2,
+                "setup": {
+                    "config": "compare(change)",
+                    "op": "or"
+                }
+            },
+            "cosine": {
+                "score": 2,
+                "setup": {
+                    "config": "compare(change)",
+                    "op": "or"
+                }
+            }
+        }
+    },
+    "10-10": {
+        "compare(change)": {
+            "or": {
+                "intersect": 2,
+                "mse": 0.7353664535169699,
+                "jaccard": 1.0,
+                "cosine": 0.18211931217022323
+            },
+            "xor": {
+                "intersect": 2,
+                "mse": 0.7373339891785539,
+                "jaccard": 1.0,
+                "cosine": 0.16669482901289764
+            },
+            "and": {
+                "intersect": 2,
+                "mse": 0.2587309394982784,
+                "jaccard": 1.0,
+                "cosine": 0.859134710542425
+            },
+            "xnor": {
+                "intersect": 2,
+                "mse": 0.7373339891785539,
+                "jaccard": 1.0,
+                "cosine": 0.16669482901289764
+            }
+        },
+        "change(compare)": {
+            "or": {
+                "intersect": 2,
+                "mse": 0.6487948844072798,
+                "jaccard": 1.0,
+                "cosine": 0.48903911537771333
+            },
+            "xor": {
+                "intersect": 2,
+                "mse": 0.7373339891785539,
+                "jaccard": 1.0,
+                "cosine": 0.16669482901289764
+            },
+            "and": {
+                "intersect": 2,
+                "mse": 0.3649778652238072,
+                "jaccard": 1.0,
+                "cosine": 0.7167358674798193
+            },
+            "xnor": {
+                "intersect": 2,
+                "mse": 0.7373339891785539,
+                "jaccard": 1.0,
+                "cosine": 0.16669482901289764
+            }
+        },
+        "best": {
+            "intersect": {
+                "score": 2,
+                "setup": {
+                    "config": "compare(change)",
+                    "op": "or"
+                }
+            },
+            "mse": {
+                "score": 2,
+                "setup": {
+                    "config": "compare(change)",
+                    "op": "or"
+                }
+            },
+            "jaccard": {
+                "score": 2,
+                "setup": {
+                    "config": "compare(change)",
+                    "op": "or"
+                }
+            },
+            "cosine": {
+                "score": 2,
+                "setup": {
+                    "config": "compare(change)",
+                    "op": "or"
+                }
+            }
+        }
+    },
+    "25-11": {
+        "compare(change)": {
+            "or": {
+                "intersect": 2,
+                "mse": 0.5756808223483518,
+                "jaccard": 1.0,
+                "cosine": 0.6477260929525513
+            },
+            "xor": {
+                "intersect": 2,
+                "mse": 0.5760136072029433,
+                "jaccard": 1.0,
+                "cosine": 0.6476505699292527
+            },
+            "and": {
+                "intersect": 2,
+                "mse": 0.579322967701381,
+                "jaccard": 1.0,
+                "cosine": 0.6484103236977515
+            },
+            "xnor": {
+                "intersect": 2,
+                "mse": 0.5760136072029433,
+                "jaccard": 1.0,
+                "cosine": 0.6476505699292527
+            }
+        },
+        "change(compare)": {
+            "or": {
+                "intersect": 2,
+                "mse": 0.2845218066519995,
+                "jaccard": 1.0,
+                "cosine": 0.7291838260945364
+            },
+            "xor": {
+                "intersect": 2,
+                "mse": 0.5760136072029433,
+                "jaccard": 1.0,
+                "cosine": 0.6476505699292527
+            },
+            "and": {
+                "intersect": 2,
+                "mse": 0.28124942224851635,
+                "jaccard": 1.0,
+                "cosine": 0.7302305167609353
+            },
+            "xnor": {
+                "intersect": 2,
+                "mse": 0.5760136072029433,
+                "jaccard": 1.0,
+                "cosine": 0.6476505699292527
+            }
+        },
+        "best": {
+            "intersect": {
+                "score": 2,
+                "setup": {
+                    "config": "compare(change)",
+                    "op": "or"
+                }
+            },
+            "mse": {
+                "score": 2,
+                "setup": {
+                    "config": "compare(change)",
+                    "op": "or"
+                }
+            },
+            "jaccard": {
+                "score": 2,
+                "setup": {
+                    "config": "compare(change)",
+                    "op": "or"
+                }
+            },
+            "cosine": {
+                "score": 2,
+                "setup": {
+                    "config": "compare(change)",
+                    "op": "or"
+                }
+            }
+        }
+    },
+    "29-10": {
+        "compare(change)": {
+            "or": {
+                "intersect": 2,
+                "mse": 0.8104429596634496,
+                "jaccard": 1.0,
+                "cosine": 0.320407318694033
+            },
+            "xor": {
+                "intersect": 2,
+                "mse": 0.8113090819104182,
+                "jaccard": 1.0,
+                "cosine": 0.3207034660208904
+            },
+            "and": {
+                "intersect": 2,
+                "mse": 0.7635486265775798,
+                "jaccard": 1.0,
+                "cosine": 0.48509405850215176
+            },
+            "xnor": {
+                "intersect": 2,
+                "mse": 0.8113090819104182,
+                "jaccard": 1.0,
+                "cosine": 0.3207034660208904
+            }
+        },
+        "change(compare)": {
+            "or": {
+                "intersect": 2,
+                "mse": 0.5680524622618164,
+                "jaccard": 1.0,
+                "cosine": 0.1360723478371832
+            },
+            "xor": {
+                "intersect": 2,
+                "mse": 0.8113090819104182,
+                "jaccard": 1.0,
+                "cosine": 0.3207034660208904
+            },
+            "and": {
+                "intersect": 2,
+                "mse": 0.4726552833457065,
+                "jaccard": 1.0,
+                "cosine": 0.3765549008229592
+            },
+            "xnor": {
+                "intersect": 2,
+                "mse": 0.8113090819104182,
+                "jaccard": 1.0,
+                "cosine": 0.3207034660208904
+            }
+        },
+        "best": {
+            "intersect": {
+                "score": 2,
+                "setup": {
+                    "config": "compare(change)",
+                    "op": "or"
+                }
+            },
+            "mse": {
+                "score": 2,
+                "setup": {
+                    "config": "compare(change)",
+                    "op": "or"
+                }
+            },
+            "jaccard": {
+                "score": 2,
+                "setup": {
+                    "config": "compare(change)",
+                    "op": "or"
+                }
+            },
+            "cosine": {
+                "score": 2,
+                "setup": {
+                    "config": "compare(change)",
+                    "op": "or"
+                }
+            }
+        }
+    },
+    "best_overall": {
+        "compare(change)": {
+            "or": 32,
+            "xor": 0,
+            "and": 0,
+            "xnor": 0
+        },
+        "change(compare)": {
+            "or": 0,
+            "xor": 0,
+            "and": 0,
+            "xnor": 0
+        }
+    }
+}
