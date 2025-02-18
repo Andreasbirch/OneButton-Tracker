@@ -1,9 +1,4 @@
 {
-    "ABC123": {
-        "id": "ABC123",
-        "devicePath": "MOCK",
-        "patientName": "Mock Data"
-    },
     "DF625857C7603C2B": {
         "id": "DF625857C7603C2B",
         "devicePath": "CIRCUITPY",

@@ -103,7 +103,16 @@ function CalendarYear({scope, setScope, selectedMonth, selectedWeek, selectedDat
                                 </tr>
                             </thead>
                             <tbody>
-                                {Object.keys(calendar).map((k) => (
+                                {Object.keys(calendar)
+                                .map(Number)
+                                .sort((a, b) => {
+                                    // If month is december, week number 1 is from next year, and should be sorted after the last weeknumber
+                                    if (i === 11) { 
+                                    if (a === 1) return 1; 
+                                    if (b === 1) return -1;
+                                    }
+                                    return a - b;
+                                }).map((k) => (
                                     <tr key={k}>
                                         <td role='button' onClick={() => onWeekClick(year, parseInt(k))}>
                                             {k}

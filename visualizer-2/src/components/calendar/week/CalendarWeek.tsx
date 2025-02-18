@@ -41,7 +41,8 @@ function CalendarWeek({year, _week, width, sessions, onMonthClick}: CalendarWeek
           tickFormat: Plot.formatWeekday("dk", "short"),
           tickSize: 0,
           domain: [1, 2, 3, 4, 5, 6, 0],
-          axis: "top"
+          axis: "top",
+          label: null
         },
         y: {
           domain: [24, 0],

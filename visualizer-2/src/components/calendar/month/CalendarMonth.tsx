@@ -82,7 +82,7 @@ function CalendarMonth({year, _month, sessions, onWeekClick, onDateClick}:Calend
                             return <div 
                                 role='button'
                                 className='week-day'
-                                style={{backgroundColor: getColor(groups, o)?? ""}}
+                                style={{backgroundColor: getColor(groups, new Date(new Date(o).setDate(o.getDate() + 1)))?? ""}}
                                 onClick={() => onDateClick(o?.getFullYear(), o?.getMonth(), o?.getDate())}
                                 key={`${k}-${i}`}>{o?.getDate()}
                             </div>
