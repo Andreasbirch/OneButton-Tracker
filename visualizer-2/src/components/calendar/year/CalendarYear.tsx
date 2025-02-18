@@ -110,7 +110,7 @@ function CalendarYear({scope, setScope, selectedMonth, selectedWeek, selectedDat
                                         </td>
                                         {calendar[k].map((o: Date, idx: number) => {
                                             if (!o) return <td key={idx}></td>;
-                                            let colr = getColor(groups, o);
+                                            let colr = getColor(groups, new Date(new Date(o).setDate(o.getDate() + 1)));
                                             // console.log(color);
                                             return (
                                                 <td
